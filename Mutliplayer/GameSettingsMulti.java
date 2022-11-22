@@ -21,17 +21,6 @@ public class GameSettingsMulti extends BasicAdder{
     public int atkHigh = 100;
     public int atkCrazy = 10000;
 
-    public boolean isHpLow = false;
-    public boolean isHpMed = false;
-    public boolean isHpHigh = false;
-    public boolean isHpCrazy = false;
-
-    public boolean isAtkLow = false;
-    public boolean isAtkMed = false;
-    public boolean isAtkHigh = false;
-    public boolean isAtkCrazy = false;
-
-
     public JPanel gameSetMulti = new JPanel();
     public JLabel settingsMultiTxt = new JLabel("GAME SETTINGS",SwingConstants.CENTER);
     public JLabel setHp = new JLabel("Set Hitpoint");
