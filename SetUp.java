@@ -312,8 +312,8 @@ public class SetUp extends Adder {
             Gm.statusGame.setForeground(Color.BLACK);
         }
         Gm.statusGame.setText("Waiting for the roll...");
-        addComponent(0,4,5,Gm.rollBtn,Gm.gameMultiPanel);
-        addComponent(0,5,5,Gm.settings, Gm.gameMultiPanel);
+        addComponent(0,4,7,Gm.rollBtn,Gm.gameMultiPanel);
+        addComponent(0,5,7,Gm.settings, Gm.gameMultiPanel);
     }
 
     public void P1Action(){
@@ -342,10 +342,11 @@ public class SetUp extends Adder {
             Gm.continueP1.setBackground(Color.BLUE);
         }
         Gm.statusGame.setText("Player 1 Turn");
-        addComponent(0,4,5,Gm.btnAtkP1, Gm.gameMultiPanel);
-        addComponent(0,5,5,Gm.btnHealP1, Gm.gameMultiPanel);
-        addComponent(0,6,5,Gm.btnPoisonP1, Gm.gameMultiPanel);
-        addComponent(0,7,5,Gm.settings, Gm.gameMultiPanel);
+        addComponent(0,4,7,Gm.btnAtkP1, Gm.gameMultiPanel);
+        addComponent(0,5,7,Gm.btnHealP1, Gm.gameMultiPanel);
+        addComponent(0,6,7,Gm.btnPoisonP1, Gm.gameMultiPanel);
+        addComponent(0,7,7,Gm.continueP1,Gm.gameMultiPanel);
+        addComponent(0,8,7,Gm.settings, Gm.gameMultiPanel);
     }
 
     public void P2Action(){
@@ -375,16 +376,18 @@ public class SetUp extends Adder {
             Gm.statusGame.setBackground(Color.RED);
         }
         Gm.statusGame.setText("Player 2 Turn");
-        addComponent(0,4,5,Gm.btnAtkP2, Gm.gameMultiPanel);
-        addComponent(0,5,5,Gm.btnHealP2, Gm.gameMultiPanel);
-        addComponent(0,6,5,Gm.btnPoisonP2, Gm.gameMultiPanel);
-        addComponent(0,7,5,Gm.settings, Gm.gameMultiPanel);
+        addComponent(0,4,7,Gm.btnAtkP2, Gm.gameMultiPanel);
+        addComponent(0,5,7,Gm.btnHealP2, Gm.gameMultiPanel);
+        addComponent(0,6,7,Gm.btnPoisonP2, Gm.gameMultiPanel);
+        addComponent(0,7,7,Gm.continueP2, Gm.gameMultiPanel);
+        addComponent(0,8,7,Gm.settings, Gm.gameMultiPanel);
     }
 
     public void removeP1Btn(){
         removeBtn(Gm.btnAtkP1);
         removeBtn(Gm.btnHealP1);
         removeBtn(Gm.btnPoisonP1);
+        removeBtn(Gm.continueP1);
         removeBtn(Gm.settings);
     }
 
@@ -392,6 +395,7 @@ public class SetUp extends Adder {
         removeBtn(Gm.btnAtkP2);
         removeBtn(Gm.btnHealP2);
         removeBtn(Gm.btnPoisonP2);
+        removeBtn(Gm.continueP2);
         removeBtn(Gm.settings);
     }
 
