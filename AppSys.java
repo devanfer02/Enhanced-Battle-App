@@ -193,13 +193,16 @@ public class AppSys extends SetUp{
 
     public class backMenu implements ActionListener{
         public void actionPerformed(ActionEvent e){
-            playSound();
             if(paused){
+                stopSong();
+                setSongFile(song1);
+                checkContinueSound();
                 removePanel(frame, Mgs.pauseSettingPanel);
                 removePanel(frame, Gm.gameMultiPanel);
                 resetStat();
                 paused = false;
             } else{
+                checkSetSoundVer2();
                 removePanel(frame, winner.winPanel);
                 removePanel(frame, Settings.settingsPanel);
                 removePanel(frame, About.aboutPanel);
@@ -218,7 +221,8 @@ public class AppSys extends SetUp{
     }
     public void checkSetSound(){
         String txt = Settings.setSound.getText();
-        if(txt.equals("Sound : Off")){
+        String txt2 = Mgs.setSound.getText();
+        if(txt.equals("SOUND : OFF") && txt2.equals("SOUND : OFF")){
             playSound();
             stopSound();
             holdSong();
@@ -229,13 +233,44 @@ public class AppSys extends SetUp{
             loopSong();
         }
     }
+
+    public void checkSetSoundVer2(){
+        String txt = Settings.setSound.getText();
+        String txt2 = Mgs.setSound.getText();
+        if(txt.equals("SOUND : OFF") && txt2.equals("SOUND : OFF")){
+            playSound();
+            stopSound();
+            holdSong();
+        } else{
+            setSoundEffectFile(btnSound);
+            playSound();
+            loopSong();
+        }
+    }
+
+    public void checkContinueSound(){
+        String txt = Settings.setSound.getText();
+        String txt2 = Mgs.setSound.getText();
+        if(txt.equals("SOUND : OFF") && txt2.equals("SOUND : OFF")){
+            playSound();
+            stopSound();
+            holdSong();
+        } else{
+            setSoundEffectFile(btnSound);
+            playSound();
+            playSong();
+        }
+    }
+
     public class setSoundSettingsBtn implements ActionListener{
         public void actionPerformed(ActionEvent e) {
             String text = Settings.setSound.getText();
+            String text2 = Mgs.setSound.getText();
             switch (text) {
                 case "SOUND : ON" -> {
                     playSound();
                     Settings.setSound.setText("SOUND : OFF");
+                    Mgs.setSound.setText("SOUND : OFF");
                     holdSong();
                     stopSound();
 
@@ -244,10 +279,26 @@ public class AppSys extends SetUp{
                     setSoundEffectFile(btnSound);
                     playSound();
                     Settings.setSound.setText("SOUND : ON");
+                    Mgs.setSound.setText("SOUND : ON");
                     continueSong();
-
                 }
-
+            }
+            //JUST FOR MGS SET SOUND
+            switch (text2){
+                case "SOUND : ON" -> {
+                    playSound();
+                    Settings.setSound.setText("SOUND : OFF");
+                    Mgs.setSound.setText("SOUND : OFF");
+                    holdSong();
+                    stopSound();
+                }
+                case "SOUND : OFF" ->  {
+                    setSoundEffectFile(btnSound);
+                    playSound();
+                    Settings.setSound.setText("SOUND : ON");
+                    Mgs.setSound.setText("SOUND : ON");
+                    continueSong();
+                }
             }
         }
     }
@@ -411,14 +462,14 @@ public class AppSys extends SetUp{
         public void actionPerformed(ActionEvent e){
             if((isHpLow || isHpMed || isHpHigh || isHpCrazy)
                     && (isAtkLow || isAtkMed || isAtkHigh || isAtkCrazy)){
+                stopSong();
+                setSongFile(song2);
                 if(paused){
-                    checkSetSound();
+                    checkContinueSound();
                     paused = false;
                     removePanel(frame, Mgs.pauseSettingPanel);
                     gameScreen();
                 } else{
-                    stopSong();
-                    setSongFile(song2);
                     checkSetSound();
                     if(isHpLow){
                         Gm.hpPlayer1.setText("Hitpoint : " + Gsm.hpLow);
@@ -562,6 +613,11 @@ public class AppSys extends SetUp{
                 }
                 winnerScreen();
             } else {
+                if(dark){
+                    Gm.atkPlayer2R.setForeground(Color.WHITE);
+                } else {
+                    Gm.atkPlayer2R.setForeground(Color.BLACK);
+                }
                 playSound();
                 Gm.hpPlayer1.setText("HP : " + Gsm.Player1_HP);
                 Gm.hpPlayer2.setText("HP : " + Gsm.Player2_HP);
