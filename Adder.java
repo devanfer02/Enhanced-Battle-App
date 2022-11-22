@@ -11,6 +11,8 @@ public class Adder {
     //SOUNDS AND SONGS
     String btnSound = "D:\\IntelliJ\\CompleteSetBattleApp\\src\\Songs\\BtnSound.wav";
     String song1 = "D:\\IntelliJ\\CompleteSetBattleApp\\src\\Songs\\song4-Alone.wav";
+    String song2 = "D:\\IntelliJ\\CompleteSetBattleApp\\src\\Songs\\song2-Megalovania.wav";
+    String WSong = "D:\\IntelliJ\\CompleteSetBattleApp\\src\\Songs\\Won-RUSH E.wav";
 
     //FOR MUSIC AND SOUND PLAYER
     Clip song;
@@ -63,6 +65,10 @@ public class Adder {
 
     public void holdSong(){
         song.stop();
+    }
+    public void stopSong(){
+        song.stop();
+        song.close();
     }
 
     //END FOR SONG AND SOUND
