@@ -4,14 +4,13 @@ import javax.swing.*;
 import Basics.BasicAdder;
 
 public class GameMulti extends BasicAdder{
-    GameSettingsMulti GsmTxt = new GameSettingsMulti();
     public JPanel gameMultiPanel = new JPanel();
     public JLabel labelPlayer1 = new JLabel("Player 1",SwingConstants.CENTER);
     public JLabel labelPlayer2 = new JLabel("Player 2",SwingConstants.CENTER);
-    public JLabel hpPlayer1 = new JLabel("Hitpoint : " + GsmTxt.Player1_HP);
-    public JLabel hpPlayer2 = new JLabel("Hitpoint : " +  GsmTxt.Player2_HP,SwingConstants.RIGHT);
-    public JLabel atkPlayer1R = new JLabel("P1 ATK R : " + GsmTxt.Player1_ATKR);
-    public JLabel atkPlayer2R = new JLabel("P2 ATK R : " + GsmTxt.Player2_ATKR,SwingConstants.RIGHT);
+    public JLabel hpPlayer1 = new JLabel("Hitpoint : ");
+    public JLabel hpPlayer2 = new JLabel("Hitpoint : " ,SwingConstants.RIGHT);
+    public JLabel atkPlayer1R = new JLabel("P1 ATK R : ");
+    public JLabel atkPlayer2R = new JLabel("P2 ATK R : ",SwingConstants.RIGHT);
     public JLabel statusGame = new JLabel("Status",SwingConstants.CENTER);
     public JButton rollBtn = new JButton("ROLL TURN");
     public JButton btnAtkP1 = new JButton("ATTACK");
