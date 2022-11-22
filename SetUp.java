@@ -28,6 +28,10 @@ public class SetUp extends Adder {
     public boolean P1Turn = false;
     public boolean P2Turn = false;
 
+    ///COUNT FOR POISONS
+    public int countPoisP1 = 5;
+    public int countPoisP2 = 5;
+
     //START SWITCH THEME//
     public void switchMode(){
         Opening();
@@ -82,6 +86,7 @@ public class SetUp extends Adder {
         switchLabelColor(Rules.rule1);
         switchLabelColor(Rules.rule2);
         switchLabelColor(Rules.rule3);
+        switchLabelColor(Rules.rule4);
         switchBtnColor(Rules.continueTo);
         switchBtnColor(Rules.backMenu);
     }
@@ -154,7 +159,6 @@ public class SetUp extends Adder {
             Gsm.setHpMedBtn.setBackground(Color.LIGHT_GRAY);
             Gsm.setHpHighBtn.setBackground(Color.LIGHT_GRAY);
             Gsm.setHpCrazyBtn.setBackground(Color.LIGHT_GRAY);
-            System.out.println(false);
         }
         if(dark && isHpMed){
             Gsm.setHpLowBtn.setBackground(Color.LIGHT_GRAY);
@@ -400,6 +404,8 @@ public class SetUp extends Adder {
     }
 
     public void resetStat(){
+        countPoisP1 = 5;
+        countPoisP2 = 5;
         isHpLow = false;
         isHpMed  = false;
         isHpHigh  = false;
