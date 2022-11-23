@@ -1,21 +1,30 @@
 import Basics.*;
 import Basics.Menu;
 import Mutliplayer.*;
+import Singleplayer.*;
 
 import java.awt.*;
 
 public class SetUp extends Adder {
+    //START IMPORT FROM BASICS PACKAGE
     Opening Opening = new Opening();
     Menu Menu = new Menu();
     About About = new About();
     Settings Settings = new Settings();
+    //END IMPORT FROM BASICS PACKAGE
+
+    //START IMPORT FROM MULTIPLAYER PACKAGE
     Rules Rules = new Rules();
     GameSettingsMulti Gsm = new GameSettingsMulti();
     GameMulti Gm = new GameMulti();
     MultiGameSettings Mgs = new MultiGameSettings();
     Winner winner = new Winner();
+    //END IMPORT FROM MULTIPLAYER PACKAGE
 
-    //BOOLEAN
+    //START IMPORT FROM SINGLEPLAYER PACKAGE
+    GameChoice SpChoice = new GameChoice();
+
+    //BOOLEAN SWITCHES
     public boolean isHpLow = false;
     public boolean isHpMed = false;
     public boolean isHpHigh = false;
@@ -43,6 +52,7 @@ public class SetUp extends Adder {
         GameMulti();
         MultiGameSettings();
         Winner();
+        GameChoice();
     }
     public void Opening(){
         switchPanelColor(Opening.openingPanel);
@@ -147,6 +157,14 @@ public class SetUp extends Adder {
         switchLabelColor(winner.won);
         switchBtnColor(winner.newGameBtn);
         switchBtnColor(winner.menuBtn);
+    }
+
+    public void GameChoice(){
+        switchPanelColor(SpChoice.choicePanel);
+        switchBtnColor(SpChoice.storyBtn);
+        switchBtnColor(SpChoice.duelBtn);
+        switchBtnColor(SpChoice.survivalBtn);
+        switchBtnColor(SpChoice.menuBtn);
     }
     //END SWITCH THEME//
 
@@ -444,5 +462,63 @@ public class SetUp extends Adder {
         Gsm.Player2_HP = 0;
         Gsm.Player1_ATKR = 0;
         Gsm.Player2_ATKR = 0;
+    }
+
+    ///FOR FUNCTION IN APPSYS
+    public void checkSetSound(){
+        String txt = Settings.setSound.getText();
+        String txt2 = Mgs.setSound.getText();
+        if(txt.equals("SOUND : OFF") && txt2.equals("SOUND : OFF")){
+            playSound();
+            stopSound();
+            holdSong();
+        } else{
+            setSoundEffectFile(btnSound);
+            playSound();
+            playSong();
+            loopSong();
+        }
+    }
+
+    public void checkSetSoundVer2(){
+        String txt = Settings.setSound.getText();
+        String txt2 = Mgs.setSound.getText();
+        if(txt.equals("SOUND : OFF") && txt2.equals("SOUND : OFF")){
+            playSound();
+            stopSound();
+            holdSong();
+        } else{
+            setSoundEffectFile(btnSound);
+            playSound();
+            loopSong();
+        }
+    }
+
+    public void checkContinueSound(){
+        String txt = Settings.setSound.getText();
+        String txt2 = Mgs.setSound.getText();
+        if(txt.equals("SOUND : OFF") && txt2.equals("SOUND : OFF")){
+            playSound();
+            stopSound();
+            holdSong();
+        } else{
+            setSoundEffectFile(btnSound);
+            playSound();
+            playSong();
+        }
+    }
+
+    public int heal(){
+        int Heal = (int) (Math.random() * 80) + 1;
+        if(isHpLow){
+            Heal = (int) (Math.random() * (Gsm.hpLow * 0.1)) + 1;
+        } else if(isHpMed){
+            Heal = (int) (Math.random() * (Gsm.hpMed * 0.1)) + 1;
+        } else if(isHpHigh){
+            Heal = (int) (Math.random() * (Gsm.hpHigh * 0.1)) + 1;
+        } else if(isHpCrazy){
+            Heal = (int) (Math.random() * (Gsm.hpCrazy * 0.1)) + 1;
+        }
+        return Heal;
     }
 }
