@@ -11,6 +11,7 @@ public class AppSys extends SetUp{
     settingBtn settingBtn = new settingBtn();
     setColorSettingsBtn setColorBtn = new setColorSettingsBtn();
     setSoundSettingsBtn setSoundBtn = new setSoundSettingsBtn();
+    gameChoiceBtn gameChoiceBtn = new gameChoiceBtn();
     ruleBtn ruleBtn = new ruleBtn();
     contGameSetMulti contGameSetMulti = new contGameSetMulti();
     backToRuleBtn backToRuleBtn = new backToRuleBtn();
@@ -35,7 +36,7 @@ public class AppSys extends SetUp{
     SkipP2 skipP2 = new SkipP2();
     backMenuWin bmw = new backMenuWin();
 
-    //START SETTING CLASSES FOR ACTION PERFORMED AKA BUTTONS
+    //END SETTING CLASSES FOR ACTION PERFORMED AKA BUTTONS
     JFrame frame = new JFrame("BattleApp");
 
     //SWITCHES BOOLEAN
@@ -65,6 +66,7 @@ public class AppSys extends SetUp{
         Menu.aboutBtn.addActionListener(aboutBtn);
         Menu.settingsBtn.addActionListener(settingBtn);
         Menu.multiBtn.addActionListener(ruleBtn);
+        Menu.singleBtn.addActionListener(gameChoiceBtn);
         ///END BUTTONS IN MENU
         //START BUTTONS IN ABOUT
         About.backMainBtn.addActionListener(backMenu);
@@ -113,6 +115,9 @@ public class AppSys extends SetUp{
         ///BUTTONS IN WIN SCREEN
         winner.newGameBtn.addActionListener(contGameSetMulti);
         winner.menuBtn.addActionListener(bmw);
+
+        ///BUTTONS IN SINGLE PLAYER GAME CHOICE
+        SpChoice.menuBtn.addActionListener(backMenu);
     }
 
     //START SETTING PANEL SCREEN
@@ -152,6 +157,11 @@ public class AppSys extends SetUp{
         frame.setVisible(true);
     }
 
+    public void gameChoiceScreen(){
+        frame.add(SpChoice.choicePanel);
+        frame.setVisible(true);
+    }
+
     public void winnerScreen(){
         P1Turn = false;
         P2Turn = false;
@@ -168,12 +178,20 @@ public class AppSys extends SetUp{
     //END SETTING PANEL SCREEN
 
     //IMPLEMENTING BUTTON ACTION
-    ///MENU BUTTON
+    ///START MENU BUTTON
     public class continueBtn implements ActionListener{
         public void actionPerformed(ActionEvent e){
             playSound();
             removePanel(frame, Opening.openingPanel);
             menuScreen();
+        }
+    }
+
+    public class gameChoiceBtn implements ActionListener{
+        public void actionPerformed(ActionEvent e){
+            playSound();
+            removePanel(frame, Menu.menuPanel);
+            gameChoiceScreen();
         }
     }
 
@@ -211,21 +229,11 @@ public class AppSys extends SetUp{
                 paused = false;
             } else{
                 checkSetSoundVer2();
-
+                removePanel(frame, SpChoice.choicePanel);
                 removePanel(frame, Settings.settingsPanel);
                 removePanel(frame, About.aboutPanel);
                 removePanel(frame, Rules.rulePanel);
             }
-            menuScreen();
-        }
-    }
-
-    public class backMenuWin implements ActionListener{
-        public void actionPerformed(ActionEvent e){
-            stopSong();
-            setSongFile(song1);
-            checkSetSound();
-            removePanel(frame, winner.winPanel);
             menuScreen();
         }
     }
@@ -237,48 +245,18 @@ public class AppSys extends SetUp{
             settingsScreen();
         }
     }
-    public void checkSetSound(){
-        String txt = Settings.setSound.getText();
-        String txt2 = Mgs.setSound.getText();
-        if(txt.equals("SOUND : OFF") && txt2.equals("SOUND : OFF")){
-            playSound();
-            stopSound();
-            holdSong();
-        } else{
-            setSoundEffectFile(btnSound);
-            playSound();
-            playSong();
-            loopSong();
-        }
-    }
 
-    public void checkSetSoundVer2(){
-        String txt = Settings.setSound.getText();
-        String txt2 = Mgs.setSound.getText();
-        if(txt.equals("SOUND : OFF") && txt2.equals("SOUND : OFF")){
-            playSound();
-            stopSound();
-            holdSong();
-        } else{
-            setSoundEffectFile(btnSound);
-            playSound();
-            loopSong();
+    ///END MENU BUTTON
+    public class backMenuWin implements ActionListener{
+        public void actionPerformed(ActionEvent e){
+            stopSong();
+            setSongFile(song1);
+            checkSetSound();
+            removePanel(frame, winner.winPanel);
+            menuScreen();
         }
     }
-
-    public void checkContinueSound(){
-        String txt = Settings.setSound.getText();
-        String txt2 = Mgs.setSound.getText();
-        if(txt.equals("SOUND : OFF") && txt2.equals("SOUND : OFF")){
-            playSound();
-            stopSound();
-            holdSong();
-        } else{
-            setSoundEffectFile(btnSound);
-            playSound();
-            playSong();
-        }
-    }
+    ///START BUTTON IN SETTING
 
     public class setSoundSettingsBtn implements ActionListener{
         public void actionPerformed(ActionEvent e) {
@@ -341,6 +319,7 @@ public class AppSys extends SetUp{
         }
 
     }
+    ///END BUTTON IN SETTING
 
     public class contGameSetMulti implements ActionListener{
         public void actionPerformed(ActionEvent e){
@@ -371,7 +350,8 @@ public class AppSys extends SetUp{
             Gsm.settingHp.setText("HP : " + Gsm.hpLow);
             Gsm.Player1_HP = Gsm.hpLow;
             Gsm.Player2_HP = Gsm.hpLow;
-
+            Gm.hpPlayer1.setText("Hitpoint : " + Gsm.hpLow);
+            Gm.hpPlayer2.setText("Hitpoint : " + Gsm.hpLow);
 
         }
     }
@@ -387,7 +367,8 @@ public class AppSys extends SetUp{
             Gsm.settingHp.setText("HP : " + Gsm.hpMed);
             Gsm.Player1_HP = Gsm.hpMed;
             Gsm.Player2_HP = Gsm.hpMed;
-
+            Gm.hpPlayer1.setText("Hitpoint : " + Gsm.hpMed);
+            Gm.hpPlayer2.setText("Hitpoint : " + Gsm.hpMed);
         }
     }
     public class playerhighhp implements ActionListener{
@@ -401,7 +382,8 @@ public class AppSys extends SetUp{
             Gsm.settingHp.setText("HP : " + Gsm.hpHigh);
             Gsm.Player1_HP = Gsm.hpHigh;
             Gsm.Player2_HP = Gsm.hpHigh;
-
+            Gm.hpPlayer1.setText("Hitpoint : " + Gsm.hpHigh);
+            Gm.hpPlayer2.setText("Hitpoint : " + Gsm.hpHigh);
         }
     }
     public class playercrazyhp implements ActionListener{
@@ -415,7 +397,8 @@ public class AppSys extends SetUp{
             Gsm.settingHp.setText("HP : " + Gsm.hpCrazy);
             Gsm.Player1_HP = Gsm.hpCrazy;
             Gsm.Player2_HP = Gsm.hpCrazy;
-
+            Gm.hpPlayer1.setText("Hitpoint : " + Gsm.hpCrazy);
+            Gm.hpPlayer2.setText("Hitpoint : " + Gsm.hpCrazy);
         }
     }
     //ATK RANGE
@@ -430,7 +413,8 @@ public class AppSys extends SetUp{
             Gsm.settingAtk.setText("Atk : " + Gsm.atkLow);
             Gsm.Player1_ATKR = Gsm.atkLow;
             Gsm.Player2_ATKR = Gsm.atkLow;
-
+            Gm.atkPlayer1R.setText("Atk Range : " + Gsm.atkLow);
+            Gm.atkPlayer2R.setText("Atk Range : " + Gsm.atkLow);
         }
     }
     public class playermedatk implements ActionListener{
@@ -444,7 +428,8 @@ public class AppSys extends SetUp{
             Gsm.settingAtk.setText("Atk : " + Gsm.atkMed);
             Gsm.Player1_ATKR = Gsm.atkMed;
             Gsm.Player2_ATKR = Gsm.atkMed;
-
+            Gm.atkPlayer1R.setText("Atk Range : " + Gsm.atkMed);
+            Gm.atkPlayer2R.setText("Atk Range : " + Gsm.atkMed);
         }
     }
     public class playerhighatk implements ActionListener{
@@ -458,7 +443,8 @@ public class AppSys extends SetUp{
             Gsm.settingAtk.setText("Atk : " + Gsm.atkHigh);
             Gsm.Player1_ATKR = Gsm.atkHigh;
             Gsm.Player2_ATKR = Gsm.atkHigh;
-
+            Gm.atkPlayer1R.setText("Atk Range : " + Gsm.atkHigh);
+            Gm.atkPlayer2R.setText("Atk Range : " + Gsm.atkHigh);
         }
     }
     public class playercrazyatk implements ActionListener{
@@ -472,7 +458,8 @@ public class AppSys extends SetUp{
             Gsm.settingAtk.setText("Atk : " + Gsm.atkCrazy);
             Gsm.Player1_ATKR = Gsm.atkCrazy;
             Gsm.Player2_ATKR = Gsm.atkCrazy;
-
+            Gm.atkPlayer1R.setText("Atk Range : "+ Gsm.atkCrazy);
+            Gm.atkPlayer2R.setText("Atk Range : " + Gsm.atkCrazy);
         }
     }
 
@@ -492,54 +479,20 @@ public class AppSys extends SetUp{
                     stopSong();
                     setSongFile(song2);
                     checkSetSound();
-                    if(isHpLow){
-                        Gm.hpPlayer1.setText("Hitpoint : " + Gsm.hpLow);
-                        Gm.hpPlayer2.setText("Hitpoint : " + Gsm.hpLow);
-                    }
-                    if(isHpMed){
-                        Gm.hpPlayer1.setText("Hitpoint : " + Gsm.hpMed);
-                        Gm.hpPlayer2.setText("Hitpoint : " + Gsm.hpMed);
-                    }
-                    if(isHpHigh){
-                        Gm.hpPlayer1.setText("Hitpoint : " + Gsm.hpHigh);
-                        Gm.hpPlayer2.setText("Hitpoint : " + Gsm.hpHigh);
-                    }
-                    if(isHpCrazy){
-                        Gm.hpPlayer1.setText("Hitpoint : " + Gsm.hpCrazy);
-                        Gm.hpPlayer2.setText("Hitpoint : " + Gsm.hpCrazy);
-                    }
-                    if(isAtkLow){
-                        Gm.atkPlayer1R.setText("Atk Range : " + Gsm.atkLow);
-                        Gm.atkPlayer2R.setText("Atk Range : " + Gsm.atkLow);
-                    }
-                    if(isAtkMed){
-                        Gm.atkPlayer1R.setText("Atk Range : " + Gsm.atkMed);
-                        Gm.atkPlayer2R.setText("Atk Range : " + Gsm.atkMed);
-                    }
-                    if(isAtkHigh){
-                        Gm.atkPlayer1R.setText("Atk Range : " + Gsm.atkHigh);
-                        Gm.atkPlayer2R.setText("Atk Range : " + Gsm.atkHigh);
-                    }
-                    if(isAtkCrazy){
-                        Gm.atkPlayer1R.setText("Atk Range : "+ Gsm.atkCrazy);
-                        Gm.atkPlayer2R.setText("Atk Range : " + Gsm.atkCrazy);
-                    }
                     removePanel(frame, Gsm.gameSetMulti);
                     gameScreen();
                     if(P1Turn){
                         removeP1Btn();
                     }
-                    if(P2Turn){
-                        if(dark){
-                            Gm.atkPlayer2R.setForeground(Color.WHITE);
-                        } else {
-                            Gm.atkPlayer2R.setForeground(Color.BLACK);
-                        }
+                    if(P2Turn && dark){
+                        Gm.atkPlayer2R.setForeground(Color.WHITE);
                         removeP2Btn();
+                    } else if(P2Turn && light){
+                        Gm.atkPlayer2R.setForeground(Color.BLACK);
                     }
+
                     rollDice();
                 }
-
             } else{
                 Gsm.settingsMultiTxt.setText("Please select first");
             }
@@ -810,19 +763,8 @@ public class AppSys extends SetUp{
         }
 
     }
-    public int heal(){
-        int Heal = (int) (Math.random() * 80) + 1;
-        if(isHpLow){
-            Heal = (int) (Math.random() * (Gsm.hpLow * 0.1)) + 1;
-        } else if(isHpMed){
-            Heal = (int) (Math.random() * (Gsm.hpMed * 0.1)) + 1;
-        } else if(isHpHigh){
-            Heal = (int) (Math.random() * (Gsm.hpHigh * 0.1)) + 1;
-        } else if(isHpCrazy){
-            Heal = (int) (Math.random() * (Gsm.hpCrazy * 0.1)) + 1;
-        }
-        return Heal;
-    }
+
     ///////////////////////////////////FOR SINGLE PLAYER//////////////////////////////////////////////////////////
     ///////////////////////////////////FOR SINGLE PLAYER///////////////////////////////////////////////////////////
+
 }
