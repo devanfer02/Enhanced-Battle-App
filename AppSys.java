@@ -33,6 +33,7 @@ public class AppSys extends SetUp{
     HealP2 healP2 = new HealP2();
     PoisonP2 poisonP2 = new PoisonP2();
     SkipP2 skipP2 = new SkipP2();
+    backMenuWin bmw = new backMenuWin();
 
     //START SETTING CLASSES FOR ACTION PERFORMED AKA BUTTONS
     JFrame frame = new JFrame("BattleApp");
@@ -111,7 +112,7 @@ public class AppSys extends SetUp{
 
         ///BUTTONS IN WIN SCREEN
         winner.newGameBtn.addActionListener(contGameSetMulti);
-        winner.menuBtn.addActionListener(backMenu);
+        winner.menuBtn.addActionListener(bmw);
     }
 
     //START SETTING PANEL SCREEN
@@ -152,6 +153,9 @@ public class AppSys extends SetUp{
     }
 
     public void winnerScreen(){
+        P1Turn = false;
+        P2Turn = false;
+
         stopSong();
         setSongFile(WSong);
         resetStat();
@@ -207,11 +211,21 @@ public class AppSys extends SetUp{
                 paused = false;
             } else{
                 checkSetSoundVer2();
-                removePanel(frame, winner.winPanel);
+
                 removePanel(frame, Settings.settingsPanel);
                 removePanel(frame, About.aboutPanel);
                 removePanel(frame, Rules.rulePanel);
             }
+            menuScreen();
+        }
+    }
+
+    public class backMenuWin implements ActionListener{
+        public void actionPerformed(ActionEvent e){
+            stopSong();
+            setSongFile(song1);
+            checkSetSound();
+            removePanel(frame, winner.winPanel);
             menuScreen();
         }
     }
@@ -558,6 +572,8 @@ public class AppSys extends SetUp{
                 }
                 winnerScreen();
             } else {
+                P1Turn = false;
+                P2Turn = false;
                 playSound();
                 Gm.hpPlayer1.setText("Hitpoint : " + Gsm.Player1_HP);
                 Gm.hpPlayer2.setText("Hitpoint : " + Gsm.Player2_HP);
@@ -572,6 +588,9 @@ public class AppSys extends SetUp{
     public class HealP1 implements ActionListener{
 
         public void actionPerformed(ActionEvent e){
+            P1Turn = false;
+            P2Turn = false;
+
             playSound();
             int Heal = heal();
             Gsm.Player1_HP += Heal;
@@ -595,6 +614,9 @@ public class AppSys extends SetUp{
 
     public class PoisonP1 implements ActionListener{
         public void actionPerformed(ActionEvent e){
+            P1Turn = false;
+            P2Turn = false;
+
             int gacha = (int) (Math.random() * 1000) + 1;
             if(gacha == 14 && countPoisP1 > 0){
                 removePanel(frame, Gm.gameMultiPanel);
@@ -612,19 +634,20 @@ public class AppSys extends SetUp{
                 Gm.atkPlayer2R.setText("Atk Range : "+ Gsm.Player2_ATKR);
                 removeP1Btn();
                 rollDice();
-            } else{
+            } else if(gacha % 2 == 1 && countPoisP1 > 0){
                 playSound();
                 Gsm.Player1_ATKR *= 0.95;
                 Gm.atkPlayer1R.setText("Atk Range : " + Gsm.Player1_ATKR);
                 removeP1Btn();
                 rollDice();
+            } else{
+                playSound();
             }
             if(dark){
                 Gm.atkPlayer2R.setForeground(Color.WHITE);
             } else{
                 Gm.atkPlayer2R.setForeground(Color.BLACK);
             }
-
             countPoisP1--;
             if(countPoisP1 > -1){
                 Gm.btnPoisonP1.setText("POISON" + "(" + countPoisP1 + ")");
@@ -637,6 +660,8 @@ public class AppSys extends SetUp{
     public class SkipP1 implements ActionListener{
 
         public void actionPerformed(ActionEvent e){
+            P1Turn = false;
+            P2Turn = true;
             playSound();
             Gm.statusGame.setText("Status : Player 2 Turn");
             removeP1Btn();
@@ -661,6 +686,9 @@ public class AppSys extends SetUp{
                 }
                 winnerScreen();
             } else {
+                P1Turn = false;
+                P2Turn = false;
+
                 if(dark){
                     Gm.atkPlayer2R.setForeground(Color.WHITE);
                 } else {
@@ -678,6 +706,9 @@ public class AppSys extends SetUp{
     public class HealP2 implements ActionListener{
 
         public void actionPerformed(ActionEvent e){
+            P1Turn = false;
+            P2Turn = false;
+
             playSound();
             int Heal = heal();
             Gsm.Player2_HP += Heal;
@@ -706,6 +737,9 @@ public class AppSys extends SetUp{
 
     public class PoisonP2 implements ActionListener{
         public void actionPerformed(ActionEvent e){
+            P1Turn = false;
+            P2Turn = false;
+
             int gacha = (int) (Math.random() * 1000) + 1;
             if(gacha == 15 && countPoisP2 > 0){
                 removePanel(frame, Gm.gameMultiPanel);
@@ -723,12 +757,14 @@ public class AppSys extends SetUp{
                 Gm.atkPlayer1R.setText("Atk Range : " + Gsm.Player1_ATKR);
                 removeP2Btn();
                 rollDice();
-            } else{
+            } else if(gacha % 2 == 1 && countPoisP2 > 0){
                 playSound();
                 Gsm.Player2_ATKR *= 0.95;
                 Gm.atkPlayer2R.setText("Atk Range : " + Gsm.Player2_ATKR);
                 removeP2Btn();
                 rollDice();
+            } else{
+                playSound();
             }
             if(dark){
                 Gm.atkPlayer2R.setForeground(Color.WHITE);
@@ -747,6 +783,8 @@ public class AppSys extends SetUp{
     public class SkipP2 implements ActionListener{
 
         public void actionPerformed(ActionEvent e){
+            P1Turn = true;
+            P2Turn = false;
             playSound();
             Gm.statusGame.setText("Status : Player 2 Turn");
             removeP2Btn();
@@ -756,8 +794,7 @@ public class AppSys extends SetUp{
     //RANDOM TURN
     public class rollDice implements ActionListener{
         public void actionPerformed(ActionEvent e){
-            P1Turn = false;
-            P2Turn = false;
+
             playSound();
             int turn = (int) (Math.random() * 10);
             removeBtn(Gm.rollBtn);
@@ -786,4 +823,6 @@ public class AppSys extends SetUp{
         }
         return Heal;
     }
+    ///////////////////////////////////FOR SINGLE PLAYER//////////////////////////////////////////////////////////
+    ///////////////////////////////////FOR SINGLE PLAYER///////////////////////////////////////////////////////////
 }
