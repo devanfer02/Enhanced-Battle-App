@@ -163,8 +163,6 @@ public class AppSys extends SetUp{
     }
 
     public void winnerScreen(){
-        P1Turn = false;
-        P2Turn = false;
 
         stopSong();
         setSongFile(WSong);
@@ -490,7 +488,8 @@ public class AppSys extends SetUp{
                     } else if(P2Turn && light){
                         Gm.atkPlayer2R.setForeground(Color.BLACK);
                     }
-
+                    P1Turn = false;
+                    P2Turn = false;
                     rollDice();
                 }
             } else{
@@ -530,6 +529,7 @@ public class AppSys extends SetUp{
                 playSound();
                 Gm.hpPlayer1.setText("Hitpoint : " + Gsm.Player1_HP);
                 Gm.hpPlayer2.setText("Hitpoint : " + Gsm.Player2_HP);
+
                 removeP1Btn();
                 rollDice();
             }
@@ -567,9 +567,8 @@ public class AppSys extends SetUp{
 
     public class PoisonP1 implements ActionListener{
         public void actionPerformed(ActionEvent e){
-            P1Turn = false;
-            P2Turn = false;
 
+            P1Turn = true;
             int gacha = (int) (Math.random() * 1000) + 1;
             if(gacha == 14 && countPoisP1 > 0){
                 removePanel(frame, Gm.gameMultiPanel);
@@ -582,17 +581,52 @@ public class AppSys extends SetUp{
                 }
                 winnerScreen();
             } else if(gacha % 2 == 0 && countPoisP1 > 0){
-                playSound();
+
+                Gsm.Player2_HP -= Gsm.Player2_ATKR * 0.1;
                 Gsm.Player2_ATKR *= 0.95;
-                Gm.atkPlayer2R.setText("Atk Range : "+ Gsm.Player2_ATKR);
-                removeP1Btn();
-                rollDice();
+                if(Gsm.Player2_HP < 1){
+                    removePanel(frame, Gm.gameMultiPanel);
+                    winner.won.setText("P1 WON");
+                    if(dark){
+                        winner.won.setForeground(Color.CYAN);
+                    }
+                    if(light){
+                        winner.won.setForeground(Color.BLUE);
+                    }
+                    winnerScreen();
+                } else{
+                    countPoisP1--;
+                    P1Turn = false;
+                    P2Turn = false;
+                    playSound();
+                    Gm.atkPlayer2R.setText("Atk Range : "+ Gsm.Player2_ATKR);
+                    Gm.hpPlayer2.setText("Hitpoint : " + Gsm.Player2_HP);
+                    removeP1Btn();
+                    rollDice();
+                }
             } else if(gacha % 2 == 1 && countPoisP1 > 0){
-                playSound();
+                Gsm.Player1_HP -= Gsm.Player1_ATKR * 0.1;
                 Gsm.Player1_ATKR *= 0.95;
-                Gm.atkPlayer1R.setText("Atk Range : " + Gsm.Player1_ATKR);
-                removeP1Btn();
-                rollDice();
+                if(Gsm.Player1_HP < 1){
+                    removePanel(frame, Gm.gameMultiPanel);
+                    winner.won.setText("P2 WON");
+                    if(dark){
+                        winner.won.setForeground(Color.YELLOW);
+                    }
+                    if(light){
+                        winner.won.setForeground(Color.RED);
+                    }
+                    winnerScreen();
+                } else{
+                    countPoisP1--;
+                    P1Turn = false;
+                    P2Turn = false;
+                    playSound();
+                    Gm.atkPlayer1R.setText("Atk Range : " + Gsm.Player1_ATKR);
+                    Gm.hpPlayer1.setText("Hitpoint : " + Gsm.Player1_HP);
+                    removeP1Btn();
+                    rollDice();
+                }
             } else{
                 playSound();
             }
@@ -601,7 +635,7 @@ public class AppSys extends SetUp{
             } else{
                 Gm.atkPlayer2R.setForeground(Color.BLACK);
             }
-            countPoisP1--;
+
             if(countPoisP1 > -1){
                 Gm.btnPoisonP1.setText("POISON" + "(" + countPoisP1 + ")");
             }
@@ -690,9 +724,7 @@ public class AppSys extends SetUp{
 
     public class PoisonP2 implements ActionListener{
         public void actionPerformed(ActionEvent e){
-            P1Turn = false;
-            P2Turn = false;
-
+            P2Turn = true;
             int gacha = (int) (Math.random() * 1000) + 1;
             if(gacha == 15 && countPoisP2 > 0){
                 removePanel(frame, Gm.gameMultiPanel);
@@ -705,17 +737,53 @@ public class AppSys extends SetUp{
                 }
                 winnerScreen();
             } else if(gacha % 2 == 0 && countPoisP2 > 0){
-                playSound();
+
+                Gsm.Player1_HP -= Gsm.Player1_ATKR * 0.1;
                 Gsm.Player1_ATKR *= 0.95;
-                Gm.atkPlayer1R.setText("Atk Range : " + Gsm.Player1_ATKR);
-                removeP2Btn();
-                rollDice();
+                if(Gsm.Player1_HP < 1){
+                    removePanel(frame, Gm.gameMultiPanel);
+                    winner.won.setText("P2 WON");
+                    if(dark){
+                        winner.won.setForeground(Color.YELLOW);
+                    }
+                    if(light){
+                        winner.won.setForeground(Color.RED);
+                    }
+                    winnerScreen();
+                } else{
+                    countPoisP2--;
+                    P1Turn = false;
+                    P2Turn = false;
+                    playSound();
+                    Gm.atkPlayer1R.setText("Atk Range : " + Gsm.Player1_ATKR);
+                    Gm.hpPlayer1.setText("Hitpoint : " + Gsm.Player1_HP);
+                    removeP2Btn();
+                    rollDice();
+                }
             } else if(gacha % 2 == 1 && countPoisP2 > 0){
-                playSound();
+
+                Gsm.Player2_HP -= Gsm.Player2_ATKR * 0.1;
                 Gsm.Player2_ATKR *= 0.95;
-                Gm.atkPlayer2R.setText("Atk Range : " + Gsm.Player2_ATKR);
-                removeP2Btn();
-                rollDice();
+                if(Gsm.Player2_HP < 1){
+                    removePanel(frame, Gm.gameMultiPanel);
+                    winner.won.setText("P1 WON");
+                    if(dark){
+                        winner.won.setForeground(Color.CYAN);
+                    }
+                    if(light){
+                        winner.won.setForeground(Color.BLUE);
+                    }
+                    winnerScreen();
+                } else {
+                    countPoisP2--;
+                    P1Turn = false;
+                    P2Turn = false;
+                    playSound();
+                    Gm.atkPlayer2R.setText("Atk Range : " + Gsm.Player2_ATKR);
+                    Gm.hpPlayer2.setText("Hitpoint : " + Gsm.Player2_HP);
+                    removeP2Btn();
+                    rollDice();
+                }
             } else{
                 playSound();
             }
@@ -724,7 +792,7 @@ public class AppSys extends SetUp{
             } else{
                 Gm.atkPlayer2R.setForeground(Color.BLACK);
             }
-            countPoisP2--;
+
             if(countPoisP2 > -1){
                 Gm.btnPoisonP2.setText("POISON" + "(" + countPoisP2 + ")");
             }
