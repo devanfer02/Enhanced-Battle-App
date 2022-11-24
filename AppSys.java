@@ -1,3 +1,5 @@
+
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -43,7 +45,8 @@ public class AppSys extends SetUp{
     ///END MULTIPLAYER MODE BUTTONS
 
     ///START SINGLEPLAYER MODE BUTTONS
-    //// START DUEL MODE BUTTONS
+
+    //// START DUEL SETTING MODE BUTTONS
     startDuelGame startDuelGame = new startDuelGame();
     duelModeRule duelModeRule = new duelModeRule();
     backToChoice backToChoice = new backToChoice();
@@ -53,8 +56,15 @@ public class AppSys extends SetUp{
     normalDuelMode normalDuelMode = new normalDuelMode();
     hardDuelMode hardDuelMode = new hardDuelMode();
     extremeDuelMode extremeDuelMode = new extremeDuelMode();
+    //// END DUEL MODE SETTING BUTTONS
+
+    //// START DUEL MODE GAME
+    rollDuelAction rollDuelAction = new rollDuelAction();
+    duelGamePaused duelGamePaused = new duelGamePaused();
+    //// END DUEL MODE GAME
     //END SETTING CLASSES FOR ACTION PERFORMED AKA BUTTONS
     JFrame frame = new JFrame("BattleApp");
+    String songPlayed = song1;
 
     public void GameApp(){
         frame.setSize(800,600);
@@ -63,7 +73,7 @@ public class AppSys extends SetUp{
 
         frame.add(Opening.openingPanel);
         setSoundEffectFile(btnSound);
-        setSongFile(song1);
+        setSongFile(songPlayed);
         playSong();
         loopSong();
         frame.setVisible(true);
@@ -147,6 +157,9 @@ public class AppSys extends SetUp{
         DuelSettings.backRule.addActionListener(backToRuleDuel);
         DuelSettings.startButton.addActionListener(startDuelGame);
 
+        ////BUTTONS IN DUEL GAME
+        DuelGame.settingsDuel.addActionListener(duelGamePaused);
+        DuelGame.rollDuel.addActionListener(rollDuelAction);
     }
 
     //START SETTING PANEL SCREEN
@@ -199,6 +212,11 @@ public class AppSys extends SetUp{
 
     public void duelModeSettingScreen(){
         frame.add(DuelSettings.duelSettingPanel);
+        frame.setVisible(true);
+    }
+
+    public void duelGameScreen(){
+        frame.add(DuelGame.duelGamePanel);
         frame.setVisible(true);
     }
 
@@ -284,13 +302,22 @@ public class AppSys extends SetUp{
         public void actionPerformed(ActionEvent e){
             if(multiPaused){
                 stopSong();
-                setSongFile(song1);
+                setSongFile(songPlayed);
                 checkContinueSound();
                 removePanel(frame, Mgs.pauseSettingPanel);
                 removePanel(frame, Gm.gameMultiPanel);
                 resetStat();
                 multiPaused = false;
-            } else{
+            }
+            if(duelPaused){
+                stopSong();
+                setSongFile(songPlayed);
+                checkContinueSound();
+                removePanel(frame, Mgs.pauseSettingPanel);
+                removePanel(frame, DuelGame.duelGamePanel);
+                duelPaused = false;
+            }
+            else{
                 checkSetSoundVer2();
                 removePanel(frame, SpChoice.choicePanel);
                 removePanel(frame, Settings.settingsPanel);
@@ -313,7 +340,7 @@ public class AppSys extends SetUp{
     public class backMenuWin implements ActionListener{
         public void actionPerformed(ActionEvent e){
             stopSong();
-            setSongFile(song1);
+            setSongFile(songPlayed);
             checkSetSound();
             removePanel(frame, winner.winPanel);
             menuScreen();
@@ -385,12 +412,12 @@ public class AppSys extends SetUp{
 
     public class changeSong implements ActionListener{
         public void actionPerformed(ActionEvent e) {
-            playSound();
             countArrs++;
             if(countArrs > 11) countArrs = (countArrs % 11) - 1;
             if(countArrs == 1) countArrs += 1;
             stopSong();
-            setSongFile(arrSongs[countArrs]);
+            songPlayed = arrSongs[countArrs];
+            setSongFile(songPlayed);
             checkSetSoundVer2();
         }
     }
@@ -540,6 +567,13 @@ public class AppSys extends SetUp{
 
     public class startGame implements ActionListener {
         public void actionPerformed(ActionEvent e){
+            if((DuelSettings.isEasy || DuelSettings.isNormal ||
+                    DuelSettings.isHard || DuelSettings.isExtreme) && duelPaused ){
+                checkSetSoundVer2();
+                duelPaused = false;
+                removePanel(frame, Mgs.pauseSettingPanel);
+                duelGameScreen();
+            }
             if((Gsm.isHpLow || Gsm.isHpMed || Gsm.isHpHigh || Gsm.isHpCrazy)
                     && (Gsm.isAtkLow || Gsm.isAtkMed || Gsm.isAtkHigh || Gsm.isAtkCrazy)){
                 Gm.btnPoisonP1.setText("POISON" + "(" + Gsm.countPoisP1 + ")");
@@ -921,7 +955,7 @@ public class AppSys extends SetUp{
             DuelSettings.isExtreme = false;
 
             DuelSettings.enemyHp = 60;
-            DuelSettings.enemyAtk = 10;
+            DuelSettings.enemyAtk = 5;
             checkDuelMode();
         }
     }
@@ -935,7 +969,7 @@ public class AppSys extends SetUp{
             DuelSettings.isExtreme = false;
 
             DuelSettings.enemyHp = 120;
-            DuelSettings.enemyAtk = 20;
+            DuelSettings.enemyAtk = 15;
             checkDuelMode();
         }
     }
@@ -949,7 +983,7 @@ public class AppSys extends SetUp{
             DuelSettings.isExtreme = false;
 
             DuelSettings.enemyHp = 200;
-            DuelSettings.enemyAtk = 35;
+            DuelSettings.enemyAtk = 30;
             checkDuelMode();
         }
     }
@@ -962,7 +996,7 @@ public class AppSys extends SetUp{
             DuelSettings.isHard = false;
             DuelSettings.isExtreme = true;
 
-            DuelSettings.enemyHp = 300;
+            DuelSettings.enemyHp = 320;
             DuelSettings.enemyAtk = 50;
             checkDuelMode();
         }
@@ -973,11 +1007,26 @@ public class AppSys extends SetUp{
             playSound();
             if(DuelSettings.isEasy || DuelSettings.isNormal ||
                     DuelSettings.isHard || DuelSettings.isExtreme){
-                System.out.println(true);
+
+                removePanel(frame, DuelSettings.duelSettingPanel);
+                DuelGame.PlayerHP.setText("Hitpoint : " + DuelSettings.playerHp);
+                DuelGame.PlayerAtk.setText("Atk Range : " + DuelSettings.playerAtk);
+                DuelGame.EnemyHP.setText("Hitpoint : " + DuelSettings.enemyHp);
+                DuelGame.EnemyAtk.setText("Atk Range : " + DuelSettings.enemyAtk);
+                duelGameScreen();
+                duelRollButtons();
+
+
             } else{
-                DuelSettings.titleDuelSetting.setText("PLEASE SELECT MODE FIRST");
+                DuelSettings.titleDuelSetting.setText("SELECT MODE FIRST");
             }
 
+        }
+    }
+
+    public class rollDuelAction implements ActionListener{
+        public void actionPerformed(ActionEvent e) {
+            duelRollTurn();
         }
     }
 
@@ -992,11 +1041,21 @@ public class AppSys extends SetUp{
             DuelSettings.normalLabel.setText("");
             DuelSettings.hardLabel.setText("");
             DuelSettings.extremeLabel.setText("");
-
+            DuelSettings.titleDuelSetting.setText("GAME SETTINGS");
 
             checkDuelMode();
             removePanel(frame, DuelSettings.duelSettingPanel);
             duelModeRuleScreen();
+        }
+    }
+    ////BUTTON ACTIONS FOR DUEL GAME
+    public class duelGamePaused implements ActionListener{
+
+        public void actionPerformed(ActionEvent e) {
+            duelPaused = true;
+            playSound();
+            removePanel(frame, DuelGame.duelGamePanel);
+            settingGameScreen();
         }
     }
 }
