@@ -1,1059 +1,797 @@
-import javax.swing.*;
+import Basics.*;
+import Basics.Menu;
+import Mutliplayer.*;
+import Singleplayer.*;
+
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-public class AppSys extends SetUp{
-    //START SETTING CLASSES FOR ACTION PERFORMED AKA BUTTONS
-    ///START OPENING MENU AND SETTINGS
-    continueBtn continueBtn = new continueBtn();
-    exitBtn exitBtn = new exitBtn();
-    aboutBtn aboutBtn = new aboutBtn();
-    backMenu backMenu = new backMenu();
-    settingBtn settingBtn = new settingBtn();
-    setColorSettingsBtn setColorBtn = new setColorSettingsBtn();
-    setSoundSettingsBtn setSoundBtn = new setSoundSettingsBtn();
-    gameChoiceBtn gameChoiceBtn = new gameChoiceBtn();
-    ruleBtn ruleBtn = new ruleBtn();
-    contGameSetMulti contGameSetMulti = new contGameSetMulti();
-    backToRuleBtn backToRuleBtn = new backToRuleBtn();
-    changeSong changeSong = new changeSong();
-    ///END OPENING MENU AND SETTINGS
 
-    ///START MULTIPLAYER MODE BUTTONS
-    playerlowhp playerlowhp = new playerlowhp();
-    playermedhp playermedhp = new playermedhp();
-    playerhighhp playerhighhp = new playerhighhp();
-    playercrazyhp playercrazyhp = new playercrazyhp();
-    playerlowatk playerlowatk = new playerlowatk();
-    playermedatk playermedatk = new playermedatk();
-    playerhighatk playerhighatk = new playerhighatk();
-    playercrazyatk playercrazyatk = new playercrazyatk();
-    startGame startMultiGame = new startGame();
-    pauseGame pauseGame = new pauseGame();
-    rollDice rollDice = new rollDice();
-    AttackP1 attackP1 = new AttackP1();
-    HealP1 healP1 = new HealP1();
-    PoisonP1 poisonP1 = new PoisonP1();
-    SkipP1 skipP1 = new SkipP1();
-    AttackP2 attackP2 = new AttackP2();
-    HealP2 healP2 = new HealP2();
-    PoisonP2 poisonP2 = new PoisonP2();
-    SkipP2 skipP2 = new SkipP2();
-    backMenuWin bmw = new backMenuWin();
-    ///END MULTIPLAYER MODE BUTTONS
+public class SetUp extends Adder {
+    //START IMPORT FROM BASICS PACKAGE
+    Opening Opening = new Opening();
+    Menu Menu = new Menu();
+    About About = new About();
+    Settings Settings = new Settings();
+    //END IMPORT FROM BASICS PACKAGE
 
-    ///START SINGLEPLAYER MODE BUTTONS
+    //START IMPORT FROM MULTIPLAYER PACKAGE
+    Rules Rules = new Rules();
+    GameSettingsMulti Gsm = new GameSettingsMulti();
+    GameMulti Gm = new GameMulti();
+    MultiGameSettings Mgs = new MultiGameSettings();
+    Winner winner = new Winner();
+    //END IMPORT FROM MULTIPLAYER PACKAGE
 
-    //// START DUEL SETTING MODE BUTTONS
-    startDuelGame startDuelGame = new startDuelGame();
-    duelModeRule duelModeRule = new duelModeRule();
-    backToChoice backToChoice = new backToChoice();
-    duelContSetting duelContSetting = new duelContSetting();
-    backToRuleDuel backToRuleDuel = new backToRuleDuel();
-    easyDuelMode easyDuelMode = new easyDuelMode();
-    normalDuelMode normalDuelMode = new normalDuelMode();
-    hardDuelMode hardDuelMode = new hardDuelMode();
-    extremeDuelMode extremeDuelMode = new extremeDuelMode();
-    //// END DUEL MODE SETTING BUTTONS
+    //START IMPORT FROM SINGLEPLAYER PACKAGE
+    GameChoice SpChoice = new GameChoice();
+    DuelModeRule DMR = new DuelModeRule();
+    DuelModeGameSettings DuelSettings = new DuelModeGameSettings();
+    DuelGame DuelGame = new DuelGame();
+    ///START BOOLEANS FOR SWITCHING PAUSES
+    boolean multiPaused = false;
+    boolean duelPaused = false;
 
-    //// START DUEL MODE GAME
-    rollDuelAction rollDuelAction = new rollDuelAction();
-    duelGamePaused duelGamePaused = new duelGamePaused();
-    //// END DUEL MODE GAME
-    //END SETTING CLASSES FOR ACTION PERFORMED AKA BUTTONS
-    JFrame frame = new JFrame("BattleApp");
-    String songPlayed = song1;
-
-    public void GameApp(){
-        frame.setSize(800,600);
-        frame.setLocationRelativeTo(null);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-        frame.add(Opening.openingPanel);
-        setSoundEffectFile(btnSound);
-        setSongFile(songPlayed);
-        playSong();
-        loopSong();
-        frame.setVisible(true);
-
-
-        //SETTINGS FOR BUTTON
-        ///START BUTTONS IN OPENING
-        Opening.continueToMenu.addActionListener(continueBtn);
-        Opening.exitGame.addActionListener(exitBtn);
-        ///END BUTTONS IN OPENING
-
-        ///START BUTTONS IN MENU
-        Menu.exitBtn.addActionListener(exitBtn);
-        Menu.aboutBtn.addActionListener(aboutBtn);
-        Menu.settingsBtn.addActionListener(settingBtn);
-        Menu.multiBtn.addActionListener(ruleBtn);
-        Menu.singleBtn.addActionListener(gameChoiceBtn);
-        ///END BUTTONS IN MENU
-        //START BUTTONS IN ABOUT
-        About.backMainBtn.addActionListener(backMenu);
-        //START BUTTONS IN SETTINGS
-
-        Settings.setColor.addActionListener(setColorBtn);
-        Settings.setSound.addActionListener(setSoundBtn);
-        Settings.backMenu.addActionListener(backMenu);
-        Settings.setSong.addActionListener(changeSong);
-        //END BUTTONS IN SETTINGS
-        ///START BUTTONS IN RULE MULTI
-        Rules.continueTo.addActionListener(contGameSetMulti);
-        Rules.backMenu.addActionListener(backMenu);
-        /// END BUTTONS IN RULE MULTI
-        ///BUTTONS IN GAME SETTINGS MUTLI
-        Gsm.setHpLowBtn.addActionListener(playerlowhp);
-        Gsm.setHpMedBtn.addActionListener(playermedhp);
-        Gsm.setHpHighBtn.addActionListener(playerhighhp);
-        Gsm.setHpCrazyBtn.addActionListener(playercrazyhp);
-        Gsm.setAtkLowBtn.addActionListener(playerlowatk);
-        Gsm.setAtkMedBtn.addActionListener(playermedatk);
-        Gsm.setAtkHighBtn.addActionListener(playerhighatk);
-        Gsm.setAtkCrazyBtn.addActionListener(playercrazyatk);
-        Gsm.backToRule.addActionListener(backToRuleBtn);
-        Gsm.startMultiGame.addActionListener(startMultiGame);
-        //END BUTTONS IN GAME SETTINGS MULTI
-
-        //START BUTTON IN GAME BATTLE MULTI
-        Gm.rollBtn.addActionListener(rollDice);
-        Gm.btnAtkP1.addActionListener(attackP1);
-        Gm.btnHealP1.addActionListener(healP1);
-        Gm.btnPoisonP1.addActionListener(poisonP1);
-        Gm.continueP1.addActionListener(skipP1);
-        Gm.btnAtkP2.addActionListener(attackP2);
-        Gm.btnHealP2.addActionListener(healP2);
-        Gm.btnPoisonP2.addActionListener(poisonP2);
-        Gm.continueP2.addActionListener(skipP2);
-        Gm.settings.addActionListener(pauseGame);
-        ///END BUTTON IN GAME BATTLE MULTI
-
-        ///SETTINGS IN GAME BATTLE MULTI
-        Mgs.continueToGame.addActionListener(startMultiGame);
-        Mgs.setColor.addActionListener(setColorBtn);
-        Mgs.setSound.addActionListener(setSoundBtn);
-        Mgs.backMenu.addActionListener(backMenu);
-
-        ///BUTTONS IN WIN SCREEN
-        winner.newGameBtn.addActionListener(contGameSetMulti);
-        winner.menuBtn.addActionListener(bmw);
-
-        ///BUTTONS IN SINGLE PLAYER GAME CHOICE
-        SpChoice.menuBtn.addActionListener(backMenu);
-        SpChoice.duelBtn.addActionListener(duelModeRule);
-        ////BUTTONS IN DUEL MODE
-        DMR.backChoice.addActionListener(backToChoice);
-        DMR.contDMGS.addActionListener(duelContSetting);
-
-        ////BUTTONS IN DUEL MODE SETTINGS
-        DuelSettings.easyButton.addActionListener(easyDuelMode);
-        DuelSettings.normalButton.addActionListener(normalDuelMode);
-        DuelSettings.hardButton.addActionListener(hardDuelMode);
-        DuelSettings.extremeButton.addActionListener(extremeDuelMode);
-
-        DuelSettings.backRule.addActionListener(backToRuleDuel);
-        DuelSettings.startButton.addActionListener(startDuelGame);
-
-        ////BUTTONS IN DUEL GAME
-        DuelGame.settingsDuel.addActionListener(duelGamePaused);
-        DuelGame.rollDuel.addActionListener(rollDuelAction);
+    String enemyStatus = "";
+    //START SWITCH THEME//
+    public void switchMode(){
+        Opening();
+        Menu();
+        About();
+        Settings();
+        Rules();
+        GameSetMulti();
+        GameMulti();
+        MultiGameSettings();
+        Winner();
+        GameChoice();
+        DuelModeRule();
+        DuelModeSettings();
+        DuelGame();
+    }
+    public void Opening(){
+        switchPanelColor(Opening.openingPanel);
+        switchLabelColor(Opening.titleGame);
+        switchBtnColor(Opening.continueToMenu);
+        switchBtnColor(Opening.exitGame);
+    }
+    public void Menu(){
+        switchPanelColor(Menu.menuPanel);
+        switchLabelColor(Menu.titleMenu);
+        switchBtnColor(Menu.singleBtn);
+        switchBtnColor(Menu.multiBtn);
+        switchBtnColor(Menu.aboutBtn);
+        switchBtnColor(Menu.settingsBtn);
+        switchBtnColor(Menu.exitBtn);
     }
 
-    //START SETTING PANEL SCREEN
-
-    public void menuScreen(){
-        frame.add(Menu.menuPanel);
-        frame.setVisible(true);
+    public void About(){
+        switchPanelColor(About.aboutPanel);
+        switchLabelColor(About.titleMenu);
+        switchLabelColor(About.paragraph1);
+        switchLabelColor(About.paragraph2);
+        switchLabelColor(About.paragraph3);
+        switchBtnColor(About.backMainBtn);
     }
 
-    public void aboutScreen(){
-        frame.add(About.aboutPanel);
-        frame.setVisible(true);
+    public void Settings(){
+        switchPanelColor(Settings.settingsPanel);
+        switchLabelColor(Settings.titleSettings);
+        switchBtnColor(Settings.setColor);
+        switchBtnColor(Settings.setSound);
+        switchBtnColor(Settings.setSong);
+        switchBtnColor(Settings.backMenu);
     }
 
-    public void settingsScreen(){
-        frame.add(Settings.settingsPanel);
-        frame.setVisible(true);
+    public void Rules(){
+        switchPanelColor(Rules.rulePanel);
+        switchLabelColor(Rules.titleRule);
+        switchLabelColor(Rules.desc1);
+        switchLabelColor(Rules.desc2);
+        switchLabelColor(Rules.rule1);
+        switchLabelColor(Rules.rule2);
+        switchLabelColor(Rules.rule3);
+        switchLabelColor(Rules.rule4);
+        switchBtnColor(Rules.continueTo);
+        switchBtnColor(Rules.backMenu);
     }
 
-    public void ruleScreen(){
-        frame.add(Rules.rulePanel);
-        frame.setVisible(true);
+    public void GameSetMulti(){
+        switchPanelColor(Gsm.gameSetMulti);
+        switchLabelColor(Gsm.settingsMultiTxt);
+        switchLabelColor(Gsm.setHp);
+        switchLabelColor(Gsm.setAtk);
+        switchLabelColor(Gsm.settingHp);
+        switchLabelColor(Gsm.settingAtk);
+        switchBtnColor(Gsm.setHpLowBtn);
+        switchBtnColor(Gsm.setHpMedBtn);
+        switchBtnColor(Gsm.setHpHighBtn);
+        switchBtnColor(Gsm.setHpCrazyBtn);
+        switchBtnColor(Gsm.setAtkLowBtn);
+        switchBtnColor(Gsm.setAtkMedBtn);
+        switchBtnColor(Gsm.setAtkHighBtn);
+        switchBtnColor(Gsm.setAtkCrazyBtn);
+        switchBtnColor(Gsm.startMultiGame);
+        switchBtnColor(Gsm.backToRule);
     }
 
-    public void gameSettingMultiScreen(){
-        frame.add(Gsm.gameSetMulti);
-        frame.setVisible(true);
+    public void GameMulti(){
+        switchPanelColor(Gm.gameMultiPanel);
+        switchLabelColor(Gm.labelPlayer1);
+        switchLabelColor(Gm.labelPlayer2);
+        switchLabelColor(Gm.hpPlayer1);
+        switchLabelColor(Gm.hpPlayer2);
+        switchLabelColor(Gm.atkPlayer1R);
+        switchLabelColor(Gm.atkPlayer2R);
+        switchLabelColor(Gm.statusGame);
+        switchBtnColor(Gm.rollBtn);
+        switchBtnColor(Gm.btnAtkP1);
+        switchBtnColor(Gm.btnHealP1);
+        switchBtnColor(Gm.btnPoisonP1);
+        switchBtnColor(Gm.continueP1);
+        switchBtnColor(Gm.btnAtkP2);
+        switchBtnColor(Gm.btnHealP2);
+        switchBtnColor(Gm.btnPoisonP2);
+        switchBtnColor(Gm.continueP2);
+        switchBtnColor(Gm.settings);
     }
 
-    public void gameScreen(){
-        frame.add(Gm.gameMultiPanel);
-        frame.setVisible(true);
+    public void MultiGameSettings(){
+        switchPanelColor(Mgs.pauseSettingPanel);
+        switchLabelColor(Mgs.titleSettings);
+        switchBtnColor(Mgs.continueToGame);
+        switchBtnColor(Mgs.setColor);
+        switchBtnColor(Mgs.setSound);
+        switchBtnColor(Mgs.setSong);
+        switchBtnColor(Mgs.backMenu);
     }
 
-    public void settingGameScreen(){
-        frame.add(Mgs.pauseSettingPanel);
-        frame.setVisible(true);
+    public void Winner(){
+        switchPanelColor(winner.winPanel);
+        switchLabelColor(winner.congrats);
+        switchLabelColor(winner.won);
+        switchBtnColor(winner.newGameBtn);
+        switchBtnColor(winner.menuBtn);
     }
 
-    public void gameChoiceScreen(){
-        frame.add(SpChoice.choicePanel);
-        frame.setVisible(true);
+    public void GameChoice(){
+        switchPanelColor(SpChoice.choicePanel);
+        switchLabelColor(SpChoice.titleChoice);
+        switchBtnColor(SpChoice.storyBtn);
+        switchBtnColor(SpChoice.duelBtn);
+        switchBtnColor(SpChoice.survivalBtn);
+        switchBtnColor(SpChoice.menuBtn);
     }
 
-    public void duelModeRuleScreen(){
-        DuelSettings.underLabel.setText("SELECT MODE");
-        frame.add(DMR.duelRulePanel);
-        frame.setVisible(true);
+    public void DuelModeRule(){
+        switchPanelColor(DMR.duelRulePanel);
+        switchLabelColor(DMR.duelRuleTitle);
+        switchLabelColor(DMR.desc1);
+        switchLabelColor(DMR.desc2);
+        switchLabelColor(DMR.rule1);
+        switchLabelColor(DMR.rule2);
+        switchLabelColor(DMR.rule3);
+        switchLabelColor(DMR.rule4);
+        switchBtnColor(DMR.contDMGS);
+        switchBtnColor(DMR.backChoice);
     }
 
-    public void duelModeSettingScreen(){
-        frame.add(DuelSettings.duelSettingPanel);
-        frame.setVisible(true);
+    public void DuelModeSettings(){
+        switchPanelColor(DuelSettings.duelSettingPanel);
+        switchLabelColor(DuelSettings.titleDuelSetting);
+        switchLabelColor(DuelSettings.easyLabel);
+        switchLabelColor(DuelSettings.normalLabel);
+        switchLabelColor(DuelSettings.hardLabel);
+        switchLabelColor(DuelSettings.extremeLabel);
+        switchBtnColor(DuelSettings.easyButton);
+        switchBtnColor(DuelSettings.normalButton);
+        switchBtnColor(DuelSettings.hardButton);
+        switchBtnColor(DuelSettings.extremeButton);
+        switchBtnColor(DuelSettings.startButton);
+        switchBtnColor(DuelSettings.backRule);
+        switchLabelColor(DuelSettings.underLabel);
     }
 
-    public void duelGameScreen(){
-        frame.add(DuelGame.duelGamePanel);
-        frame.setVisible(true);
+    public void DuelGame(){
+        switchPanelColor(DuelGame.duelGamePanel);
+        switchLabelColor(DuelGame.Player);
+        switchLabelColor(DuelGame.PlayerHP);
+        switchLabelColor(DuelGame.PlayerAtk);
+        switchLabelColor(DuelGame.Enemy);
+        switchLabelColor(DuelGame.EnemyHP);
+        switchLabelColor(DuelGame.EnemyAtk);
+        switchLabelColor(DuelGame.duelStatus1);
+        switchLabelColor(DuelGame.duelStatus2);
+        switchBtnColor(DuelGame.rollDuel);
+        switchBtnColor(DuelGame.attack);
+        switchBtnColor(DuelGame.heal);
+        switchBtnColor(DuelGame.poison);
+        switchBtnColor(DuelGame.surrender);
+        switchBtnColor(DuelGame.settingsDuel);
+    }
+    //END SWITCH THEME//
+
+    ///COLOR FOR GAME SET MUTLI SWITCH
+
+    public void checkModeGSM_HP(){
+
+        if(dark && Gsm.isHpLow){
+            Gsm.setHpLowBtn.setBackground(new Color(46,139,87));
+            Gsm.setHpMedBtn.setBackground(Color.LIGHT_GRAY);
+            Gsm.setHpHighBtn.setBackground(Color.LIGHT_GRAY);
+            Gsm.setHpCrazyBtn.setBackground(Color.LIGHT_GRAY);
+        }
+        if(dark && Gsm.isHpMed){
+            Gsm.setHpLowBtn.setBackground(Color.LIGHT_GRAY);
+            Gsm.setHpMedBtn.setBackground(new Color(46,139,87));
+            Gsm.setHpHighBtn.setBackground(Color.LIGHT_GRAY);
+            Gsm.setHpCrazyBtn.setBackground(Color.LIGHT_GRAY);
+        }
+        if(dark && Gsm.isHpHigh){
+            Gsm.setHpLowBtn.setBackground(Color.LIGHT_GRAY);
+            Gsm.setHpMedBtn.setBackground(Color.LIGHT_GRAY);
+            Gsm.setHpHighBtn.setBackground(new Color(46,139,87));
+            Gsm.setHpCrazyBtn.setBackground(Color.LIGHT_GRAY);
+        }
+        if(dark && Gsm.isHpCrazy){
+            Gsm.setHpLowBtn.setBackground(Color.LIGHT_GRAY);
+            Gsm.setHpMedBtn.setBackground(Color.LIGHT_GRAY);
+            Gsm.setHpHighBtn.setBackground(Color.LIGHT_GRAY);
+            Gsm.setHpCrazyBtn.setBackground(new Color(46,139,87));
+        }
+        if(light && Gsm.isHpLow){
+            Gsm.setHpLowBtn.setBackground(new Color(46,139,87));
+            Gsm.setHpMedBtn.setBackground(Color.DARK_GRAY);
+            Gsm.setHpHighBtn.setBackground(Color.DARK_GRAY);
+            Gsm.setHpCrazyBtn.setBackground(Color.DARK_GRAY);
+        }
+        if(light && Gsm.isHpMed){
+            Gsm.setHpLowBtn.setBackground(Color.DARK_GRAY);
+            Gsm.setHpMedBtn.setBackground(new Color(46,139,87));
+            Gsm.setHpHighBtn.setBackground(Color.DARK_GRAY);
+            Gsm.setHpCrazyBtn.setBackground(Color.DARK_GRAY);
+        }
+        if(light && Gsm.isHpHigh){
+            Gsm.setHpLowBtn.setBackground(Color.DARK_GRAY);
+            Gsm.setHpMedBtn.setBackground(Color.DARK_GRAY);
+            Gsm.setHpHighBtn.setBackground(new Color(46,139,87));
+            Gsm.setHpCrazyBtn.setBackground(Color.DARK_GRAY);
+        }
+        if(light && Gsm.isHpCrazy){
+            Gsm.setHpLowBtn.setBackground(Color.DARK_GRAY);
+            Gsm.setHpMedBtn.setBackground(Color.DARK_GRAY);
+            Gsm.setHpHighBtn.setBackground(Color.DARK_GRAY);
+            Gsm.setHpCrazyBtn.setBackground(new Color(46,139,87));
+        }
+
+    }
+    public void checkModeGSM_ATK(){
+        if(dark && Gsm.isAtkLow){
+            Gsm.setAtkLowBtn.setBackground(new Color(210,4,45));
+            Gsm.setAtkMedBtn.setBackground(Color.LIGHT_GRAY);
+            Gsm.setAtkHighBtn.setBackground(Color.LIGHT_GRAY);
+            Gsm.setAtkCrazyBtn.setBackground(Color.LIGHT_GRAY);
+        }
+        if(dark && Gsm.isAtkMed){
+            Gsm.setAtkLowBtn.setBackground(Color.LIGHT_GRAY);
+            Gsm.setAtkMedBtn.setBackground(new Color(210,4,45));
+            Gsm.setAtkHighBtn.setBackground(Color.LIGHT_GRAY);
+            Gsm.setAtkCrazyBtn.setBackground(Color.LIGHT_GRAY);
+        }
+        if(dark && Gsm.isAtkHigh){
+            Gsm.setAtkLowBtn.setBackground(Color.LIGHT_GRAY);
+            Gsm.setAtkMedBtn.setBackground(Color.LIGHT_GRAY);
+            Gsm.setAtkHighBtn.setBackground(new Color(210,4,45));
+            Gsm.setAtkCrazyBtn.setBackground(Color.LIGHT_GRAY);
+        }
+        if(dark && Gsm.isAtkCrazy){
+            Gsm.setAtkLowBtn.setBackground(Color.LIGHT_GRAY);
+            Gsm.setAtkMedBtn.setBackground(Color.LIGHT_GRAY);
+            Gsm.setAtkHighBtn.setBackground(Color.LIGHT_GRAY);
+            Gsm.setAtkCrazyBtn.setBackground(new Color(210,4,45));
+        }
+        if(light && Gsm.isAtkLow){
+            Gsm.setAtkLowBtn.setBackground(new Color(210,4,45));
+            Gsm.setAtkMedBtn.setBackground(Color.DARK_GRAY);
+            Gsm.setAtkHighBtn.setBackground(Color.DARK_GRAY);
+            Gsm.setAtkCrazyBtn.setBackground(Color.DARK_GRAY);
+        }
+        if(light && Gsm.isAtkMed){
+            Gsm.setAtkLowBtn.setBackground(Color.DARK_GRAY);
+            Gsm.setAtkMedBtn.setBackground(new Color(210,4,45));
+            Gsm.setAtkHighBtn.setBackground(Color.DARK_GRAY);
+            Gsm.setAtkCrazyBtn.setBackground(Color.DARK_GRAY);
+        }
+        if(light && Gsm.isAtkHigh){
+            Gsm.setAtkLowBtn.setBackground(Color.DARK_GRAY);
+            Gsm.setAtkMedBtn.setBackground(Color.DARK_GRAY);
+            Gsm.setAtkHighBtn.setBackground(new Color(210,4,45));
+            Gsm.setAtkCrazyBtn.setBackground(Color.DARK_GRAY);
+        }
+        if(light && Gsm.isAtkCrazy){
+            Gsm.setAtkLowBtn.setBackground(Color.DARK_GRAY);
+            Gsm.setAtkMedBtn.setBackground(Color.DARK_GRAY);
+            Gsm.setAtkHighBtn.setBackground(Color.DARK_GRAY);
+            Gsm.setAtkCrazyBtn.setBackground(new Color(210,4,45));
+        }
+
     }
 
-    public void winnerScreen(){
+    ///COLOR FOR GAME MULTI
+    public void rollDiceCheckMode(){
+        if(dark){
+            Gm.labelPlayer1.setForeground(Color.WHITE);
+            Gm.hpPlayer1.setForeground(Color.WHITE);
+            Gm.atkPlayer1R.setForeground(Color.WHITE);
+            Gm.labelPlayer2.setForeground(Color.WHITE);
+            Gm.hpPlayer2.setForeground(Color.WHITE);
+            Gm.atkPlayer1R.setForeground(Color.WHITE);
 
-        stopSong();
-        setSongFile(WSong);
-        resetStat();
-        checkModeGSM_HP();
-        checkModeGSM_ATK();
-        checkSetSound();
-        frame.add(winner.winPanel);
-        frame.setVisible(true);
+            Gm.statusGame.setForeground(Color.WHITE);
+        }
+        if(light){
+            Gm.labelPlayer1.setForeground(Color.black);
+            Gm.hpPlayer1.setForeground(Color.black);
+            Gm.atkPlayer1R.setForeground(Color.black);
+            Gm.labelPlayer2.setForeground(Color.black);
+            Gm.hpPlayer2.setForeground(Color.black);
+            Gm.atkPlayer1R.setForeground(Color.black);
+
+            Gm.statusGame.setForeground(Color.BLACK);
+        }
     }
-    //END SETTING PANEL SCREEN
 
-    //IMPLEMENTING BUTTON ACTION
-    ///START MENU BUTTON
-    public class continueBtn implements ActionListener{
-        public void actionPerformed(ActionEvent e){
+    public void P1TurnCheckMode(){
+        if(dark){
+            Gm.labelPlayer2.setForeground(Color.WHITE);
+            Gm.hpPlayer2.setForeground(Color.WHITE);
+            Gm.atkPlayer2R.setForeground(Color.WHITE);
+        }
+        if(light){
+            Gm.labelPlayer2.setForeground(Color.black);
+            Gm.hpPlayer2.setForeground(Color.BLACK);
+            Gm.atkPlayer2R.setForeground(Color.BLACK);
+        }
+    }
+    public void P2TurnCheckMode(){
+        if(dark){
+            Gm.labelPlayer1.setForeground(Color.WHITE);
+            Gm.hpPlayer1.setForeground(Color.WHITE);
+            Gm.atkPlayer1R.setForeground(Color.WHITE);
+        }
+        if(light){
+            Gm.labelPlayer1.setForeground(Color.BLACK);
+            Gm.hpPlayer1.setForeground(Color.BLACK);
+            Gm.atkPlayer1R.setForeground(Color.BLACK);
+        }
+    }
+    //ACTIONS FOR GAME
+    public void rollDice(){
+        constr.fill = GridBagConstraints.HORIZONTAL ;
+        constr.insets = new Insets(10,10,10,10);
+        rollDiceCheckMode();
+        if(dark){
+            Gm.statusGame.setForeground(Color.WHITE);
+        }
+        if(light){
+            Gm.statusGame.setForeground(Color.BLACK);
+        }
+        Gm.statusGame.setText("Waiting for the roll...");
+        addComponent(0,4,7,Gm.rollBtn,Gm.gameMultiPanel);
+        addComponent(0,5,7,Gm.settings, Gm.gameMultiPanel);
+    }
+
+    public void P1Action(){
+        constr.fill = GridBagConstraints.HORIZONTAL ;
+        constr.insets = new Insets(10,10,10,10);
+        P1TurnCheckMode();
+        if(dark){
+            Gm.labelPlayer1.setForeground(Color.CYAN);
+            Gm.hpPlayer1.setForeground(Color.CYAN);
+            Gm.atkPlayer1R.setForeground(Color.CYAN);
+            Gm.statusGame.setForeground(Color.CYAN);
+            Gm.btnAtkP1.setBackground(Color.CYAN);
+            Gm.btnHealP1.setBackground(Color.CYAN);
+            Gm.btnPoisonP1.setBackground(Color.CYAN);
+            Gm.continueP1.setBackground(Color.CYAN);
+            Gm.statusGame.setForeground(Color.CYAN);
+        }
+        if(light){
+            Gm.labelPlayer1.setForeground(Color.BLUE);
+            Gm.hpPlayer1.setForeground(Color.BLUE);
+            Gm.atkPlayer1R.setForeground(Color.BLUE);
+            Gm.statusGame.setForeground(Color.BLUE);
+            Gm.btnAtkP1.setBackground(Color.BLUE);
+            Gm.btnHealP1.setBackground(Color.BLUE);
+            Gm.btnPoisonP1.setBackground(Color.BLUE);
+            Gm.continueP1.setBackground(Color.BLUE);
+        }
+        Gm.statusGame.setText("Player 1 Turn");
+        addComponent(0,4,7,Gm.btnAtkP1, Gm.gameMultiPanel);
+        addComponent(0,5,7,Gm.btnHealP1, Gm.gameMultiPanel);
+        addComponent(0,6,7,Gm.btnPoisonP1, Gm.gameMultiPanel);
+        addComponent(0,7,7,Gm.continueP1,Gm.gameMultiPanel);
+        addComponent(0,8,7,Gm.settings, Gm.gameMultiPanel);
+    }
+
+    public void P2Action(){
+        constr.fill = GridBagConstraints.HORIZONTAL ;
+        constr.insets = new Insets(10,10,10,10);
+        P2TurnCheckMode();
+        if(dark){
+            Gm.labelPlayer2.setForeground(Color.YELLOW);
+            Gm.hpPlayer2.setForeground(Color.YELLOW);
+            Gm.atkPlayer2R.setForeground(Color.YELLOW);
+            Gm.statusGame.setForeground(Color.YELLOW);
+            Gm.btnAtkP2.setBackground(Color.YELLOW);
+            Gm.btnHealP2.setBackground(Color.YELLOW);
+            Gm.btnPoisonP2.setBackground(Color.YELLOW);
+            Gm.continueP2.setBackground(Color.YELLOW);
+            Gm.statusGame.setBackground(Color.YELLOW);
+        }
+        if(light){
+            Gm.labelPlayer2.setForeground(Color.RED);
+            Gm.hpPlayer2.setForeground(Color.RED);
+            Gm.atkPlayer2R.setForeground(Color.RED);
+            Gm.statusGame.setForeground(Color.RED);
+            Gm.btnAtkP2.setBackground(Color.RED);
+            Gm.btnHealP2.setBackground(Color.RED);
+            Gm.btnPoisonP2.setBackground(Color.RED);
+            Gm.continueP2.setBackground(Color.RED);
+            Gm.statusGame.setBackground(Color.RED);
+        }
+        Gm.statusGame.setText("Player 2 Turn");
+        addComponent(0,4,7,Gm.btnAtkP2, Gm.gameMultiPanel);
+        addComponent(0,5,7,Gm.btnHealP2, Gm.gameMultiPanel);
+        addComponent(0,6,7,Gm.btnPoisonP2, Gm.gameMultiPanel);
+        addComponent(0,7,7,Gm.continueP2, Gm.gameMultiPanel);
+        addComponent(0,8,7,Gm.settings, Gm.gameMultiPanel);
+    }
+
+    public void removeP1Btn(){
+        removeBtn(Gm.btnAtkP1);
+        removeBtn(Gm.btnHealP1);
+        removeBtn(Gm.btnPoisonP1);
+        removeBtn(Gm.continueP1);
+        removeBtn(Gm.settings);
+    }
+
+    public void removeP2Btn() {
+        removeBtn(Gm.btnAtkP2);
+        removeBtn(Gm.btnHealP2);
+        removeBtn(Gm.btnPoisonP2);
+        removeBtn(Gm.continueP2);
+        removeBtn(Gm.settings);
+    }
+
+    public void resetStat(){
+        Gsm.countPoisP1 = 5;
+        Gsm.countPoisP2 = 5;
+        Gsm.isHpLow = false;
+        Gsm.isHpMed  = false;
+        Gsm.isHpHigh  = false;
+        Gsm.isHpCrazy  = false;
+        Gsm.isAtkLow = false;
+        Gsm.isAtkMed  = false;
+        Gsm.isAtkHigh  = false;
+        Gsm.isAtkCrazy  = false;
+
+        Gsm.settingHp.setText("HP : ");
+        Gsm.settingAtk.setText("Atk : ");
+
+        if(dark) {
+            Gsm.setHpLowBtn.setBackground(Color.LIGHT_GRAY);
+            Gsm.setHpMedBtn.setBackground(Color.LIGHT_GRAY);
+            Gsm.setHpHighBtn.setBackground(Color.LIGHT_GRAY);
+            Gsm.setHpCrazyBtn.setBackground(Color.LIGHT_GRAY);
+            Gsm.setAtkLowBtn.setBackground(Color.LIGHT_GRAY);
+            Gsm.setAtkMedBtn.setBackground(Color.LIGHT_GRAY);
+            Gsm.setAtkHighBtn.setBackground(Color.LIGHT_GRAY);
+            Gsm.setAtkCrazyBtn.setBackground(Color.LIGHT_GRAY);
+        }
+
+        if(light) {
+            Gsm.setHpLowBtn.setBackground(Color.DARK_GRAY);
+            Gsm.setHpMedBtn.setBackground(Color.DARK_GRAY);
+            Gsm.setHpHighBtn.setBackground(Color.DARK_GRAY);
+            Gsm.setHpCrazyBtn.setBackground(Color.DARK_GRAY);
+            Gsm.setAtkLowBtn.setBackground(Color.DARK_GRAY);
+            Gsm.setAtkMedBtn.setBackground(Color.DARK_GRAY);
+            Gsm.setAtkHighBtn.setBackground(Color.DARK_GRAY);
+            Gsm.setAtkCrazyBtn.setBackground(Color.DARK_GRAY);
+        }
+
+        Gsm.Player1_HP = 0;
+        Gsm.Player2_HP = 0;
+        Gsm.Player1_ATKR = 0;
+        Gsm.Player2_ATKR = 0;
+    }
+
+    ///FOR FUNCTION IN APPSYS
+    public void checkSetSound(){
+        String txt = Settings.setSound.getText();
+        String txt2 = Mgs.setSound.getText();
+        if(txt.equals("SOUND : OFF") && txt2.equals("SOUND : OFF")){
             playSound();
-            removePanel(frame, Opening.openingPanel);
-            menuScreen();
-        }
-    }
-
-    public class gameChoiceBtn implements ActionListener{
-        public void actionPerformed(ActionEvent e){
+            stopSound();
+            holdSong();
+        } else{
+            setSoundEffectFile(btnSound);
             playSound();
-            removePanel(frame, Menu.menuPanel);
-            gameChoiceScreen();
+            playSong();
+            loopSong();
         }
     }
 
-    public class ruleBtn implements ActionListener{
-        public void actionPerformed(ActionEvent e){
+    public void checkSetSoundVer2(){
+        String txt = Settings.setSound.getText();
+        String txt2 = Mgs.setSound.getText();
+        if(txt.equals("SOUND : OFF") && txt2.equals("SOUND : OFF")){
             playSound();
-            removePanel(frame, Menu.menuPanel);
-            ruleScreen();
-        }
-    }
-
-    public class exitBtn implements ActionListener{
-        public void actionPerformed(ActionEvent e){
+            stopSound();
+            holdSong();
+        } else{
+            setSoundEffectFile(btnSound);
             playSound();
-            System.exit(0);
+            loopSong();
         }
     }
-    public class aboutBtn implements ActionListener{
-        public void actionPerformed(ActionEvent e){
+
+    public void checkContinueSound(){
+        String txt = Settings.setSound.getText();
+        String txt2 = Mgs.setSound.getText();
+        if(txt.equals("SOUND : OFF") && txt2.equals("SOUND : OFF")){
             playSound();
-            removePanel(frame, Menu.menuPanel);
-            aboutScreen();
-        }
-    }
-
-    public class duelModeRule implements ActionListener{
-        public void actionPerformed(ActionEvent e) {
+            stopSound();
+            holdSong();
+        } else{
+            setSoundEffectFile(btnSound);
             playSound();
-            removePanel(frame, SpChoice.choicePanel);
-            duelModeRuleScreen();
+            playSong();
         }
     }
 
-    public class duelContSetting implements ActionListener{
-        public void actionPerformed(ActionEvent e) {
-            playSound();
-            removePanel(frame, DMR.duelRulePanel);
-            duelModeSettingScreen();
+    public int heal(){
+        int Heal = (int) (Math.random() * 80) + 1;
+        if(Gsm.isHpLow){
+            Heal = (int) (Math.random() * (Gsm.hpLow * 0.1)) + 1;
+        } else if(Gsm.isHpMed){
+            Heal = (int) (Math.random() * (Gsm.hpMed * 0.1)) + 1;
+        } else if(Gsm.isHpHigh){
+            Heal = (int) (Math.random() * (Gsm.hpHigh * 0.1)) + 1;
+        } else if(Gsm.isHpCrazy){
+            Heal = (int) (Math.random() * (Gsm.hpCrazy * 0.1)) + 1;
         }
+        return Heal;
     }
-
-    public class backToChoice implements ActionListener{
-        public void actionPerformed(ActionEvent e) {
-            playSound();
-            removePanel(frame, DMR.duelRulePanel);
-            gameChoiceScreen();
-        }
-    }
-
-    //END BUTTON FOR MENU PANEL
-    public class backMenu implements ActionListener{
-        public void actionPerformed(ActionEvent e){
-            if(multiPaused){
-                stopSong();
-                setSongFile(songPlayed);
-                checkContinueSound();
-                removePanel(frame, Mgs.pauseSettingPanel);
-                removePanel(frame, Gm.gameMultiPanel);
-                resetStat();
-                multiPaused = false;
-            }
-            if(duelPaused){
-                stopSong();
-                setSongFile(songPlayed);
-                checkContinueSound();
-                removePanel(frame, Mgs.pauseSettingPanel);
-                removePanel(frame, DuelGame.duelGamePanel);
-                duelPaused = false;
-            }
-            else{
-                checkSetSoundVer2();
-                removePanel(frame, SpChoice.choicePanel);
-                removePanel(frame, Settings.settingsPanel);
-                removePanel(frame, About.aboutPanel);
-                removePanel(frame, Rules.rulePanel);
-            }
-            menuScreen();
-        }
-    }
-
-    public class settingBtn implements ActionListener{
-        public void actionPerformed(ActionEvent e){
-            playSound();
-            removePanel(frame, Menu.menuPanel);
-            settingsScreen();
-        }
-    }
-
-    ///END MENU BUTTON
-    public class backMenuWin implements ActionListener{
-        public void actionPerformed(ActionEvent e){
-            stopSong();
-            setSongFile(songPlayed);
-            checkSetSound();
-            removePanel(frame, winner.winPanel);
-            menuScreen();
-        }
-    }
-    ///START BUTTON IN SETTING
-
-    public class setSoundSettingsBtn implements ActionListener{
-        public void actionPerformed(ActionEvent e) {
-            String text = Settings.setSound.getText();
-            String text2 = Mgs.setSound.getText();
-            switch (text) {
-                case "SOUND : ON" -> {
-                    playSound();
-                    Settings.setSound.setText("SOUND : OFF");
-                    Mgs.setSound.setText("SOUND : OFF");
-                    holdSong();
-                    stopSound();
-
-                }
-                case "SOUND : OFF" ->  {
-                    setSoundEffectFile(btnSound);
-                    playSound();
-                    Settings.setSound.setText("SOUND : ON");
-                    Mgs.setSound.setText("SOUND : ON");
-                    continueSong();
-                }
-            }
-            //JUST FOR MGS SET SOUND
-            switch (text2){
-                case "SOUND : ON" -> {
-                    playSound();
-                    Settings.setSound.setText("SOUND : OFF");
-                    Mgs.setSound.setText("SOUND : OFF");
-                    holdSong();
-                    stopSound();
-                }
-                case "SOUND : OFF" ->  {
-                    setSoundEffectFile(btnSound);
-                    playSound();
-                    Settings.setSound.setText("SOUND : ON");
-                    Mgs.setSound.setText("SOUND : ON");
-                    continueSong();
-                }
-            }
-        }
-    }
-    public class setColorSettingsBtn implements ActionListener{
-        public void actionPerformed(ActionEvent e) {
-            playSound();
-            String text = Settings.setColor.getText();
-            switch (text) {
-                case "MODE : DARK" -> {
-                    light = true;
-                    dark = false;
-                    Settings.setColor.setText("MODE : LIGHT");
-                    switchMode();
-                }
-                case "MODE : LIGHT" -> {
-                    light = false;
-                    dark = true;
-                    Settings.setColor.setText("MODE : DARK");
-                    switchMode();
-                }
-            }
-        }
-
-    }
-
-    public class changeSong implements ActionListener{
-        public void actionPerformed(ActionEvent e) {
-            countArrs++;
-            if(countArrs > 11) countArrs = (countArrs % 11) - 1;
-            if(countArrs == 1) countArrs += 1;
-            stopSong();
-            songPlayed = arrSongs[countArrs];
-            setSongFile(songPlayed);
-            checkSetSoundVer2();
-        }
-    }
-    ///END BUTTON IN SETTING
-
-    public class contGameSetMulti implements ActionListener{
-        public void actionPerformed(ActionEvent e){
-            playSound();
-            removePanel(frame, winner.winPanel);
-            removePanel(frame,Rules.rulePanel);
-            gameSettingMultiScreen();
-        }
-    }
-    ////MULTIPLAYER MODE BUTTON CONFIGURATIONS
-    public class backToRuleBtn implements ActionListener{
-        public void actionPerformed(ActionEvent e){
-            playSound();
-            removePanel(frame, Gsm.gameSetMulti);
-            ruleScreen();
-        }
-    }
-
-    public class playerlowhp implements ActionListener{
-        public void actionPerformed(ActionEvent e){
-            playSound();
-            Gsm.isHpLow = true;
-            Gsm.isHpMed  = false;
-            Gsm.isHpHigh  = false;
-            Gsm.isHpCrazy  = false;
-
-            checkModeGSM_HP();
-            Gsm.settingHp.setText("HP : " + Gsm.hpLow);
-            Gsm.Player1_HP = Gsm.hpLow;
-            Gsm.Player2_HP = Gsm.hpLow;
-            Gm.hpPlayer1.setText("Hitpoint : " + Gsm.hpLow);
-            Gm.hpPlayer2.setText("Hitpoint : " + Gsm.hpLow);
+    ///BUTTONS IN DUEL MODE
+    public void checkDuelMode(){
+        DuelSettings.underLabel.setText("");
+        if(dark){
+            DuelSettings.easyButton.setBackground(Color.LIGHT_GRAY);
+            DuelSettings.normalButton.setBackground(Color.LIGHT_GRAY);
+            DuelSettings.hardButton.setBackground(Color.LIGHT_GRAY);
+            DuelSettings.extremeButton.setBackground(Color.LIGHT_GRAY);
 
         }
-    }
-    public class playermedhp implements ActionListener{
-        public void actionPerformed(ActionEvent e){
-            playSound();
-            Gsm.isHpLow = false;
-            Gsm.isHpMed  = true;
-            Gsm.isHpHigh  = false;
-            Gsm.isHpCrazy  = false;
+        if(dark && DuelSettings.isEasy){
+            DuelSettings.easyButton.setBackground(Color.GREEN);
+            DuelSettings.normalButton.setBackground(Color.LIGHT_GRAY);
+            DuelSettings.hardButton.setBackground(Color.LIGHT_GRAY);
+            DuelSettings.extremeButton.setBackground(Color.LIGHT_GRAY);
 
-            checkModeGSM_HP();
-            Gsm.settingHp.setText("HP : " + Gsm.hpMed);
-            Gsm.Player1_HP = Gsm.hpMed;
-            Gsm.Player2_HP = Gsm.hpMed;
-            Gm.hpPlayer1.setText("Hitpoint : " + Gsm.hpMed);
-            Gm.hpPlayer2.setText("Hitpoint : " + Gsm.hpMed);
-        }
-    }
-    public class playerhighhp implements ActionListener{
-        public void actionPerformed(ActionEvent e){
-            playSound();
-            Gsm.isHpLow = false;
-            Gsm.isHpMed  = false;
-            Gsm.isHpHigh  = true;
-            Gsm.isHpCrazy  = false;
-            checkModeGSM_HP();
-            Gsm.settingHp.setText("HP : " + Gsm.hpHigh);
-            Gsm.Player1_HP = Gsm.hpHigh;
-            Gsm.Player2_HP = Gsm.hpHigh;
-            Gm.hpPlayer1.setText("Hitpoint : " + Gsm.hpHigh);
-            Gm.hpPlayer2.setText("Hitpoint : " + Gsm.hpHigh);
-        }
-    }
-    public class playercrazyhp implements ActionListener{
-        public void actionPerformed(ActionEvent e){
-            playSound();
-            Gsm.isHpLow = false;
-            Gsm.isHpMed  = false;
-            Gsm.isHpHigh  = false;
-            Gsm.isHpCrazy  = true;
-            checkModeGSM_HP();
-            Gsm.settingHp.setText("HP : " + Gsm.hpCrazy);
-            Gsm.Player1_HP = Gsm.hpCrazy;
-            Gsm.Player2_HP = Gsm.hpCrazy;
-            Gm.hpPlayer1.setText("Hitpoint : " + Gsm.hpCrazy);
-            Gm.hpPlayer2.setText("Hitpoint : " + Gsm.hpCrazy);
-        }
-    }
-    //ATK RANGE
-    public class playerlowatk implements ActionListener{
-        public void actionPerformed(ActionEvent e){
-            playSound();
-            Gsm.isAtkLow = true;
-            Gsm.isAtkMed  = false;
-            Gsm.isAtkHigh  = false;
-            Gsm.isAtkCrazy  = false;
-            checkModeGSM_ATK();
-            Gsm.settingAtk.setText("Atk : " + Gsm.atkLow);
-            Gsm.Player1_ATKR = Gsm.atkLow;
-            Gsm.Player2_ATKR = Gsm.atkLow;
-            Gm.atkPlayer1R.setText("Atk Range : " + Gsm.atkLow);
-            Gm.atkPlayer2R.setText("Atk Range : " + Gsm.atkLow);
-        }
-    }
-    public class playermedatk implements ActionListener{
-        public void actionPerformed(ActionEvent e){
-            playSound();
-            Gsm.isAtkLow = false;
-            Gsm.isAtkMed  = true;
-            Gsm.isAtkHigh  = false;
-            Gsm.isAtkCrazy  = false;
-            checkModeGSM_ATK();
-            Gsm.settingAtk.setText("Atk : " + Gsm.atkMed);
-            Gsm.Player1_ATKR = Gsm.atkMed;
-            Gsm.Player2_ATKR = Gsm.atkMed;
-            Gm.atkPlayer1R.setText("Atk Range : " + Gsm.atkMed);
-            Gm.atkPlayer2R.setText("Atk Range : " + Gsm.atkMed);
-        }
-    }
-    public class playerhighatk implements ActionListener{
-        public void actionPerformed(ActionEvent e){
-            playSound();
-            Gsm.isAtkLow = false;
-            Gsm.isAtkMed  = false;
-            Gsm.isAtkHigh  = true;
-            Gsm.isAtkCrazy  = false;
-            checkModeGSM_ATK();
-            Gsm.settingAtk.setText("Atk : " + Gsm.atkHigh);
-            Gsm.Player1_ATKR = Gsm.atkHigh;
-            Gsm.Player2_ATKR = Gsm.atkHigh;
-            Gm.atkPlayer1R.setText("Atk Range : " + Gsm.atkHigh);
-            Gm.atkPlayer2R.setText("Atk Range : " + Gsm.atkHigh);
-        }
-    }
-    public class playercrazyatk implements ActionListener{
-        public void actionPerformed(ActionEvent e){
-            playSound();
-            Gsm.isAtkLow = false;
-            Gsm.isAtkMed  = false;
-            Gsm.isAtkHigh  = false;
-            Gsm.isAtkCrazy  = true;
-            checkModeGSM_ATK();
-            Gsm.settingAtk.setText("Atk : " + Gsm.atkCrazy);
-            Gsm.Player1_ATKR = Gsm.atkCrazy;
-            Gsm.Player2_ATKR = Gsm.atkCrazy;
-            Gm.atkPlayer1R.setText("Atk Range : "+ Gsm.atkCrazy);
-            Gm.atkPlayer2R.setText("Atk Range : " + Gsm.atkCrazy);
-        }
-    }
+            DuelSettings.easyLabel.setForeground(Color.GREEN);
 
-    public class startGame implements ActionListener {
-        public void actionPerformed(ActionEvent e){
-            if((DuelSettings.isEasy || DuelSettings.isNormal ||
-                    DuelSettings.isHard || DuelSettings.isExtreme) && duelPaused ){
-                checkSetSoundVer2();
-                duelPaused = false;
-                removePanel(frame, Mgs.pauseSettingPanel);
-                duelGameScreen();
-            }
-            if((Gsm.isHpLow || Gsm.isHpMed || Gsm.isHpHigh || Gsm.isHpCrazy)
-                    && (Gsm.isAtkLow || Gsm.isAtkMed || Gsm.isAtkHigh || Gsm.isAtkCrazy)){
-                Gm.btnPoisonP1.setText("POISON" + "(" + Gsm.countPoisP1 + ")");
-                Gm.btnPoisonP2.setText("POISON" + "(" + Gsm.countPoisP2 + ")");
-
-                if(multiPaused){
-                    checkSetSoundVer2();
-                    multiPaused = false;
-                    removePanel(frame, Mgs.pauseSettingPanel);
-                    gameScreen();
-                } else{
-                    stopSong();
-                    setSongFile(song2);
-                    checkSetSound();
-                    removePanel(frame, Gsm.gameSetMulti);
-                    gameScreen();
-                    if(Gsm.P1Turn){
-                        removeP1Btn();
-                    }
-                    if(Gsm.P2Turn && dark){
-                        Gm.atkPlayer2R.setForeground(Color.WHITE);
-                        removeP2Btn();
-                    } else if(Gsm.P2Turn && light){
-                        Gm.atkPlayer2R.setForeground(Color.BLACK);
-                    }
-                    Gsm.P1Turn = false;
-                    Gsm.P2Turn = false;
-                    rollDice();
-                }
-            } else{
-                Gsm.settingsMultiTxt.setText("Please select first");
-            }
-        }
-    }
-
-    public class pauseGame implements ActionListener {
-        public void actionPerformed(ActionEvent e){
-            multiPaused = true;
-            playSound();
-            removePanel(frame, Gm.gameMultiPanel);
-            settingGameScreen();
-        }
-    }
-
-    ///BUTTON FOR GAME MULTIPLAYER BATTLE
-    public class AttackP1 implements ActionListener {
-
-        public void actionPerformed(ActionEvent e){
-            int atkR = (int) (Math.random() * Gsm.Player1_ATKR) + 1;
-            Gsm.Player2_HP -= atkR;
-            if(Gsm.Player2_HP < 1){
-                removePanel(frame, Gm.gameMultiPanel);
-                winner.won.setText("P1 WON");
-                if(dark){
-                    winner.won.setForeground(Color.CYAN);
-                }
-                if(light){
-                    winner.won.setForeground(Color.BLUE);
-                }
-                winnerScreen();
-            } else {
-                Gsm.P1Turn = false;
-                Gsm.P2Turn = false;
-                playSound();
-                Gm.hpPlayer1.setText("Hitpoint : " + Gsm.Player1_HP);
-                Gm.hpPlayer2.setText("Hitpoint : " + Gsm.Player2_HP);
-
-                removeP1Btn();
-                rollDice();
-            }
-
-        }
-
-    }
-
-    public class HealP1 implements ActionListener{
-
-        public void actionPerformed(ActionEvent e){
-            Gsm.P1Turn = false;
-            Gsm.P2Turn = false;
-
-            playSound();
-            int Heal = heal();
-            Gsm.Player1_HP += Heal;
-
-            if(Gsm.isHpLow && Gsm.Player1_HP > Gsm.hpLow){
-               Gsm.Player1_HP = Gsm.hpLow;
-            } else if(Gsm.isHpMed && Gsm.Player1_HP > Gsm.hpMed){
-                Gsm.Player1_HP = Gsm.hpMed;
-            } else if(Gsm.isHpHigh && Gsm.Player1_HP > Gsm.hpHigh){
-                Gsm.Player1_HP = Gsm.hpHigh;
-            } else if(Gsm.isHpCrazy && Gsm.Player1_HP > Gsm.hpCrazy){
-                Gsm.Player1_HP = Gsm.hpCrazy;
-            }
-            Gm.hpPlayer1.setText("Hitpoint : " + Gsm.Player1_HP);
-            Gm.hpPlayer2.setText("Hitpoint : " + Gsm.Player2_HP);
-
-            removeP1Btn();
-            rollDice();
-        }
-    }
-
-    public class PoisonP1 implements ActionListener{
-        public void actionPerformed(ActionEvent e){
-
-            Gsm.P1Turn = true;
-            int gacha = (int) (Math.random() * 1000) + 1;
-            if(gacha == 14 && Gsm.countPoisP1 > 0){
-                removePanel(frame, Gm.gameMultiPanel);
-                winner.won.setText("P1 WON");
-                if(dark){
-                    winner.won.setForeground(Color.CYAN);
-                }
-                if(light){
-                    winner.won.setForeground(Color.BLUE);
-                }
-                winnerScreen();
-            } else if(gacha % 2 == 0 && Gsm.countPoisP1 > 0){
-
-                Gsm.Player2_HP -= Gsm.Player2_ATKR * 0.1;
-                Gsm.Player2_ATKR *= 0.95;
-                if(Gsm.Player2_HP < 1){
-                    removePanel(frame, Gm.gameMultiPanel);
-                    winner.won.setText("P1 WON");
-                    if(dark){
-                        winner.won.setForeground(Color.CYAN);
-                    }
-                    if(light){
-                        winner.won.setForeground(Color.BLUE);
-                    }
-                    winnerScreen();
-                } else{
-                    Gsm.countPoisP1--;
-                    Gsm.P1Turn = false;
-                    Gsm.P2Turn = false;
-                    playSound();
-                    Gm.atkPlayer2R.setText("Atk Range : "+ Gsm.Player2_ATKR);
-                    Gm.hpPlayer2.setText("Hitpoint : " + Gsm.Player2_HP);
-                    removeP1Btn();
-                    rollDice();
-                }
-            } else if(gacha % 2 == 1 && Gsm.countPoisP1 > 0){
-                Gsm.Player1_HP -= Gsm.Player1_ATKR * 0.1;
-                Gsm.Player1_ATKR *= 0.95;
-                if(Gsm.Player1_HP < 1){
-                    removePanel(frame, Gm.gameMultiPanel);
-                    winner.won.setText("P2 WON");
-                    if(dark){
-                        winner.won.setForeground(Color.YELLOW);
-                    }
-                    if(light){
-                        winner.won.setForeground(Color.RED);
-                    }
-                    winnerScreen();
-                } else{
-                    Gsm.countPoisP1--;
-                    Gsm.P1Turn = false;
-                    Gsm.P2Turn = false;
-                    playSound();
-                    Gm.atkPlayer1R.setText("Atk Range : " + Gsm.Player1_ATKR);
-                    Gm.hpPlayer1.setText("Hitpoint : " + Gsm.Player1_HP);
-                    removeP1Btn();
-                    rollDice();
-                }
-            } else{
-                playSound();
-            }
-            if(dark){
-                Gm.atkPlayer2R.setForeground(Color.WHITE);
-            } else{
-                Gm.atkPlayer2R.setForeground(Color.BLACK);
-            }
-
-            if(Gsm.countPoisP1 > -1){
-                Gm.btnPoisonP1.setText("POISON" + "(" + Gsm.countPoisP1 + ")");
-            }
-
-
-        }
-    }
-
-    public class SkipP1 implements ActionListener{
-
-        public void actionPerformed(ActionEvent e){
-            Gsm.P1Turn = false;
-            Gsm.P2Turn = true;
-            playSound();
-            Gm.statusGame.setText("Status : Player 2 Turn");
-            removeP1Btn();
-            P2Action();
-        }
-    }
-
-    //PLAYER 2 Action
-    public class AttackP2 implements ActionListener{
-
-        public void actionPerformed(ActionEvent e){
-            int atkR = (int) (Math.random() * Gsm.Player2_ATKR) + 1;
-            Gsm.Player1_HP -= atkR;
-            if(Gsm.Player1_HP < 1){
-                removePanel(frame, Gm.gameMultiPanel);
-                winner.won.setText("P2 WON");
-                if(dark){
-                    winner.won.setForeground(Color.YELLOW);
-                }
-                if(light){
-                    winner.won.setForeground(Color.RED);
-                }
-                winnerScreen();
-            } else {
-                Gsm.P1Turn = false;
-                Gsm.P2Turn = false;
-
-                if(dark){
-                    Gm.atkPlayer2R.setForeground(Color.WHITE);
-                } else {
-                    Gm.atkPlayer2R.setForeground(Color.BLACK);
-                }
-                playSound();
-                Gm.hpPlayer1.setText("Hitpoint : " + Gsm.Player1_HP);
-                Gm.hpPlayer2.setText("Hitpoint : " + Gsm.Player2_HP);
-                removeP2Btn();
-                rollDice();
-            }
-        }
-    }
-
-    public class HealP2 implements ActionListener{
-
-        public void actionPerformed(ActionEvent e){
-            Gsm.P1Turn = false;
-            Gsm.P2Turn = false;
-
-            playSound();
-            int Heal = heal();
-            Gsm.Player2_HP += Heal;
-
-            if(Gsm.isHpLow && Gsm.Player2_HP > Gsm.hpLow){
-                Gsm.Player2_HP = Gsm.hpLow;
-            } else if(Gsm.isHpMed && Gsm.Player2_HP > Gsm.hpMed){
-                Gsm.Player2_HP = Gsm.hpMed;
-            } else if(Gsm.isHpHigh && Gsm.Player2_HP > Gsm.hpHigh){
-                Gsm.Player2_HP = Gsm.hpHigh;
-            } else if(Gsm.isHpCrazy && Gsm.Player2_HP > Gsm.hpCrazy){
-                Gsm.Player2_HP = Gsm.hpCrazy;
-            }
-            Gm.hpPlayer1.setText("Hitpoint : " + Gsm.Player1_HP);
-            Gm.hpPlayer2.setText("Hitpoint : " + Gsm.Player2_HP);
-            if(dark){
-                Gm.atkPlayer2R.setForeground(Color.WHITE);
-            } else{
-                Gm.atkPlayer2R.setForeground(Color.BLACK);
-            }
-            removeP2Btn();
-            rollDice();
-        }
-
-    }
-
-    public class PoisonP2 implements ActionListener{
-        public void actionPerformed(ActionEvent e){
-            Gsm.P2Turn = true;
-            int gacha = (int) (Math.random() * 1000) + 1;
-            if(gacha == 15 && Gsm.countPoisP2 > 0){
-                removePanel(frame, Gm.gameMultiPanel);
-                winner.won.setText("P2 WON");
-                if(dark){
-                    winner.won.setForeground(Color.YELLOW);
-                }
-                if(light){
-                    winner.won.setForeground(Color.RED);
-                }
-                winnerScreen();
-            } else if(gacha % 2 == 0 && Gsm.countPoisP2 > 0){
-
-                Gsm.Player1_HP -= Gsm.Player1_ATKR * 0.1;
-                Gsm.Player1_ATKR *= 0.95;
-                if(Gsm.Player1_HP < 1){
-                    removePanel(frame, Gm.gameMultiPanel);
-                    winner.won.setText("P2 WON");
-                    if(dark){
-                        winner.won.setForeground(Color.YELLOW);
-                    }
-                    if(light){
-                        winner.won.setForeground(Color.RED);
-                    }
-                    winnerScreen();
-                } else{
-                    Gsm.countPoisP2--;
-                    Gsm.P1Turn = false;
-                    Gsm.P2Turn = false;
-                    playSound();
-                    Gm.atkPlayer1R.setText("Atk Range : " + Gsm.Player1_ATKR);
-                    Gm.hpPlayer1.setText("Hitpoint : " + Gsm.Player1_HP);
-                    removeP2Btn();
-                    rollDice();
-                }
-            } else if(gacha % 2 == 1 && Gsm.countPoisP2 > 0){
-
-                Gsm.Player2_HP -= Gsm.Player2_ATKR * 0.1;
-                Gsm.Player2_ATKR *= 0.95;
-                if(Gsm.Player2_HP < 1){
-                    removePanel(frame, Gm.gameMultiPanel);
-                    winner.won.setText("P1 WON");
-                    if(dark){
-                        winner.won.setForeground(Color.CYAN);
-                    }
-                    if(light){
-                        winner.won.setForeground(Color.BLUE);
-                    }
-                    winnerScreen();
-                } else {
-                    Gsm.countPoisP2--;
-                    Gsm.P1Turn = false;
-                    Gsm.P2Turn = false;
-                    playSound();
-                    Gm.atkPlayer2R.setText("Atk Range : " + Gsm.Player2_ATKR);
-                    Gm.hpPlayer2.setText("Hitpoint : " + Gsm.Player2_HP);
-                    removeP2Btn();
-                    rollDice();
-                }
-            } else{
-                playSound();
-            }
-            if(dark){
-                Gm.atkPlayer2R.setForeground(Color.WHITE);
-            } else{
-                Gm.atkPlayer2R.setForeground(Color.BLACK);
-            }
-
-            if(Gsm.countPoisP2 > -1){
-                Gm.btnPoisonP2.setText("POISON" + "(" + Gsm.countPoisP2 + ")");
-            }
-
-
-        }
-    }
-
-    public class SkipP2 implements ActionListener{
-
-        public void actionPerformed(ActionEvent e){
-            Gsm.P1Turn = true;
-            Gsm.P2Turn = false;
-            playSound();
-            Gm.statusGame.setText("Status : Player 2 Turn");
-            removeP2Btn();
-            P1Action();
-        }
-    }
-    //RANDOM TURN
-    public class rollDice implements ActionListener{
-        public void actionPerformed(ActionEvent e){
-
-            playSound();
-            int turn = (int) (Math.random() * 10);
-            removeBtn(Gm.rollBtn);
-            if(turn % 2 == 0){
-                Gm.statusGame.setText("Status : Player 1 Turn");
-                Gsm.P1Turn = true;
-                P1Action();
-            } else {
-                Gm.statusGame.setText("Status : Player 2 Turn");
-                Gsm.P2Turn = true;
-                P2Action();
-            }
-        }
-
-    }
-
-    ///////////////////////////////////FOR SINGLE PLAYER//////////////////////////////////////////////////////////
-    ///////////////////////////////////FOR SINGLE PLAYER///////////////////////////////////////////////////////////
-    //////START DUEL MODE BUTTON CONFIGURATIONS
-    public class easyDuelMode implements ActionListener{
-        public void actionPerformed(ActionEvent e){
-            playSound();
-            DuelSettings.isEasy = true;
-            DuelSettings.isNormal = false;
-            DuelSettings.isHard = false;
-            DuelSettings.isExtreme = false;
-
-            DuelSettings.enemyHp = 60;
-            DuelSettings.enemyAtk = 5;
-            checkDuelMode();
-        }
-    }
-
-    public class normalDuelMode implements ActionListener{
-        public void actionPerformed(ActionEvent e){
-            playSound();
-            DuelSettings.isEasy = false;
-            DuelSettings.isNormal = true;
-            DuelSettings.isHard = false;
-            DuelSettings.isExtreme = false;
-
-            DuelSettings.enemyHp = 120;
-            DuelSettings.enemyAtk = 15;
-            checkDuelMode();
-        }
-    }
-
-    public class hardDuelMode implements ActionListener{
-        public void actionPerformed(ActionEvent e){
-            playSound();
-            DuelSettings.isEasy = false;
-            DuelSettings.isNormal = false;
-            DuelSettings.isHard = true;
-            DuelSettings.isExtreme = false;
-
-            DuelSettings.enemyHp = 200;
-            DuelSettings.enemyAtk = 30;
-            checkDuelMode();
-        }
-    }
-
-    public class extremeDuelMode implements ActionListener{
-        public void actionPerformed(ActionEvent e){
-            playSound();
-            DuelSettings.isEasy = false;
-            DuelSettings.isNormal = false;
-            DuelSettings.isHard = false;
-            DuelSettings.isExtreme = true;
-
-            DuelSettings.enemyHp = 320;
-            DuelSettings.enemyAtk = 50;
-            checkDuelMode();
-        }
-    }
-
-    public class startDuelGame implements ActionListener{
-        public void actionPerformed(ActionEvent e){
-            playSound();
-            if(DuelSettings.isEasy || DuelSettings.isNormal ||
-                    DuelSettings.isHard || DuelSettings.isExtreme){
-
-                removePanel(frame, DuelSettings.duelSettingPanel);
-                DuelGame.PlayerHP.setText("Hitpoint : " + DuelSettings.playerHp);
-                DuelGame.PlayerAtk.setText("Atk Range : " + DuelSettings.playerAtk);
-                DuelGame.EnemyHP.setText("Hitpoint : " + DuelSettings.enemyHp);
-                DuelGame.EnemyAtk.setText("Atk Range : " + DuelSettings.enemyAtk);
-                duelGameScreen();
-                duelRollButtons();
-
-
-            } else{
-                DuelSettings.titleDuelSetting.setText("SELECT MODE FIRST");
-            }
-
-        }
-    }
-
-    public class rollDuelAction implements ActionListener{
-        public void actionPerformed(ActionEvent e) {
-            duelRollTurn();
-        }
-    }
-
-    public class backToRuleDuel implements ActionListener{
-        public void actionPerformed(ActionEvent e){
-            playSound();
-            DuelSettings.isEasy = false;
-            DuelSettings.isNormal = false;
-            DuelSettings.isHard = false;
-            DuelSettings.isExtreme = false;
-            DuelSettings.easyLabel.setText("");
+            DuelSettings.easyLabel.setText("KIDS");
             DuelSettings.normalLabel.setText("");
             DuelSettings.hardLabel.setText("");
             DuelSettings.extremeLabel.setText("");
-            DuelSettings.titleDuelSetting.setText("GAME SETTINGS");
+        }
+        if(dark && DuelSettings.isNormal){
+            DuelSettings.easyButton.setBackground(Color.LIGHT_GRAY);
+            DuelSettings.normalButton.setBackground(Color.YELLOW);
+            DuelSettings.hardButton.setBackground(Color.LIGHT_GRAY);
+            DuelSettings.extremeButton.setBackground(Color.LIGHT_GRAY);
 
-            checkDuelMode();
-            removePanel(frame, DuelSettings.duelSettingPanel);
-            duelModeRuleScreen();
+            DuelSettings.normalLabel.setForeground(Color.YELLOW);
+
+            DuelSettings.easyLabel.setText("");
+            DuelSettings.normalLabel.setText("TEENS");
+            DuelSettings.hardLabel.setText("");
+            DuelSettings.extremeLabel.setText("");
+        }
+        if(dark && DuelSettings.isHard){
+            DuelSettings.easyButton.setBackground(Color.LIGHT_GRAY);
+            DuelSettings.normalButton.setBackground(Color.LIGHT_GRAY);
+            DuelSettings.hardButton.setBackground(Color.ORANGE);
+            DuelSettings.extremeButton.setBackground(Color.LIGHT_GRAY);
+
+            DuelSettings.hardLabel.setForeground(Color.ORANGE);
+
+            DuelSettings.easyLabel.setText("");
+            DuelSettings.normalLabel.setText("");
+            DuelSettings.hardLabel.setText("ADULTS");
+            DuelSettings.extremeLabel.setText("");
+        }
+        if(dark && DuelSettings.isExtreme){
+            DuelSettings.easyButton.setBackground(Color.LIGHT_GRAY);
+            DuelSettings.normalButton.setBackground(Color.LIGHT_GRAY);
+            DuelSettings.hardButton.setBackground(Color.LIGHT_GRAY);
+            DuelSettings.extremeButton.setBackground(Color.RED);
+
+            DuelSettings.extremeLabel.setForeground(Color.RED);
+
+            DuelSettings.easyLabel.setText("");
+            DuelSettings.normalLabel.setText("");
+            DuelSettings.hardLabel.setText("");
+            DuelSettings.extremeLabel.setText("CHADS");
+        }
+        if(light){
+            DuelSettings.easyButton.setBackground(Color.DARK_GRAY);
+            DuelSettings.normalButton.setBackground(Color.DARK_GRAY);
+            DuelSettings.hardButton.setBackground(Color.DARK_GRAY);
+            DuelSettings.extremeButton.setBackground(Color.DARK_GRAY);
+
+        }
+        if(light && DuelSettings.isEasy){
+            DuelSettings.easyButton.setBackground(Color.GREEN);
+            DuelSettings.normalButton.setBackground(Color.DARK_GRAY);
+            DuelSettings.hardButton.setBackground(Color.DARK_GRAY);
+            DuelSettings.extremeButton.setBackground(Color.DARK_GRAY);
+
+            DuelSettings.easyLabel.setForeground(Color.GREEN);
+
+            DuelSettings.easyLabel.setText("KIDS");
+            DuelSettings.normalLabel.setText("");
+            DuelSettings.hardLabel.setText("");
+            DuelSettings.extremeLabel.setText("");
+        }
+        if(light &&DuelSettings.isNormal){
+            DuelSettings.easyButton.setBackground(Color.DARK_GRAY);
+            DuelSettings.normalButton.setBackground(Color.YELLOW);
+            DuelSettings.hardButton.setBackground(Color.DARK_GRAY);
+            DuelSettings.extremeLabel.setBackground(Color.DARK_GRAY);
+
+            DuelSettings.normalLabel.setForeground(Color.YELLOW);
+
+            DuelSettings.easyLabel.setText("");
+            DuelSettings.normalLabel.setText("TEENS");
+            DuelSettings.hardLabel.setText("");
+            DuelSettings.extremeLabel.setText("");
+        }
+        if(light && DuelSettings.isHard){
+            DuelSettings.easyButton.setBackground(Color.DARK_GRAY);
+            DuelSettings.normalButton.setBackground(Color.DARK_GRAY);
+            DuelSettings.hardButton.setBackground(Color.ORANGE);
+            DuelSettings.extremeLabel.setBackground(Color.DARK_GRAY);
+
+            DuelSettings.hardLabel.setForeground(Color.ORANGE);
+
+            DuelSettings.easyLabel.setText("");
+            DuelSettings.normalLabel.setText("");
+            DuelSettings.hardLabel.setText("ADULTS");
+            DuelSettings.extremeLabel.setText("");
+        }
+        if(light && DuelSettings.isExtreme){
+            DuelSettings.easyButton.setBackground(Color.DARK_GRAY);
+            DuelSettings.normalButton.setBackground(Color.DARK_GRAY);
+            DuelSettings.hardButton.setBackground(Color.DARK_GRAY);
+            DuelSettings.extremeLabel.setBackground(Color.RED);
+
+            DuelSettings.extremeLabel.setForeground(Color.RED);
+
+            DuelSettings.easyLabel.setText("");
+            DuelSettings.normalLabel.setText("");
+            DuelSettings.hardLabel.setText("");
+            DuelSettings.extremeLabel.setText("CHADS");
         }
     }
-    ////BUTTON ACTIONS FOR DUEL GAME
-    public class duelGamePaused implements ActionListener{
+    ///STARTT ACTIONS FOR DUEL GAME
+    public void duelRollButtons(){
+        constr.fill = GridBagConstraints.HORIZONTAL ;
+        constr.insets = new Insets(10,10,10,10);
+        addComponent(0,5,6,DuelGame.rollDuel,DuelGame.duelGamePanel);
+        addComponent(0,6,6,DuelGame.settingsDuel,DuelGame.duelGamePanel);
+    }
 
-        public void actionPerformed(ActionEvent e) {
-            duelPaused = true;
-            playSound();
-            removePanel(frame, DuelGame.duelGamePanel);
-            settingGameScreen();
+    public void duelRollTurn(){
+        int turn = (int)(Math.random() * 10) + 1;
+        if(turn % 2 == 0){
+            playerAction();
+        } else{
+            enemyAction();
         }
     }
+
+
+    public void playerAction(){
+        constr.fill = GridBagConstraints.HORIZONTAL ;
+        constr.insets = new Insets(10,10,10,10);
+        removeRollDuel();
+        DuelGame.duelStatus1.setText("ITS YOUR TURN");
+        DuelGame.duelStatus2.setText("CHOOSE ACTION");
+
+        addComponent(0,5,6,DuelGame.attack,DuelGame.duelGamePanel);
+        addComponent(0,6,6,DuelGame.heal,DuelGame.duelGamePanel);
+        addComponent(0,7,6,DuelGame.poison,DuelGame.duelGamePanel);
+        addComponent(0,8,6,DuelGame.surrender, DuelGame.duelGamePanel);
+        addComponent(0,9,6,DuelGame.settingsDuel,DuelGame.duelGamePanel);
+    }
+
+    public void removeRollDuel(){
+        removeBtn(DuelGame.rollDuel);
+        removeBtn(DuelGame.settingsDuel);
+    }
+
+    public void enemyAction(){
+        int move = (int)(Math.random() * 100) + 1;
+        int criticalHit;
+        int poison;
+        //CRITICAL HIT
+        if(DuelSettings.isExtreme && move % 30 == 0){
+            enemyStatus = "ultimate";
+            DuelSettings.playerHp -= DuelSettings.enemyAtk + 70;
+        }
+        else if(DuelSettings.isExtreme && move % 10 == 0){
+            enemyStatus = "critical";
+            criticalHit = DuelSettings.enemyAtk * 2;
+            DuelSettings.playerHp -= criticalHit;
+        } else if(DuelSettings.isHard && move % 10 == 0){
+            enemyStatus = "critical";
+            criticalHit = (int)(DuelSettings.enemyAtk * 1.7);
+            DuelSettings.playerHp -= criticalHit;
+        } else if(DuelSettings.isNormal && move % 10 == 0){
+            enemyStatus = "critical";
+            criticalHit = (int)(DuelSettings.enemyAtk * 1.3);
+            DuelSettings.playerHp -= criticalHit;
+        } else if(DuelSettings.isEasy && move % 10 == 0){
+            enemyStatus = "critical";
+            criticalHit = (int)(DuelSettings.enemyAtk * 1.1);
+            DuelSettings.playerHp -= criticalHit;
+        }
+        //POISON
+        else if(move % 5 == 0){
+            enemyStatus = "poison";
+            poison = (int)(DuelSettings.enemyAtk * 0.1);
+            DuelSettings.playerHp -= poison;
+            DuelSettings.playerAtk -= poison;
+        }
+        //SKIP
+        else if(move % 5 == 1){
+            enemyStatus = "skip";
+        }
+        //ATTACK HIT
+        else if(move % 2 == 0){
+            enemyStatus = "attack";
+            DuelSettings.playerHp -= DuelSettings.enemyAtk;
+        }
+        //HEAL
+        else if(move % 2 == 1){
+            enemyStatus = "heal";
+            if(DuelSettings.isEasy) {
+                DuelSettings.enemyHp += 10;
+                if(DuelSettings.enemyHp > 60) DuelSettings.enemyHp = 60;
+            }
+            else if(DuelSettings.isNormal) {
+                DuelSettings.enemyHp += 25;
+                if(DuelSettings.enemyHp > 120) DuelSettings.enemyHp = 120;
+            }
+            else if(DuelSettings.isHard) {
+                DuelSettings.enemyHp += 45;
+                if(DuelSettings.enemyHp > 200) DuelSettings.enemyHp = 200;
+            }
+            else if(DuelSettings.isExtreme) {
+                DuelSettings.enemyHp += 65;
+                if(DuelSettings.enemyHp > 320) DuelSettings.enemyHp = 320;
+            }
+        }
+    }
+    public void checkResult(){
+        if(enemyStatus.equals("ultimate")){
+            if(DuelSettings.playerHp < 1){
+
+            } else{
+
+            }
+        }
+    }
+
 }
