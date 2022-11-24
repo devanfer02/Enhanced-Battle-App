@@ -4,6 +4,8 @@ import javax.sound.sampled.*;
 import java.io.File;
 
 public class Adder {
+    //SWITCH
+    //SWITCH THEME MODE
     public boolean dark = true;
     public boolean light = false;
     GridBagConstraints constr = new GridBagConstraints();
@@ -12,8 +14,35 @@ public class Adder {
     String btnSound = "D:\\IntelliJ\\CompleteSetBattleApp\\src\\Songs\\BtnSound.wav";
     String song1 = "D:\\IntelliJ\\CompleteSetBattleApp\\src\\Songs\\song4-Alone.wav";
     String song2 = "D:\\IntelliJ\\CompleteSetBattleApp\\src\\Songs\\song2-Megalovania.wav";
+    String song3 = "D:\\IntelliJ\\CompleteSetBattleApp\\src\\Songs\\song3-YoungAgain.wav";
+    String song4 =  "D:\\IntelliJ\\CompleteSetBattleApp\\src\\Songs\\song5-TheSpectre.wav";
+    String song5 =  "D:\\IntelliJ\\CompleteSetBattleApp\\src\\Songs\\song6-WaitingForLove.wav";
+    String song6 =  "D:\\IntelliJ\\CompleteSetBattleApp\\src\\Songs\\song7-Facedown.wav";
+    String song7 =  "D:\\IntelliJ\\CompleteSetBattleApp\\src\\Songs\\song8-Followyou.wav";
+    String song8 =  "D:\\IntelliJ\\CompleteSetBattleApp\\src\\Songs\\song9-CreaturesOfTheNight.wav";
+    String song9 =  "D:\\IntelliJ\\CompleteSetBattleApp\\src\\Songs\\song10-MoreThanYouKnow.wav";
+    String song10 =  "D:\\IntelliJ\\CompleteSetBattleApp\\src\\Songs\\song11-BeautifulNow.wav";
+    String song11 =  "D:\\IntelliJ\\CompleteSetBattleApp\\src\\Songs\\song12-Ibiza.wav";
+    String song12 =  "D:\\IntelliJ\\CompleteSetBattleApp\\src\\Songs\\song10-MoreThanYouKnow.wav";
+
     String WSong = "D:\\IntelliJ\\CompleteSetBattleApp\\src\\Songs\\Won-RUSH E.wav";
 
+    //SETTING UP ARRAY OF SONGS
+    public String[] arrSongs = {
+            song1,
+            song2,
+            song3,
+            song4,
+            song5,
+            song6,
+            song7,
+            song8,
+            song9,
+            song10,
+            song11,
+            song12
+    };
+    public int countArrs = 0;
     //FOR MUSIC AND SOUND PLAYER
     Clip song;
     Clip soundEffect;
@@ -71,7 +100,11 @@ public class Adder {
         song.close();
     }
 
+
+
     //END FOR SONG AND SOUND
+
+    //START ADD COMPONENT TO GRID
     public void addComponent(int x, int y, int width, JLabel text, JPanel panel){
         constr.gridx = x;
         constr.gridy = y;
@@ -85,7 +118,9 @@ public class Adder {
         constr.gridwidth = width;
         panel.add(button, constr);
     }
+    //END ADD COMPONENT TO GRID
 
+    //REMOVE BUTTON AND PANEL
     public void removePanel(JFrame frame,JPanel panel){
         frame.remove(panel);
         frame.revalidate();
@@ -98,7 +133,10 @@ public class Adder {
         btn.revalidate();
         btn.repaint();
     }
+    //END REMOVE BUTTON AND PANEL
 
+
+    //START SWITCH THEME MODE
     public void switchBtnColor(JButton button){
         if(dark){
             button.setBackground(Color.LIGHT_GRAY);
@@ -125,5 +163,6 @@ public class Adder {
             panel.setBackground(Color.LIGHT_GRAY);
         }
     }
+    //END SWITCH THEME MODE
 
 }
