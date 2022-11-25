@@ -25,10 +25,14 @@ public class SetUp extends Adder {
     GameChoice SpChoice = new GameChoice();
     DuelModeRule DMR = new DuelModeRule();
     DuelModeGameSettings DuelSettings = new DuelModeGameSettings();
-
-
+    DuelGame DuelGame = new DuelGame();
+    DuelResult DuelResult = new DuelResult();
     ///START BOOLEANS FOR SWITCHING PAUSES
     boolean multiPaused = false;
+    boolean duelPaused = false;
+    boolean enemyWin = false;
+    boolean playerTurn = false;
+    String enemyStatus = "";
     //START SWITCH THEME//
     public void switchMode(){
         Opening();
@@ -43,6 +47,8 @@ public class SetUp extends Adder {
         GameChoice();
         DuelModeRule();
         DuelModeSettings();
+        DuelGame();
+        DuelResult();
     }
     public void Opening(){
         switchPanelColor(Opening.openingPanel);
@@ -169,7 +175,6 @@ public class SetUp extends Adder {
         switchLabelColor(DMR.rule4);
         switchBtnColor(DMR.contDMGS);
         switchBtnColor(DMR.backChoice);
-
     }
 
     public void DuelModeSettings(){
@@ -186,6 +191,32 @@ public class SetUp extends Adder {
         switchBtnColor(DuelSettings.startButton);
         switchBtnColor(DuelSettings.backRule);
         switchLabelColor(DuelSettings.underLabel);
+    }
+
+    public void DuelGame(){
+        switchPanelColor(DuelGame.duelGamePanel);
+        switchLabelColor(DuelGame.Player);
+        switchLabelColor(DuelGame.PlayerHP);
+        switchLabelColor(DuelGame.PlayerAtk);
+        switchLabelColor(DuelGame.Enemy);
+        switchLabelColor(DuelGame.EnemyHP);
+        switchLabelColor(DuelGame.EnemyAtk);
+        switchLabelColor(DuelGame.duelStatus1);
+        switchLabelColor(DuelGame.duelStatus2);
+        switchBtnColor(DuelGame.rollDuel);
+        switchBtnColor(DuelGame.attackBtn);
+        switchBtnColor(DuelGame.healBtn);
+        switchBtnColor(DuelGame.poisonBtn);
+        switchBtnColor(DuelGame.surrenderBtn);
+        switchBtnColor(DuelGame.settingsDuel);
+    }
+
+    public void DuelResult(){
+        switchPanelColor(DuelResult.duelResultPanel);
+        switchLabelColor(DuelResult.topTitle);
+        switchLabelColor(DuelResult.duelResultTitle);
+        switchBtnColor(DuelResult.newGame);
+        switchBtnColor(DuelResult.backMenu);
     }
     //END SWITCH THEME//
 
@@ -663,6 +694,237 @@ public class SetUp extends Adder {
             DuelSettings.hardLabel.setText("");
             DuelSettings.extremeLabel.setText("CHADS");
         }
+    }
+    ///STARTT ACTIONS FOR DUEL GAME
+    public void duelRollButtons(){
+        constr.fill = GridBagConstraints.HORIZONTAL ;
+        constr.insets = new Insets(10,10,10,10);
+        addComponent(0,5,6,DuelGame.rollDuel,DuelGame.duelGamePanel);
+        addComponent(0,6,6,DuelGame.settingsDuel,DuelGame.duelGamePanel);
+    }
 
+
+
+    public void duelRollTurn(){
+        int turn = (int)(Math.random() * 10) + 1;
+        if(turn % 2 == 0){
+            playerAction();
+            playerTurn = true;
+        } else{
+            enemyAction();
+        }
+    }
+
+
+    public void playerAction(){
+        constr.fill = GridBagConstraints.HORIZONTAL ;
+        constr.insets = new Insets(10,10,10,10);
+        removeRollDuel();
+        DuelGame.duelStatus1.setText("ITS YOUR TURN");
+        DuelGame.duelStatus2.setText("CHOOSE ACTION");
+
+        addComponent(0,5,6,DuelGame.attackBtn,DuelGame.duelGamePanel);
+        addComponent(0,6,6,DuelGame.healBtn,DuelGame.duelGamePanel);
+        addComponent(0,7,6,DuelGame.poisonBtn,DuelGame.duelGamePanel);
+        addComponent(0,8,6,DuelGame.surrenderBtn, DuelGame.duelGamePanel);
+        addComponent(0,9,6,DuelGame.settingsDuel,DuelGame.duelGamePanel);
+    }
+
+    public void removePlayerAction(){
+        removeBtn(DuelGame.attackBtn);
+        removeBtn(DuelGame.healBtn);
+        removeBtn(DuelGame.poisonBtn);
+        removeBtn(DuelGame.surrenderBtn);
+        removeBtn(DuelGame.settingsDuel);
+    }
+
+    public void removeRollDuel(){
+        removeBtn(DuelGame.rollDuel);
+        removeBtn(DuelGame.settingsDuel);
+    }
+    //ENEMY ACTION
+    public void enemyAction(){
+        int move = (int)(Math.random() * 100) + 1;
+        int ultimate;
+        int atk;
+        int criticalHit;
+        int poison;
+        //CRITICAL HIT
+        if(DuelSettings.isExtreme && move % 25 == 0){
+            enemyStatus = "ultimate";
+            ultimate = DuelSettings.enemyAtk + 70;
+            DuelSettings.playerHp -= ultimate;
+            DuelGame.duelStatus1.setText("ENEMY USED ULTIMATE!");
+            DuelGame.duelStatus2.setText("DAMAGE : " + ultimate);
+            updateStatusDuel();
+            enemyDuelResult();
+
+        }
+        else if(DuelSettings.isHard && move % 30 == 0){
+            enemyStatus = "ultimate";
+            ultimate = DuelSettings.enemyAtk + 50;
+            DuelSettings.playerHp -= ultimate;
+            DuelGame.duelStatus1.setText("ENEMY USED ULTIMATE!");
+            DuelGame.duelStatus2.setText("DAMAGE : " + ultimate);
+            updateStatusDuel();
+            enemyDuelResult();
+        }
+        else if(DuelSettings.isNormal && move % 40 == 0){
+            enemyStatus = "ultimate";
+            ultimate = DuelSettings.enemyAtk + 30;
+            DuelSettings.playerHp -= ultimate;
+            DuelGame.duelStatus1.setText("ENEMY USED ULTIMATE!");
+            DuelGame.duelStatus2.setText("DAMAGE : " + ultimate);
+            updateStatusDuel();
+            enemyDuelResult();
+        }
+        else if(DuelSettings.isExtreme && move % 10 == 0){
+            enemyStatus = "critical";
+            criticalHit = DuelSettings.enemyAtk * 2;
+            DuelSettings.playerHp -= criticalHit;
+            DuelGame.duelStatus1.setText("ENEMY HIT YOU CRITICALLY!");
+            DuelGame.duelStatus2.setText("DAMAGE : " + criticalHit);
+            updateStatusDuel();
+            enemyDuelResult();
+        } else if(DuelSettings.isHard && move % 10 == 0){
+            enemyStatus = "critical";
+            criticalHit = (int)(DuelSettings.enemyAtk * 1.7);
+            DuelSettings.playerHp -= criticalHit;
+            DuelGame.duelStatus1.setText("ENEMY HIT YOU CRITICALLY!");
+            DuelGame.duelStatus2.setText("DAMAGE : " + criticalHit);
+            updateStatusDuel();
+            enemyDuelResult();
+
+        } else if(DuelSettings.isNormal && move % 10 == 0){
+            enemyStatus = "critical";
+            criticalHit = (int)(DuelSettings.enemyAtk * 1.3);
+            DuelSettings.playerHp -= criticalHit;
+            DuelGame.duelStatus1.setText("ENEMY HIT YOU CRITICALLY!");
+            DuelGame.duelStatus2.setText("DAMAGE : " + criticalHit);
+            updateStatusDuel();
+            enemyDuelResult();
+
+        } else if(DuelSettings.isEasy && move % 10 == 0){
+            enemyStatus = "critical";
+            criticalHit = (int)(DuelSettings.enemyAtk * 1.1);
+            DuelSettings.playerHp -= criticalHit;
+            DuelGame.duelStatus1.setText("ENEMY HIT YOU CRITICALLY!");
+            DuelGame.duelStatus2.setText("DAMAGE : " + criticalHit);
+            updateStatusDuel();
+            enemyDuelResult();
+        }
+        //POISON
+        else if(move % 5 == 0){
+            enemyStatus = "poison";
+            poison = (int)(DuelSettings.enemyAtk * 0.1);
+            DuelSettings.playerHp -= poison;
+            DuelSettings.playerAtk -= poison;
+            if(DuelSettings.playerHp < 1){
+                enemyWin = true;
+                DuelResult.topTitle.setText("ENEMY POISONED YOU");
+                DuelResult.duelResultTitle.setText("YOU LOSE");
+            } else{
+                DuelGame.duelStatus1.setText("ENEMY POISONED YOU!");
+                DuelGame.duelStatus2.setText("DMG TO ATK & HP : " + poison);
+                updateStatusDuel();
+            }
+        }
+        //SKIP
+        else if(move % 5 == 1){
+            enemyStatus = "skip";
+            DuelGame.duelStatus1.setText("ENEMY SKIP TURN!");
+            DuelGame.duelStatus2.setText("YOUR TURN NOW!");
+            playerAction();
+
+        }
+        //ATTACK HIT
+        else if(move % 2 == 0){
+            enemyStatus = "attack";
+            atk = (int)(Math.random() * DuelSettings.enemyAtk) + 1;
+            DuelSettings.playerHp -= atk;
+            if(DuelSettings.playerHp < 1){
+                DuelResult.topTitle.setText("ENEMY ATTACKED YOU");
+                DuelResult.duelResultTitle.setText("YOU LOSE");
+                enemyWin = true;
+            } else{
+                DuelGame.duelStatus1.setText("ENEMY ATTACKED YOU!");
+                DuelGame.duelStatus2.setText("DAMAGE DONE : " + atk);
+                updateStatusDuel();
+            }
+        }
+        //HEAL
+        else if(move % 2 == 1){
+            enemyStatus = "heal";
+            int heal = 0;
+            if(DuelSettings.isEasy) {
+                heal = (int)(Math.random() * 10) + 5;
+                DuelSettings.enemyHp += heal;
+                if(DuelSettings.enemyHp > 60) DuelSettings.enemyHp = 60;
+            }
+            else if(DuelSettings.isNormal) {
+                heal = (int)(Math.random() * 25) + 7;
+                DuelSettings.enemyHp += heal;
+                if(DuelSettings.enemyHp > 120) DuelSettings.enemyHp = 120;
+            }
+            else if(DuelSettings.isHard) {
+                heal = (int)(Math.random() * 45) + 10;
+                DuelSettings.enemyHp += heal;
+                if(DuelSettings.enemyHp > 200) DuelSettings.enemyHp = 200;
+            }
+            else if(DuelSettings.isExtreme) {
+                heal = (int)(Math.random() * 65) + 15;
+                DuelSettings.enemyHp += heal;
+                if(DuelSettings.enemyHp > 320) DuelSettings.enemyHp = 320;
+            }
+            DuelGame.duelStatus1.setText("ENEMY USE HEAL!");
+            DuelGame.duelStatus2.setText("HP RECOVERED : " + heal);
+            updateStatusDuel();
+        }
+    }
+
+    public void resetDuelSettings(){
+        enemyWin = false;
+        DuelSettings.isEasy = false;
+        DuelSettings.isNormal = false;
+        DuelSettings.isHard = false;
+        DuelSettings.isExtreme = false;
+        DuelSettings.easyLabel.setText("");
+        DuelSettings.normalLabel.setText("");
+        DuelSettings.hardLabel.setText("");
+        DuelSettings.extremeLabel.setText("");
+        DuelSettings.titleDuelSetting.setText("GAME SETTINGS");
+        DuelSettings.underLabel.setText("SELECT MODE");
+        DuelGame.duelStatus1.setText(" ");
+        DuelGame.duelStatus2.setText("WAITING FOR THE ROLL...");
+
+        DuelSettings.playerHp = 120;
+        DuelSettings.playerAtk = 20;
+        checkDuelMode();
+    }
+
+    public void updateStatusDuel(){
+        DuelGame.PlayerHP.setText("HITPOINT :" + DuelSettings.playerHp);
+        DuelGame.PlayerAtk.setText("ATK RANGE :" + DuelSettings.playerAtk);
+        DuelGame.EnemyHP.setText("HITPOINT :" + DuelSettings.enemyHp);
+        DuelGame.EnemyAtk.setText("HITPOINT :" + DuelSettings.enemyAtk);
+    }
+
+    public void enemyDuelResult(){
+        switch(enemyStatus){
+            case "ultimate":
+                if(DuelSettings.playerHp < 1){
+                    enemyWin = true;
+                    DuelResult.topTitle.setText("ENEMY USED ULTIMATE");
+                    DuelResult.duelResultTitle.setText("YOU LOSE");
+                }
+                break;
+            case "critical":
+                if(DuelSettings.playerHp < 1){
+                    enemyWin = true;
+                    DuelResult.topTitle.setText("ENEMY HIT CRITICALLY");
+                    DuelResult.duelResultTitle.setText("YOU LOSE");
+                }
+                break;
+        }
     }
 }
