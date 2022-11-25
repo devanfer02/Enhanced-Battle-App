@@ -32,6 +32,7 @@ public class SetUp extends Adder {
     boolean duelPaused = false;
     boolean enemyWin = false;
     boolean playerTurn = false;
+    boolean playerWin = false;
     String enemyStatus = "";
     //START SWITCH THEME//
     public void switchMode(){
@@ -702,9 +703,6 @@ public class SetUp extends Adder {
         addComponent(0,5,6,DuelGame.rollDuel,DuelGame.duelGamePanel);
         addComponent(0,6,6,DuelGame.settingsDuel,DuelGame.duelGamePanel);
     }
-
-
-
     public void duelRollTurn(){
         int turn = (int)(Math.random() * 10) + 1;
         if(turn % 2 == 0){
@@ -894,8 +892,9 @@ public class SetUp extends Adder {
         DuelSettings.extremeLabel.setText("");
         DuelSettings.titleDuelSetting.setText("GAME SETTINGS");
         DuelSettings.underLabel.setText("SELECT MODE");
-        DuelGame.duelStatus1.setText(" ");
+        DuelGame.duelStatus1.setText("   ");
         DuelGame.duelStatus2.setText("WAITING FOR THE ROLL...");
+        DuelSettings.poisonCount = 5;
 
         DuelSettings.playerHp = 120;
         DuelSettings.playerAtk = 20;
@@ -925,6 +924,8 @@ public class SetUp extends Adder {
                     DuelResult.duelResultTitle.setText("YOU LOSE");
                 }
                 break;
+
         }
+
     }
 }
