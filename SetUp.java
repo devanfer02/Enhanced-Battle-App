@@ -4,6 +4,7 @@ import Mutliplayer.*;
 import Singleplayer.*;
 
 import java.awt.*;
+import javax.swing.*;
 
 public class SetUp extends Adder {
     //START IMPORT FROM BASICS PACKAGE
@@ -33,6 +34,15 @@ public class SetUp extends Adder {
     boolean enemyWin = false;
     boolean playerTurn = false;
     boolean playerWin = false;
+    boolean playerSurender= false;
+
+    ///ARRAY STORING DATA FOR JBUTTON AND MORE
+    JButton[] multiHPbutton = {Gsm.setHpLowBtn,Gsm.setHpMedBtn,Gsm.setHpHighBtn,Gsm.setHpCrazyBtn};
+    boolean[] multiHpCheck = {Gsm.isHpLow, Gsm.isHpMed,Gsm.isHpHigh, Gsm.isHpCrazy};
+    int[] multiHPset = {Gsm.hpLow, Gsm.hpMed, Gsm.hpHigh, Gsm.hpCrazy};
+    JButton[] multiAtkbutton = {Gsm.setAtkLowBtn,Gsm.setAtkMedBtn,Gsm.setAtkHighBtn,Gsm.setAtkCrazyBtn};
+    boolean[] multiAtkCheck = {Gsm.isAtkLow, Gsm.isAtkMed,Gsm.isAtkHigh, Gsm.isAtkCrazy};
+
     String enemyStatus = "";
     //START SWITCH THEME//
     public void switchMode(){
@@ -222,109 +232,69 @@ public class SetUp extends Adder {
     //END SWITCH THEME//
 
     ///COLOR FOR GAME SET MUTLI SWITCH
+    public void multiSettingBtnDarkHP(){
+        Gsm.setHpLowBtn.setBackground(Color.LIGHT_GRAY);
+        Gsm.setHpMedBtn.setBackground(Color.LIGHT_GRAY);
+        Gsm.setHpHighBtn.setBackground(Color.LIGHT_GRAY);
+        Gsm.setHpCrazyBtn.setBackground(Color.LIGHT_GRAY);
+    }
+
+    public void multiSettingBtnLightHP(){
+        Gsm.setHpLowBtn.setBackground(Color.DARK_GRAY);
+        Gsm.setHpMedBtn.setBackground(Color.DARK_GRAY);
+        Gsm.setHpHighBtn.setBackground(Color.DARK_GRAY);
+        Gsm.setHpCrazyBtn.setBackground(Color.DARK_GRAY);
+    }
+
+    public void multiSettingBtnDarkAtk(){
+        Gsm.setAtkLowBtn.setBackground(Color.LIGHT_GRAY);
+        Gsm.setAtkMedBtn.setBackground(Color.LIGHT_GRAY);
+        Gsm.setAtkHighBtn.setBackground(Color.LIGHT_GRAY);
+        Gsm.setAtkCrazyBtn.setBackground(Color.LIGHT_GRAY);
+    }
+
+    public void multiSettingBtnLightAtk(){
+        Gsm.setAtkLowBtn.setBackground(Color.DARK_GRAY);
+        Gsm.setAtkMedBtn.setBackground(Color.DARK_GRAY);
+        Gsm.setAtkHighBtn.setBackground(Color.DARK_GRAY);
+        Gsm.setAtkCrazyBtn.setBackground(Color.DARK_GRAY);
+    }
+
+    public void setAllMultiHpFalse(){
+        for(int i = 0; i < 4; i++){
+            multiHpCheck[i] = false;
+        }
+    }
+
+    public void setAllMultiAtkFalse(){
+        for(int i = 0; i < 4; i++){
+            multiAtkCheck[i] = false;
+        }
+    }
 
     public void checkModeGSM_HP(){
+        for(int i = 0; i < 4; i++){
+            if(dark && multiHpCheck[i]){
+                multiSettingBtnDarkHP();
+                multiHPbutton[i].setBackground(new Color(46,139,87));
+            } else if(light && multiHpCheck[i]){
+                multiSettingBtnLightHP();
+                multiHPbutton[i].setBackground(new Color(46,139,87));
+            }
+        }
 
-        if(dark && Gsm.isHpLow){
-            Gsm.setHpLowBtn.setBackground(new Color(46,139,87));
-            Gsm.setHpMedBtn.setBackground(Color.LIGHT_GRAY);
-            Gsm.setHpHighBtn.setBackground(Color.LIGHT_GRAY);
-            Gsm.setHpCrazyBtn.setBackground(Color.LIGHT_GRAY);
-        }
-        if(dark && Gsm.isHpMed){
-            Gsm.setHpLowBtn.setBackground(Color.LIGHT_GRAY);
-            Gsm.setHpMedBtn.setBackground(new Color(46,139,87));
-            Gsm.setHpHighBtn.setBackground(Color.LIGHT_GRAY);
-            Gsm.setHpCrazyBtn.setBackground(Color.LIGHT_GRAY);
-        }
-        if(dark && Gsm.isHpHigh){
-            Gsm.setHpLowBtn.setBackground(Color.LIGHT_GRAY);
-            Gsm.setHpMedBtn.setBackground(Color.LIGHT_GRAY);
-            Gsm.setHpHighBtn.setBackground(new Color(46,139,87));
-            Gsm.setHpCrazyBtn.setBackground(Color.LIGHT_GRAY);
-        }
-        if(dark && Gsm.isHpCrazy){
-            Gsm.setHpLowBtn.setBackground(Color.LIGHT_GRAY);
-            Gsm.setHpMedBtn.setBackground(Color.LIGHT_GRAY);
-            Gsm.setHpHighBtn.setBackground(Color.LIGHT_GRAY);
-            Gsm.setHpCrazyBtn.setBackground(new Color(46,139,87));
-        }
-        if(light && Gsm.isHpLow){
-            Gsm.setHpLowBtn.setBackground(new Color(46,139,87));
-            Gsm.setHpMedBtn.setBackground(Color.DARK_GRAY);
-            Gsm.setHpHighBtn.setBackground(Color.DARK_GRAY);
-            Gsm.setHpCrazyBtn.setBackground(Color.DARK_GRAY);
-        }
-        if(light && Gsm.isHpMed){
-            Gsm.setHpLowBtn.setBackground(Color.DARK_GRAY);
-            Gsm.setHpMedBtn.setBackground(new Color(46,139,87));
-            Gsm.setHpHighBtn.setBackground(Color.DARK_GRAY);
-            Gsm.setHpCrazyBtn.setBackground(Color.DARK_GRAY);
-        }
-        if(light && Gsm.isHpHigh){
-            Gsm.setHpLowBtn.setBackground(Color.DARK_GRAY);
-            Gsm.setHpMedBtn.setBackground(Color.DARK_GRAY);
-            Gsm.setHpHighBtn.setBackground(new Color(46,139,87));
-            Gsm.setHpCrazyBtn.setBackground(Color.DARK_GRAY);
-        }
-        if(light && Gsm.isHpCrazy){
-            Gsm.setHpLowBtn.setBackground(Color.DARK_GRAY);
-            Gsm.setHpMedBtn.setBackground(Color.DARK_GRAY);
-            Gsm.setHpHighBtn.setBackground(Color.DARK_GRAY);
-            Gsm.setHpCrazyBtn.setBackground(new Color(46,139,87));
-        }
 
     }
     public void checkModeGSM_ATK(){
-        if(dark && Gsm.isAtkLow){
-            Gsm.setAtkLowBtn.setBackground(new Color(210,4,45));
-            Gsm.setAtkMedBtn.setBackground(Color.LIGHT_GRAY);
-            Gsm.setAtkHighBtn.setBackground(Color.LIGHT_GRAY);
-            Gsm.setAtkCrazyBtn.setBackground(Color.LIGHT_GRAY);
+        for(int i = 0; i < 4; i++){
+            if(dark && multiAtkCheck[i]){
+                multiSettingBtnDarkAtk();
+                multiAtkbutton[i].setBackground(new Color(210,4,45));
+            } else if(light && multiAtkCheck[i]){
+                multiSettingBtnLightAtk();
+                multiAtkbutton[i].setBackground(new Color(210,4,45));
+            }
         }
-        if(dark && Gsm.isAtkMed){
-            Gsm.setAtkLowBtn.setBackground(Color.LIGHT_GRAY);
-            Gsm.setAtkMedBtn.setBackground(new Color(210,4,45));
-            Gsm.setAtkHighBtn.setBackground(Color.LIGHT_GRAY);
-            Gsm.setAtkCrazyBtn.setBackground(Color.LIGHT_GRAY);
-        }
-        if(dark && Gsm.isAtkHigh){
-            Gsm.setAtkLowBtn.setBackground(Color.LIGHT_GRAY);
-            Gsm.setAtkMedBtn.setBackground(Color.LIGHT_GRAY);
-            Gsm.setAtkHighBtn.setBackground(new Color(210,4,45));
-            Gsm.setAtkCrazyBtn.setBackground(Color.LIGHT_GRAY);
-        }
-        if(dark && Gsm.isAtkCrazy){
-            Gsm.setAtkLowBtn.setBackground(Color.LIGHT_GRAY);
-            Gsm.setAtkMedBtn.setBackground(Color.LIGHT_GRAY);
-            Gsm.setAtkHighBtn.setBackground(Color.LIGHT_GRAY);
-            Gsm.setAtkCrazyBtn.setBackground(new Color(210,4,45));
-        }
-        if(light && Gsm.isAtkLow){
-            Gsm.setAtkLowBtn.setBackground(new Color(210,4,45));
-            Gsm.setAtkMedBtn.setBackground(Color.DARK_GRAY);
-            Gsm.setAtkHighBtn.setBackground(Color.DARK_GRAY);
-            Gsm.setAtkCrazyBtn.setBackground(Color.DARK_GRAY);
-        }
-        if(light && Gsm.isAtkMed){
-            Gsm.setAtkLowBtn.setBackground(Color.DARK_GRAY);
-            Gsm.setAtkMedBtn.setBackground(new Color(210,4,45));
-            Gsm.setAtkHighBtn.setBackground(Color.DARK_GRAY);
-            Gsm.setAtkCrazyBtn.setBackground(Color.DARK_GRAY);
-        }
-        if(light && Gsm.isAtkHigh){
-            Gsm.setAtkLowBtn.setBackground(Color.DARK_GRAY);
-            Gsm.setAtkMedBtn.setBackground(Color.DARK_GRAY);
-            Gsm.setAtkHighBtn.setBackground(new Color(210,4,45));
-            Gsm.setAtkCrazyBtn.setBackground(Color.DARK_GRAY);
-        }
-        if(light && Gsm.isAtkCrazy){
-            Gsm.setAtkLowBtn.setBackground(Color.DARK_GRAY);
-            Gsm.setAtkMedBtn.setBackground(Color.DARK_GRAY);
-            Gsm.setAtkHighBtn.setBackground(Color.DARK_GRAY);
-            Gsm.setAtkCrazyBtn.setBackground(new Color(210,4,45));
-        }
-
     }
 
     ///COLOR FOR GAME MULTI
@@ -477,38 +447,21 @@ public class SetUp extends Adder {
     public void resetStat(){
         Gsm.countPoisP1 = 5;
         Gsm.countPoisP2 = 5;
-        Gsm.isHpLow = false;
-        Gsm.isHpMed  = false;
-        Gsm.isHpHigh  = false;
-        Gsm.isHpCrazy  = false;
-        Gsm.isAtkLow = false;
-        Gsm.isAtkMed  = false;
-        Gsm.isAtkHigh  = false;
-        Gsm.isAtkCrazy  = false;
+        for(int i = 0; i < 4; i++){
+            multiHpCheck[i] = false;
+            multiAtkCheck[i] = false;
+        }
 
         Gsm.settingHp.setText("HP : ");
         Gsm.settingAtk.setText("Atk : ");
 
         if(dark) {
-            Gsm.setHpLowBtn.setBackground(Color.LIGHT_GRAY);
-            Gsm.setHpMedBtn.setBackground(Color.LIGHT_GRAY);
-            Gsm.setHpHighBtn.setBackground(Color.LIGHT_GRAY);
-            Gsm.setHpCrazyBtn.setBackground(Color.LIGHT_GRAY);
-            Gsm.setAtkLowBtn.setBackground(Color.LIGHT_GRAY);
-            Gsm.setAtkMedBtn.setBackground(Color.LIGHT_GRAY);
-            Gsm.setAtkHighBtn.setBackground(Color.LIGHT_GRAY);
-            Gsm.setAtkCrazyBtn.setBackground(Color.LIGHT_GRAY);
+            multiSettingBtnDarkHP();
+            multiSettingBtnDarkAtk();
         }
-
         if(light) {
-            Gsm.setHpLowBtn.setBackground(Color.DARK_GRAY);
-            Gsm.setHpMedBtn.setBackground(Color.DARK_GRAY);
-            Gsm.setHpHighBtn.setBackground(Color.DARK_GRAY);
-            Gsm.setHpCrazyBtn.setBackground(Color.DARK_GRAY);
-            Gsm.setAtkLowBtn.setBackground(Color.DARK_GRAY);
-            Gsm.setAtkMedBtn.setBackground(Color.DARK_GRAY);
-            Gsm.setAtkHighBtn.setBackground(Color.DARK_GRAY);
-            Gsm.setAtkCrazyBtn.setBackground(Color.DARK_GRAY);
+            multiSettingBtnLightHP();
+            multiSettingBtnLightAtk();
         }
 
         Gsm.Player1_HP = 0;
@@ -547,152 +500,114 @@ public class SetUp extends Adder {
         }
     }
 
-    public void checkContinueSound(){
-        String txt = Settings.setSound.getText();
-        String txt2 = Mgs.setSound.getText();
-        if(txt.equals("SOUND : OFF") && txt2.equals("SOUND : OFF")){
-            playSound();
-            stopSound();
-            holdSong();
-        } else{
-            setSoundEffectFile(btnSound);
-            playSound();
-            playSong();
-        }
-    }
-
     public int heal(){
         int Heal = (int) (Math.random() * 80) + 1;
-        if(Gsm.isHpLow){
-            Heal = (int) (Math.random() * (Gsm.hpLow * 0.1)) + 1;
-        } else if(Gsm.isHpMed){
-            Heal = (int) (Math.random() * (Gsm.hpMed * 0.1)) + 1;
-        } else if(Gsm.isHpHigh){
-            Heal = (int) (Math.random() * (Gsm.hpHigh * 0.1)) + 1;
-        } else if(Gsm.isHpCrazy){
-            Heal = (int) (Math.random() * (Gsm.hpCrazy * 0.1)) + 1;
+        for(int i = 0; i < 4; i++){
+            if(multiHpCheck[i]){
+                Heal = (int) (Math.random() * (multiHPset[i] * 0.1)) + 1;
+            }
         }
         return Heal;
     }
     ///BUTTONS IN DUEL MODE
+    public void duelCheckSettingBtnDark(){
+        DuelSettings.easyButton.setBackground(Color.LIGHT_GRAY);
+        DuelSettings.normalButton.setBackground(Color.LIGHT_GRAY);
+        DuelSettings.hardButton.setBackground(Color.LIGHT_GRAY);
+        DuelSettings.extremeButton.setBackground(Color.LIGHT_GRAY);
+    }
+
+    public void duelCheckSettingBtnLight(){
+        DuelSettings.easyButton.setBackground(Color.DARK_GRAY);
+        DuelSettings.normalButton.setBackground(Color.DARK_GRAY);
+        DuelSettings.hardButton.setBackground(Color.DARK_GRAY);
+        DuelSettings.extremeButton.setBackground(Color.DARK_GRAY);
+    }
+
+    public void setDuelSettingText(){
+        DuelSettings.easyLabel.setText("");
+        DuelSettings.normalLabel.setText("");
+        DuelSettings.hardLabel.setText("");
+        DuelSettings.extremeLabel.setText("");
+    }
+
     public void checkDuelMode(){
         DuelSettings.underLabel.setText("");
         if(dark){
-            DuelSettings.easyButton.setBackground(Color.LIGHT_GRAY);
-            DuelSettings.normalButton.setBackground(Color.LIGHT_GRAY);
-            DuelSettings.hardButton.setBackground(Color.LIGHT_GRAY);
-            DuelSettings.extremeButton.setBackground(Color.LIGHT_GRAY);
+            duelCheckSettingBtnDark();
 
         }
         if(dark && DuelSettings.isEasy){
+            duelCheckSettingBtnDark();
             DuelSettings.easyButton.setBackground(Color.GREEN);
-            DuelSettings.normalButton.setBackground(Color.LIGHT_GRAY);
-            DuelSettings.hardButton.setBackground(Color.LIGHT_GRAY);
-            DuelSettings.extremeButton.setBackground(Color.LIGHT_GRAY);
 
             DuelSettings.easyLabel.setForeground(Color.GREEN);
-
+            setDuelSettingText();
             DuelSettings.easyLabel.setText("KIDS");
-            DuelSettings.normalLabel.setText("");
-            DuelSettings.hardLabel.setText("");
-            DuelSettings.extremeLabel.setText("");
         }
         if(dark && DuelSettings.isNormal){
-            DuelSettings.easyButton.setBackground(Color.LIGHT_GRAY);
+            duelCheckSettingBtnDark();
             DuelSettings.normalButton.setBackground(Color.YELLOW);
-            DuelSettings.hardButton.setBackground(Color.LIGHT_GRAY);
-            DuelSettings.extremeButton.setBackground(Color.LIGHT_GRAY);
 
             DuelSettings.normalLabel.setForeground(Color.YELLOW);
 
-            DuelSettings.easyLabel.setText("");
+            setDuelSettingText();
             DuelSettings.normalLabel.setText("TEENS");
-            DuelSettings.hardLabel.setText("");
-            DuelSettings.extremeLabel.setText("");
         }
         if(dark && DuelSettings.isHard){
-            DuelSettings.easyButton.setBackground(Color.LIGHT_GRAY);
-            DuelSettings.normalButton.setBackground(Color.LIGHT_GRAY);
+            duelCheckSettingBtnDark();
             DuelSettings.hardButton.setBackground(Color.ORANGE);
-            DuelSettings.extremeButton.setBackground(Color.LIGHT_GRAY);
 
             DuelSettings.hardLabel.setForeground(Color.ORANGE);
 
-            DuelSettings.easyLabel.setText("");
-            DuelSettings.normalLabel.setText("");
+            setDuelSettingText();
             DuelSettings.hardLabel.setText("ADULTS");
-            DuelSettings.extremeLabel.setText("");
         }
         if(dark && DuelSettings.isExtreme){
-            DuelSettings.easyButton.setBackground(Color.LIGHT_GRAY);
-            DuelSettings.normalButton.setBackground(Color.LIGHT_GRAY);
-            DuelSettings.hardButton.setBackground(Color.LIGHT_GRAY);
+            duelCheckSettingBtnDark();
             DuelSettings.extremeButton.setBackground(Color.RED);
 
             DuelSettings.extremeLabel.setForeground(Color.RED);
 
-            DuelSettings.easyLabel.setText("");
-            DuelSettings.normalLabel.setText("");
-            DuelSettings.hardLabel.setText("");
+            setDuelSettingText();
             DuelSettings.extremeLabel.setText("CHADS");
         }
         if(light){
-            DuelSettings.easyButton.setBackground(Color.DARK_GRAY);
-            DuelSettings.normalButton.setBackground(Color.DARK_GRAY);
-            DuelSettings.hardButton.setBackground(Color.DARK_GRAY);
-            DuelSettings.extremeButton.setBackground(Color.DARK_GRAY);
-
+            duelCheckSettingBtnLight();
         }
         if(light && DuelSettings.isEasy){
+            duelCheckSettingBtnLight();
             DuelSettings.easyButton.setBackground(Color.GREEN);
-            DuelSettings.normalButton.setBackground(Color.DARK_GRAY);
-            DuelSettings.hardButton.setBackground(Color.DARK_GRAY);
-            DuelSettings.extremeButton.setBackground(Color.DARK_GRAY);
 
             DuelSettings.easyLabel.setForeground(Color.GREEN);
-
+            setDuelSettingText();
             DuelSettings.easyLabel.setText("KIDS");
-            DuelSettings.normalLabel.setText("");
-            DuelSettings.hardLabel.setText("");
-            DuelSettings.extremeLabel.setText("");
         }
         if(light &&DuelSettings.isNormal){
-            DuelSettings.easyButton.setBackground(Color.DARK_GRAY);
+            duelCheckSettingBtnLight();
             DuelSettings.normalButton.setBackground(Color.YELLOW);
-            DuelSettings.hardButton.setBackground(Color.DARK_GRAY);
-            DuelSettings.extremeLabel.setBackground(Color.DARK_GRAY);
 
             DuelSettings.normalLabel.setForeground(Color.YELLOW);
 
-            DuelSettings.easyLabel.setText("");
+            setDuelSettingText();
             DuelSettings.normalLabel.setText("TEENS");
-            DuelSettings.hardLabel.setText("");
-            DuelSettings.extremeLabel.setText("");
         }
         if(light && DuelSettings.isHard){
-            DuelSettings.easyButton.setBackground(Color.DARK_GRAY);
-            DuelSettings.normalButton.setBackground(Color.DARK_GRAY);
+            duelCheckSettingBtnLight();
             DuelSettings.hardButton.setBackground(Color.ORANGE);
-            DuelSettings.extremeLabel.setBackground(Color.DARK_GRAY);
 
             DuelSettings.hardLabel.setForeground(Color.ORANGE);
 
-            DuelSettings.easyLabel.setText("");
-            DuelSettings.normalLabel.setText("");
+            setDuelSettingText();
             DuelSettings.hardLabel.setText("ADULTS");
-            DuelSettings.extremeLabel.setText("");
         }
         if(light && DuelSettings.isExtreme){
-            DuelSettings.easyButton.setBackground(Color.DARK_GRAY);
-            DuelSettings.normalButton.setBackground(Color.DARK_GRAY);
-            DuelSettings.hardButton.setBackground(Color.DARK_GRAY);
-            DuelSettings.extremeLabel.setBackground(Color.RED);
+            duelCheckSettingBtnLight();
+            DuelSettings.extremeButton.setBackground(Color.RED);
 
             DuelSettings.extremeLabel.setForeground(Color.RED);
 
-            DuelSettings.easyLabel.setText("");
-            DuelSettings.normalLabel.setText("");
-            DuelSettings.hardLabel.setText("");
+            setDuelSettingText();
             DuelSettings.extremeLabel.setText("CHADS");
         }
     }
@@ -704,7 +619,7 @@ public class SetUp extends Adder {
         addComponent(0,6,6,DuelGame.settingsDuel,DuelGame.duelGamePanel);
     }
     public void duelRollTurn(){
-        int turn = (int)(Math.random() * 10) + 1;
+        int turn = (int)(Math.random() * 11);
         if(turn % 2 == 0){
             playerAction();
             playerTurn = true;
@@ -752,6 +667,7 @@ public class SetUp extends Adder {
             enemyStatus = "ultimate";
             ultimate = DuelSettings.enemyAtk + 70;
             DuelSettings.playerHp -= ultimate;
+            DuelSettings.playerAtk -= ultimate * 0.05;
             DuelGame.duelStatus1.setText("ENEMY USED ULTIMATE!");
             DuelGame.duelStatus2.setText("DAMAGE : " + ultimate);
             updateStatusDuel();
@@ -762,6 +678,7 @@ public class SetUp extends Adder {
             enemyStatus = "ultimate";
             ultimate = DuelSettings.enemyAtk + 50;
             DuelSettings.playerHp -= ultimate;
+            DuelSettings.playerAtk -= ultimate * 0.04;
             DuelGame.duelStatus1.setText("ENEMY USED ULTIMATE!");
             DuelGame.duelStatus2.setText("DAMAGE : " + ultimate);
             updateStatusDuel();
@@ -771,6 +688,7 @@ public class SetUp extends Adder {
             enemyStatus = "ultimate";
             ultimate = DuelSettings.enemyAtk + 30;
             DuelSettings.playerHp -= ultimate;
+            DuelSettings.playerAtk -= ultimate * 0.03;
             DuelGame.duelStatus1.setText("ENEMY USED ULTIMATE!");
             DuelGame.duelStatus2.setText("DAMAGE : " + ultimate);
             updateStatusDuel();
@@ -838,7 +756,7 @@ public class SetUp extends Adder {
         //ATTACK HIT
         else if(move % 2 == 0){
             enemyStatus = "attack";
-            atk = (int)(Math.random() * DuelSettings.enemyAtk) + 1;
+            atk = (int)(Math.random() * DuelSettings.enemyAtk) + (int)(DuelSettings.enemyAtk * 0.3);
             DuelSettings.playerHp -= atk;
             if(DuelSettings.playerHp < 1){
                 DuelResult.topTitle.setText("ENEMY ATTACKED YOU");
@@ -857,22 +775,22 @@ public class SetUp extends Adder {
             if(DuelSettings.isEasy) {
                 heal = (int)(Math.random() * 10) + 5;
                 DuelSettings.enemyHp += heal;
-                if(DuelSettings.enemyHp > 60) DuelSettings.enemyHp = 60;
+                if(DuelSettings.enemyHp > 100) DuelSettings.enemyHp = 100;
             }
             else if(DuelSettings.isNormal) {
                 heal = (int)(Math.random() * 25) + 7;
                 DuelSettings.enemyHp += heal;
-                if(DuelSettings.enemyHp > 120) DuelSettings.enemyHp = 120;
+                if(DuelSettings.enemyHp > 150) DuelSettings.enemyHp = 150;
             }
             else if(DuelSettings.isHard) {
                 heal = (int)(Math.random() * 45) + 10;
                 DuelSettings.enemyHp += heal;
-                if(DuelSettings.enemyHp > 200) DuelSettings.enemyHp = 200;
+                if(DuelSettings.enemyHp > 220) DuelSettings.enemyHp = 220;
             }
             else if(DuelSettings.isExtreme) {
                 heal = (int)(Math.random() * 65) + 15;
                 DuelSettings.enemyHp += heal;
-                if(DuelSettings.enemyHp > 320) DuelSettings.enemyHp = 320;
+                if(DuelSettings.enemyHp > 420) DuelSettings.enemyHp = 420;
             }
             DuelGame.duelStatus1.setText("ENEMY USE HEAL!");
             DuelGame.duelStatus2.setText("HP RECOVERED : " + heal);
@@ -892,7 +810,7 @@ public class SetUp extends Adder {
         DuelSettings.extremeLabel.setText("");
         DuelSettings.titleDuelSetting.setText("GAME SETTINGS");
         DuelSettings.underLabel.setText("SELECT MODE");
-        DuelGame.duelStatus1.setText("   ");
+        DuelGame.duelStatus1.setText("GAME STARTED");
         DuelGame.duelStatus2.setText("WAITING FOR THE ROLL...");
         DuelSettings.poisonCount = 5;
 
@@ -924,8 +842,18 @@ public class SetUp extends Adder {
                     DuelResult.duelResultTitle.setText("YOU LOSE");
                 }
                 break;
-
         }
+    }
 
+    public void setColorResult(){
+        if(DuelSettings.isExtreme){
+            DuelResult.duelResultTitle.setForeground(Color.RED);
+        } else if(DuelSettings.isHard){
+            DuelResult.duelResultTitle.setForeground(Color.ORANGE);
+        } else if(DuelSettings.isNormal){
+            DuelResult.duelResultTitle.setForeground(Color.YELLOW);
+        } else if(DuelSettings.isEasy){
+            DuelResult.duelResultTitle.setForeground(Color.GREEN);
+        }
     }
 }
