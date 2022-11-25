@@ -232,10 +232,12 @@ public class AppSys extends SetUp{
     public void duelResultScreen(){
         stopSong();
         setSongFile(loseDuel);
+        if(playerSurender) setSongFile(surrenderDuel);
         if(DuelSettings.isEasy && playerWin) setSongFile(WinDuelEasy);
         if(DuelSettings.isNormal && playerWin) setSongFile(WinDuelNormal);
         if(DuelSettings.isHard && playerWin) setSongFile(WinDuelHard);
         if(DuelSettings.isExtreme && playerWin) setSongFile(WinDuelExtreme);
+        playerSurender = false;
         playerWin = false;
         checkSetSound();
         checkDuelMode();
@@ -333,7 +335,7 @@ public class AppSys extends SetUp{
             if(multiPaused){
                 stopSong();
                 setSongFile(songPlayed);
-                checkContinueSound();
+                checkSetSoundVer2();
                 removePanel(frame, Mgs.pauseSettingPanel);
                 removePanel(frame, Gm.gameMultiPanel);
                 resetStat();
@@ -345,7 +347,7 @@ public class AppSys extends SetUp{
                 duelRollButtons();
                 stopSong();
                 setSongFile(songPlayed);
-                checkContinueSound();
+                checkSetSoundVer2();
                 removePanel(frame, Mgs.pauseSettingPanel);
                 removePanel(frame, DuelGame.duelGamePanel);
                 resetDuelSettings();
@@ -477,10 +479,8 @@ public class AppSys extends SetUp{
     public class playerlowhp implements ActionListener{
         public void actionPerformed(ActionEvent e){
             playSound();
-            Gsm.isHpLow = true;
-            Gsm.isHpMed  = false;
-            Gsm.isHpHigh  = false;
-            Gsm.isHpCrazy  = false;
+            setAllMultiHpFalse();
+            multiHpCheck[0] = true;
 
             checkModeGSM_HP();
             Gsm.settingHp.setText("HP : " + Gsm.hpLow);
@@ -494,10 +494,8 @@ public class AppSys extends SetUp{
     public class playermedhp implements ActionListener{
         public void actionPerformed(ActionEvent e){
             playSound();
-            Gsm.isHpLow = false;
-            Gsm.isHpMed  = true;
-            Gsm.isHpHigh  = false;
-            Gsm.isHpCrazy  = false;
+            setAllMultiHpFalse();
+            multiHpCheck[1] = true;
 
             checkModeGSM_HP();
             Gsm.settingHp.setText("HP : " + Gsm.hpMed);
@@ -510,10 +508,8 @@ public class AppSys extends SetUp{
     public class playerhighhp implements ActionListener{
         public void actionPerformed(ActionEvent e){
             playSound();
-            Gsm.isHpLow = false;
-            Gsm.isHpMed  = false;
-            Gsm.isHpHigh  = true;
-            Gsm.isHpCrazy  = false;
+            setAllMultiHpFalse();
+            multiHpCheck[2] = true;
             checkModeGSM_HP();
             Gsm.settingHp.setText("HP : " + Gsm.hpHigh);
             Gsm.Player1_HP = Gsm.hpHigh;
@@ -525,10 +521,8 @@ public class AppSys extends SetUp{
     public class playercrazyhp implements ActionListener{
         public void actionPerformed(ActionEvent e){
             playSound();
-            Gsm.isHpLow = false;
-            Gsm.isHpMed  = false;
-            Gsm.isHpHigh  = false;
-            Gsm.isHpCrazy  = true;
+            setAllMultiHpFalse();
+            multiHpCheck[3] = true;
             checkModeGSM_HP();
             Gsm.settingHp.setText("HP : " + Gsm.hpCrazy);
             Gsm.Player1_HP = Gsm.hpCrazy;
@@ -541,10 +535,8 @@ public class AppSys extends SetUp{
     public class playerlowatk implements ActionListener{
         public void actionPerformed(ActionEvent e){
             playSound();
-            Gsm.isAtkLow = true;
-            Gsm.isAtkMed  = false;
-            Gsm.isAtkHigh  = false;
-            Gsm.isAtkCrazy  = false;
+            setAllMultiAtkFalse();
+            multiAtkCheck[0] = true;
             checkModeGSM_ATK();
             Gsm.settingAtk.setText("Atk : " + Gsm.atkLow);
             Gsm.Player1_ATKR = Gsm.atkLow;
@@ -556,10 +548,8 @@ public class AppSys extends SetUp{
     public class playermedatk implements ActionListener{
         public void actionPerformed(ActionEvent e){
             playSound();
-            Gsm.isAtkLow = false;
-            Gsm.isAtkMed  = true;
-            Gsm.isAtkHigh  = false;
-            Gsm.isAtkCrazy  = false;
+            setAllMultiAtkFalse();
+            multiAtkCheck[1] = true;
             checkModeGSM_ATK();
             Gsm.settingAtk.setText("Atk : " + Gsm.atkMed);
             Gsm.Player1_ATKR = Gsm.atkMed;
@@ -571,10 +561,8 @@ public class AppSys extends SetUp{
     public class playerhighatk implements ActionListener{
         public void actionPerformed(ActionEvent e){
             playSound();
-            Gsm.isAtkLow = false;
-            Gsm.isAtkMed  = false;
-            Gsm.isAtkHigh  = true;
-            Gsm.isAtkCrazy  = false;
+            setAllMultiAtkFalse();
+            multiAtkCheck[2] = true;
             checkModeGSM_ATK();
             Gsm.settingAtk.setText("Atk : " + Gsm.atkHigh);
             Gsm.Player1_ATKR = Gsm.atkHigh;
@@ -586,10 +574,8 @@ public class AppSys extends SetUp{
     public class playercrazyatk implements ActionListener{
         public void actionPerformed(ActionEvent e){
             playSound();
-            Gsm.isAtkLow = false;
-            Gsm.isAtkMed  = false;
-            Gsm.isAtkHigh  = false;
-            Gsm.isAtkCrazy  = true;
+            setAllMultiAtkFalse();
+            multiAtkCheck[3] = true;
             checkModeGSM_ATK();
             Gsm.settingAtk.setText("Atk : " + Gsm.atkCrazy);
             Gsm.Player1_ATKR = Gsm.atkCrazy;
@@ -608,8 +594,8 @@ public class AppSys extends SetUp{
                 removePanel(frame, Mgs.pauseSettingPanel);
                 duelGameScreen();
             }
-            if((Gsm.isHpLow || Gsm.isHpMed || Gsm.isHpHigh || Gsm.isHpCrazy)
-                    && (Gsm.isAtkLow || Gsm.isAtkMed || Gsm.isAtkHigh || Gsm.isAtkCrazy)){
+            if((multiHpCheck[0] || multiHpCheck[1] || multiHpCheck[2] || multiHpCheck[3])
+                    && (multiAtkCheck[0] ||multiAtkCheck[1] || multiAtkCheck[2] || multiAtkCheck[3])){
                 Gm.btnPoisonP1.setText("POISON" + "(" + Gsm.countPoisP1 + ")");
                 Gm.btnPoisonP2.setText("POISON" + "(" + Gsm.countPoisP2 + ")");
 
@@ -659,7 +645,6 @@ public class AppSys extends SetUp{
             int atkR = (int) (Math.random() * Gsm.Player1_ATKR) + 1;
             Gsm.Player2_HP -= atkR;
             if(Gsm.Player2_HP < 1){
-                playSound();
                 removePanel(frame, Gm.gameMultiPanel);
                 winner.won.setText("PLAYER 1 WON");
                 if(dark){
@@ -687,25 +672,20 @@ public class AppSys extends SetUp{
     public class HealP1 implements ActionListener{
 
         public void actionPerformed(ActionEvent e){
-            Gsm.P1Turn = false;
-            Gsm.P2Turn = false;
-
             playSound();
             int Heal = heal();
             Gsm.Player1_HP += Heal;
 
-            if(Gsm.isHpLow && Gsm.Player1_HP > Gsm.hpLow){
-               Gsm.Player1_HP = Gsm.hpLow;
-            } else if(Gsm.isHpMed && Gsm.Player1_HP > Gsm.hpMed){
-                Gsm.Player1_HP = Gsm.hpMed;
-            } else if(Gsm.isHpHigh && Gsm.Player1_HP > Gsm.hpHigh){
-                Gsm.Player1_HP = Gsm.hpHigh;
-            } else if(Gsm.isHpCrazy && Gsm.Player1_HP > Gsm.hpCrazy){
-                Gsm.Player1_HP = Gsm.hpCrazy;
+            for(int i = 0; i < 4; i++){
+                if(multiHpCheck[i] && Gsm.Player1_HP > multiHPset[i]){
+                    Gsm.Player1_HP = multiHPset[i];
+                }
             }
+
             Gm.hpPlayer1.setText("Hitpoint : " + Gsm.Player1_HP);
             Gm.hpPlayer2.setText("Hitpoint : " + Gsm.Player2_HP);
-
+            Gsm.P1Turn = false;
+            Gsm.P2Turn = false;
             removeP1Btn();
             rollDice();
         }
@@ -839,22 +819,17 @@ public class AppSys extends SetUp{
     public class HealP2 implements ActionListener{
 
         public void actionPerformed(ActionEvent e){
-            Gsm.P1Turn = false;
-            Gsm.P2Turn = false;
-
             playSound();
             int Heal = heal();
             Gsm.Player2_HP += Heal;
 
-            if(Gsm.isHpLow && Gsm.Player2_HP > Gsm.hpLow){
-                Gsm.Player2_HP = Gsm.hpLow;
-            } else if(Gsm.isHpMed && Gsm.Player2_HP > Gsm.hpMed){
-                Gsm.Player2_HP = Gsm.hpMed;
-            } else if(Gsm.isHpHigh && Gsm.Player2_HP > Gsm.hpHigh){
-                Gsm.Player2_HP = Gsm.hpHigh;
-            } else if(Gsm.isHpCrazy && Gsm.Player2_HP > Gsm.hpCrazy){
-                Gsm.Player2_HP = Gsm.hpCrazy;
+            for(int i = 0; i < 4; i++){
+                if(multiHpCheck[i] && Gsm.Player2_HP > multiHPset[i]){
+                    Gsm.Player2_HP = multiHPset[i];
+                }
             }
+            Gsm.P1Turn = false;
+            Gsm.P2Turn = false;
             Gm.hpPlayer1.setText("Hitpoint : " + Gsm.Player1_HP);
             Gm.hpPlayer2.setText("Hitpoint : " + Gsm.Player2_HP);
             if(dark){
@@ -987,8 +962,8 @@ public class AppSys extends SetUp{
             DuelSettings.isHard = false;
             DuelSettings.isExtreme = false;
 
-            DuelSettings.enemyHp = 60;
-            DuelSettings.enemyAtk = 10;
+            DuelSettings.enemyHp = 100;
+            DuelSettings.enemyAtk = 15;
             checkDuelMode();
         }
     }
@@ -1001,8 +976,8 @@ public class AppSys extends SetUp{
             DuelSettings.isHard = false;
             DuelSettings.isExtreme = false;
 
-            DuelSettings.enemyHp = 120;
-            DuelSettings.enemyAtk = 20;
+            DuelSettings.enemyHp = 150;
+            DuelSettings.enemyAtk = 25;
             checkDuelMode();
         }
     }
@@ -1015,7 +990,7 @@ public class AppSys extends SetUp{
             DuelSettings.isHard = true;
             DuelSettings.isExtreme = false;
 
-            DuelSettings.enemyHp = 200;
+            DuelSettings.enemyHp = 220;
             DuelSettings.enemyAtk = 30;
             checkDuelMode();
         }
@@ -1029,7 +1004,7 @@ public class AppSys extends SetUp{
             DuelSettings.isHard = false;
             DuelSettings.isExtreme = true;
 
-            DuelSettings.enemyHp = 320;
+            DuelSettings.enemyHp = 420;
             DuelSettings.enemyAtk = 50;
             checkDuelMode();
         }
@@ -1043,6 +1018,7 @@ public class AppSys extends SetUp{
                 setSongFile(btlSong2);
                 checkSetSound();
                 removePanel(frame, DuelSettings.duelSettingPanel);
+                DuelGame.poisonBtn.setText("POISON (" + DuelSettings.poisonCount + ")");
                 DuelGame.PlayerHP.setText("Hitpoint : " + DuelSettings.playerHp);
                 DuelGame.PlayerAtk.setText("Atk Range : " + DuelSettings.playerAtk);
                 DuelGame.EnemyHP.setText("Hitpoint : " + DuelSettings.enemyHp);
@@ -1132,6 +1108,7 @@ public class AppSys extends SetUp{
             if(DuelSettings.enemyHp < 1){
                 playerWin = true;
                 removePlayerAction();
+                setColorResult();
                 removePanel(frame, DuelGame.duelGamePanel);
                 DuelResult.topTitle.setText("CONGRATULATIONS...");
                 DuelResult.duelResultTitle.setText("YOU WON!");
@@ -1150,7 +1127,7 @@ public class AppSys extends SetUp{
             playerTurn = false;
             int Heal = (int)(Math.random() * 35) + 15;
             DuelSettings.playerHp += Heal;
-            if(DuelSettings.playerHp > 120) DuelSettings.playerHp = 120;
+            if(DuelSettings.playerHp > 140) DuelSettings.playerHp = 140;
             DuelGame.duelStatus1.setText("YOU HEALED YOUR WOUND!");
             DuelGame.duelStatus2.setText("HP RECOVERED : " + Heal);
             updateStatusDuel();
@@ -1172,6 +1149,7 @@ public class AppSys extends SetUp{
                     playerWin = true;
                     removePlayerAction();
                     removePanel(frame, DuelGame.duelGamePanel);
+                    setColorResult();
                     DuelResult.topTitle.setText("CONGRATULATIONS...");
                     DuelResult.duelResultTitle.setText("YOU WON!");
                     duelResultScreen();
@@ -1193,7 +1171,13 @@ public class AppSys extends SetUp{
         public void actionPerformed(ActionEvent e){
             playerTurn = false;
             removePlayerAction();
+            playerSurender = true;
             removePanel(frame, DuelGame.duelGamePanel);
+            if(dark){
+                DuelResult.duelResultTitle.setForeground(Color.WHITE);
+            } else{
+                DuelResult.duelResultTitle.setForeground(Color.BLACK);
+            }
             DuelSettings.underLabel.setText("SELECT MODE");
             DuelResult.topTitle.setText("WOW SEE YOU GOT A...");
             DuelResult.duelResultTitle.setText("A FUCKING L");
