@@ -1,5 +1,3 @@
-
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -61,6 +59,10 @@ public class AppSys extends SetUp{
     //// START DUEL MODE GAME
     rollDuelAction rollDuelAction = new rollDuelAction();
     duelGamePaused duelGamePaused = new duelGamePaused();
+    PlayerAttack PlayerAttack = new PlayerAttack();
+    PlayerHeal PlayerHeal = new PlayerHeal();
+    PlayerPoison PlayerPoison = new PlayerPoison();
+    PlayerSurrender PlayerSurrender = new PlayerSurrender();
     //// END DUEL MODE GAME
     //END SETTING CLASSES FOR ACTION PERFORMED AKA BUTTONS
     JFrame frame = new JFrame("BattleApp");
@@ -160,6 +162,14 @@ public class AppSys extends SetUp{
         ////BUTTONS IN DUEL GAME
         DuelGame.settingsDuel.addActionListener(duelGamePaused);
         DuelGame.rollDuel.addActionListener(rollDuelAction);
+        DuelGame.attackBtn.addActionListener(PlayerAttack);
+        DuelGame.healBtn.addActionListener(PlayerHeal);
+        DuelGame.poisonBtn.addActionListener(PlayerPoison);
+        DuelGame.surrenderBtn.addActionListener(PlayerSurrender);
+
+        ////BUTTONS IN DUEL RESULT
+        DuelResult.backMenu.addActionListener(bmw);
+        DuelResult.newGame.addActionListener(duelContSetting);
     }
 
     //START SETTING PANEL SCREEN
@@ -220,8 +230,20 @@ public class AppSys extends SetUp{
         frame.setVisible(true);
     }
 
-    public void winnerScreen(){
+    public void duelResultScreen(){
+        stopSong();
+        if(DuelSettings.isEasy) setSongFile(WinDuelEasy);
+        if(DuelSettings.isNormal) setSongFile(WinDuelNormal);
+        if(DuelSettings.isHard) setSongFile(WinDuelHard);
+        if(DuelSettings.isExtreme) setSongFile(WinDuelExtreme);
+        checkSetSound();
+        checkDuelMode();
+        resetDuelSettings();
+        frame.add(DuelResult.duelResultPanel);
+        frame.setVisible(true);
+    }
 
+    public void winnerScreen(){
         stopSong();
         setSongFile(WSong);
         resetStat();
@@ -284,7 +306,12 @@ public class AppSys extends SetUp{
     public class duelContSetting implements ActionListener{
         public void actionPerformed(ActionEvent e) {
             playSound();
+            DuelSettings.isEasy = false;
+            DuelSettings.isNormal = false;
+            DuelSettings.isHard = false;
+            DuelSettings.isExtreme = false;
             removePanel(frame, DMR.duelRulePanel);
+            removePanel(frame, DuelResult.duelResultPanel);
             duelModeSettingScreen();
         }
     }
@@ -310,11 +337,13 @@ public class AppSys extends SetUp{
                 multiPaused = false;
             }
             if(duelPaused){
+                if(playerTurn) removePlayerAction();
                 stopSong();
                 setSongFile(songPlayed);
                 checkContinueSound();
                 removePanel(frame, Mgs.pauseSettingPanel);
                 removePanel(frame, DuelGame.duelGamePanel);
+                resetDuelSettings();
                 duelPaused = false;
             }
             else{
@@ -343,6 +372,7 @@ public class AppSys extends SetUp{
             setSongFile(songPlayed);
             checkSetSound();
             removePanel(frame, winner.winPanel);
+            removePanel(frame, DuelResult.duelResultPanel);
             menuScreen();
         }
     }
@@ -624,8 +654,9 @@ public class AppSys extends SetUp{
             int atkR = (int) (Math.random() * Gsm.Player1_ATKR) + 1;
             Gsm.Player2_HP -= atkR;
             if(Gsm.Player2_HP < 1){
+                playSound();
                 removePanel(frame, Gm.gameMultiPanel);
-                winner.won.setText("P1 WON");
+                winner.won.setText("PLAYER 1 WON");
                 if(dark){
                     winner.won.setForeground(Color.CYAN);
                 }
@@ -682,7 +713,7 @@ public class AppSys extends SetUp{
             int gacha = (int) (Math.random() * 1000) + 1;
             if(gacha == 14 && Gsm.countPoisP1 > 0){
                 removePanel(frame, Gm.gameMultiPanel);
-                winner.won.setText("P1 WON");
+                winner.won.setText("PLAYER 1 WON");
                 if(dark){
                     winner.won.setForeground(Color.CYAN);
                 }
@@ -774,7 +805,7 @@ public class AppSys extends SetUp{
             Gsm.Player1_HP -= atkR;
             if(Gsm.Player1_HP < 1){
                 removePanel(frame, Gm.gameMultiPanel);
-                winner.won.setText("P2 WON");
+                winner.won.setText("PLAYER 2 WON");
                 if(dark){
                     winner.won.setForeground(Color.YELLOW);
                 }
@@ -838,7 +869,7 @@ public class AppSys extends SetUp{
             int gacha = (int) (Math.random() * 1000) + 1;
             if(gacha == 15 && Gsm.countPoisP2 > 0){
                 removePanel(frame, Gm.gameMultiPanel);
-                winner.won.setText("P2 WON");
+                winner.won.setText("PLAYER 2 WON");
                 if(dark){
                     winner.won.setForeground(Color.YELLOW);
                 }
@@ -906,8 +937,6 @@ public class AppSys extends SetUp{
             if(Gsm.countPoisP2 > -1){
                 Gm.btnPoisonP2.setText("POISON" + "(" + Gsm.countPoisP2 + ")");
             }
-
-
         }
     }
 
@@ -954,7 +983,7 @@ public class AppSys extends SetUp{
             DuelSettings.isExtreme = false;
 
             DuelSettings.enemyHp = 60;
-            DuelSettings.enemyAtk = 5;
+            DuelSettings.enemyAtk = 10;
             checkDuelMode();
         }
     }
@@ -968,7 +997,7 @@ public class AppSys extends SetUp{
             DuelSettings.isExtreme = false;
 
             DuelSettings.enemyHp = 120;
-            DuelSettings.enemyAtk = 15;
+            DuelSettings.enemyAtk = 20;
             checkDuelMode();
         }
     }
@@ -1003,7 +1032,6 @@ public class AppSys extends SetUp{
 
     public class startDuelGame implements ActionListener{
         public void actionPerformed(ActionEvent e){
-            playSound();
             if(DuelSettings.isEasy || DuelSettings.isNormal ||
                     DuelSettings.isHard || DuelSettings.isExtreme){
                 stopSong();
@@ -1018,37 +1046,35 @@ public class AppSys extends SetUp{
                 duelRollButtons();
 
             } else{
+                playSound();
                 DuelSettings.titleDuelSetting.setText("SELECT MODE FIRST");
             }
 
         }
     }
 
-    public class rollDuelAction implements ActionListener{
-        public void actionPerformed(ActionEvent e) {
-            duelRollTurn();
-        }
-    }
-
     public class backToRuleDuel implements ActionListener{
         public void actionPerformed(ActionEvent e){
             playSound();
-            DuelSettings.isEasy = false;
-            DuelSettings.isNormal = false;
-            DuelSettings.isHard = false;
-            DuelSettings.isExtreme = false;
-            DuelSettings.easyLabel.setText("");
-            DuelSettings.normalLabel.setText("");
-            DuelSettings.hardLabel.setText("");
-            DuelSettings.extremeLabel.setText("");
-            DuelSettings.titleDuelSetting.setText("GAME SETTINGS");
-
-            checkDuelMode();
+            resetDuelSettings();
             removePanel(frame, DuelSettings.duelSettingPanel);
             duelModeRuleScreen();
+
         }
     }
     ////BUTTON ACTIONS FOR DUEL GAME
+    public class rollDuelAction implements ActionListener{
+        public void actionPerformed(ActionEvent e) {
+            playSound();
+            duelRollTurn();
+            if(enemyWin){
+                removeRollDuel();
+                removePanel(frame, DuelGame.duelGamePanel);
+                duelResultScreen();
+            }
+        }
+    }
+
     public class duelGamePaused implements ActionListener{
 
         public void actionPerformed(ActionEvent e) {
@@ -1058,4 +1084,116 @@ public class AppSys extends SetUp{
             settingGameScreen();
         }
     }
+
+    public class PlayerAttack implements ActionListener{
+        public void actionPerformed(ActionEvent e){
+            playerTurn = false;
+            playSound();
+            int critical = (int)(Math.random() * 100) + 1;
+            int atkRange = (int)(Math.random() * DuelSettings.playerAtk) + 15;
+            int atk;
+            if(critical % 100 == 0){
+                DuelGame.duelStatus1.setText("YOU HIT THEM CRITICALLY!");
+                atk = atkRange * 6;
+                DuelGame.duelStatus2.setText("DAMAGE : " + atk);
+                DuelSettings.enemyHp -= atk;
+            }
+            else if(critical % 50 == 0){
+                DuelGame.duelStatus1.setText("YOU HIT THEM CRITICALLY!");
+                atk = atkRange * 4;
+                DuelGame.duelStatus2.setText("DAMAGE : " + atk);
+                DuelSettings.enemyHp -= atk;
+            } else if(critical % 25 == 0){
+                DuelGame.duelStatus1.setText("YOU HIT THEM CRITICALLY!");
+                atk = (int)(atkRange * 2.5);
+                DuelGame.duelStatus2.setText("DAMAGE : " + atk);
+                DuelSettings.enemyHp -= atk;
+            } else if(critical % 10 == 0){
+                DuelGame.duelStatus1.setText("YOU HIT THEM CRITICALLY!");
+                atk = (int)(atkRange * 1.7);
+                DuelGame.duelStatus2.setText("DAMAGE : " + atk);
+                DuelSettings.enemyHp -= atk;
+            } else if(critical % 5 == 0){
+                DuelGame.duelStatus1.setText("YOU HIT THEM CRITICALLY!");
+                atk = (int)(atkRange * 1.4);
+                DuelGame.duelStatus2.setText("DAMAGE : " + atk);
+                DuelSettings.enemyHp -= atk;
+            } else{
+                DuelGame.duelStatus1.setText("YOU ATTACK THEM!");
+                DuelGame.duelStatus2.setText("DAMAGE : " + atkRange);
+                DuelSettings.enemyHp -= atkRange;
+            }
+
+            if(DuelSettings.enemyHp < 1){
+                removePlayerAction();
+                removePanel(frame, DuelGame.duelGamePanel);
+                DuelResult.topTitle.setText("CONGRATULATIONS...");
+                DuelResult.duelResultTitle.setText("YOU WON!");
+                duelResultScreen();
+            } else{
+                updateStatusDuel();
+                removePlayerAction();
+                duelRollButtons();
+            }
+        }
+    }
+
+    public class PlayerHeal implements ActionListener{
+        public void actionPerformed(ActionEvent e){
+            playSound();
+            playerTurn = false;
+            int Heal = (int)(Math.random() * 35) + 15;
+            DuelSettings.playerHp += Heal;
+            if(DuelSettings.playerHp > 120) DuelSettings.playerHp = 120;
+            DuelGame.duelStatus1.setText("YOU HEALED YOUR WOUND!");
+            DuelGame.duelStatus2.setText("HP RECOVERED : " + Heal);
+            updateStatusDuel();
+            removePlayerAction();
+            duelRollButtons();
+        }
+    }
+
+    public class PlayerPoison implements ActionListener{
+        public void actionPerformed(ActionEvent e){
+            playSound();
+            if(DuelSettings.poisonCount > 0){
+                DuelSettings.poisonCount--;
+                int poisonAtk = (int)(DuelSettings.enemyHp * 0.01);
+                int poisonHp = (int)(DuelSettings.enemyAtk * 0.2);
+                DuelSettings.enemyHp -= DuelSettings.enemyAtk * 0.2;
+                DuelSettings.enemyAtk -= DuelSettings.enemyHp * 0.01;
+                if(DuelSettings.enemyHp < 1){
+                    removePlayerAction();
+                    removePanel(frame, DuelGame.duelGamePanel);
+                    DuelResult.topTitle.setText("CONGRATULATIONS...");
+                    DuelResult.duelResultTitle.setText("YOU WON!");
+                    duelResultScreen();
+                }
+                DuelGame.poisonBtn.setText("POISON (" + DuelSettings.poisonCount + ")");
+                DuelGame.duelStatus1.setText("YOU POISONED THEM!");
+                DuelGame.duelStatus2.setText("TOTAL DAMAGE : " + (poisonAtk + poisonHp));
+                playerTurn = false;
+                updateStatusDuel();
+                removePlayerAction();
+                duelRollButtons();
+            } else{
+                DuelGame.poisonBtn.setText("RUN OUT!");
+            }
+        }
+    }
+
+    public class PlayerSurrender implements ActionListener{
+        public void actionPerformed(ActionEvent e){
+            playSound();
+            playerTurn = false;
+            removePlayerAction();
+            removePanel(frame, DuelGame.duelGamePanel);
+            DuelSettings.underLabel.setText("SELECT MODE");
+            DuelResult.topTitle.setText("WOW SEE YOU GOT A...");
+            DuelResult.duelResultTitle.setText("A FUCKING L");
+            duelResultScreen();
+        }
+    }
+
+
 }
