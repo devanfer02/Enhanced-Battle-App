@@ -11,7 +11,7 @@ public class DuelGame extends BasicAdder {
     public JLabel PlayerAtk = new JLabel("ATK RANGE : ");
     public JLabel EnemyHP = new JLabel("HITPOINT : ");
     public JLabel EnemyAtk = new JLabel("ATK RANGE : ");
-    public JLabel duelStatus1 = new JLabel(" ",SwingConstants.CENTER);
+    public JLabel duelStatus1 = new JLabel("GAME STARTED!",SwingConstants.CENTER);
     public JLabel duelStatus2 = new JLabel("WAITING FOR THE ROLL...",SwingConstants.CENTER);
     public JButton rollDuel = new JButton("ROLL TURN");
     public JButton attackBtn = new JButton("ATTACK");
