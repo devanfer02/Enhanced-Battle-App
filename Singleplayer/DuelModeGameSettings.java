@@ -6,7 +6,8 @@ import javax.swing.*;
 public class DuelModeGameSettings extends BasicAdder{
     //PLAYER SETTING
     public int playerHp = 120;
-    public int playerAtk = 20;
+    public int playerAtk = 25;
+    public int poisonCount = 5;
 
     //ENEMY SETTING
     public int enemyHp = 120;
