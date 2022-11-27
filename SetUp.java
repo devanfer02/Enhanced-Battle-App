@@ -28,9 +28,12 @@ class SetUp extends Adder {
     DuelModeGameSettings DuelSettings = new DuelModeGameSettings();
     DuelGame DuelGame = new DuelGame();
     DuelResult DuelResult = new DuelResult();
+
+    StoryMode StoryMode = new StoryMode();
     ///START BOOLEANS FOR SWITCHING PAUSES
     boolean multiPaused = false;
     boolean duelPaused = false;
+    boolean storyPaused = false;
     boolean enemyWin = false;
     boolean playerTurn = false;
     boolean playerWin = false;
@@ -60,6 +63,7 @@ class SetUp extends Adder {
         DuelModeSettings();
         DuelGame();
         DuelResult();
+        StoryMode();
     }
     void Opening(){
         switchPanelColor(Opening.openingPanel);
@@ -91,8 +95,10 @@ class SetUp extends Adder {
         switchLabelColor(Settings.titleSettings);
         switchBtnColor(Settings.setColor);
         switchBtnColor(Settings.setSound);
-        switchBtnColor(Settings.setSong);
+        switchLabelColor(Settings.setSong);
         switchBtnColor(Settings.backMenu);
+        switchBtnColor(Settings.nextSong);
+        switchBtnColor(Settings.prevSong);
     }
 
     void Rules(){
@@ -228,6 +234,23 @@ class SetUp extends Adder {
         switchLabelColor(DuelResult.duelResultTitle);
         switchBtnColor(DuelResult.newGame);
         switchBtnColor(DuelResult.backMenu);
+    }
+
+    void StoryMode(){
+        switchPanelColor(StoryMode.storyPanel);
+        switchLabelColor(StoryMode.storyWelcomeTitle);
+        switchBtnColor(StoryMode.startStory);
+        switchBtnColor(StoryMode.backToChoice);
+
+        switchLabelColor(StoryMode.desc1);
+        switchLabelColor(StoryMode.desc2);
+        switchLabelColor(StoryMode.desc3);
+        switchLabelColor(StoryMode.desc4);
+        switchLabelColor(StoryMode.desc5);
+
+        switchBtnColor(StoryMode.choice1);
+        switchBtnColor(StoryMode.choice2);
+        switchBtnColor(StoryMode.settings);
     }
     //END SWITCH THEME//
 
