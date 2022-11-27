@@ -11,9 +11,10 @@ public class Adder {
     GridBagConstraints constr = new GridBagConstraints();
 
     //SOUNDS AND SONGS
+    String btlSong1 = "D:\\IntelliJ\\CompleteSetBattleApp\\src\\Songs\\BtlSong-Megalovania.wav";
+    String btlSong2 = "D:\\IntelliJ\\CompleteSetBattleApp\\src\\Songs\\BtlSong-IlVentoDoro.wav";
     String btnSound = "D:\\IntelliJ\\CompleteSetBattleApp\\src\\Songs\\BtnSound.wav";
     String song1 = "D:\\IntelliJ\\CompleteSetBattleApp\\src\\Songs\\song4-Alone.wav";
-    String song2 = "D:\\IntelliJ\\CompleteSetBattleApp\\src\\Songs\\song2-Megalovania.wav";
     String song3 = "D:\\IntelliJ\\CompleteSetBattleApp\\src\\Songs\\song3-YoungAgain.wav";
     String song4 =  "D:\\IntelliJ\\CompleteSetBattleApp\\src\\Songs\\song5-TheSpectre.wav";
     String song5 =  "D:\\IntelliJ\\CompleteSetBattleApp\\src\\Songs\\song6-WaitingForLove.wav";
@@ -23,14 +24,20 @@ public class Adder {
     String song9 =  "D:\\IntelliJ\\CompleteSetBattleApp\\src\\Songs\\song10-MoreThanYouKnow.wav";
     String song10 =  "D:\\IntelliJ\\CompleteSetBattleApp\\src\\Songs\\song11-BeautifulNow.wav";
     String song11 =  "D:\\IntelliJ\\CompleteSetBattleApp\\src\\Songs\\song12-Ibiza.wav";
-    String song12 =  "D:\\IntelliJ\\CompleteSetBattleApp\\src\\Songs\\song10-MoreThanYouKnow.wav";
+    String song12 =  "D:\\IntelliJ\\CompleteSetBattleApp\\src\\Songs\\song13-cantHoldUs.wav";
 
     String WSong = "D:\\IntelliJ\\CompleteSetBattleApp\\src\\Songs\\Won-RUSH E.wav";
+    String WinDuelEasy = "D:\\IntelliJ\\CompleteSetBattleApp\\src\\Songs\\WonEasy-EZ4ENCE.wav";
+    String WinDuelNormal = "D:\\IntelliJ\\CompleteSetBattleApp\\src\\Songs\\WonNormal-TournerDansLeVide.wav";
+    String WinDuelHard = "D:\\IntelliJ\\CompleteSetBattleApp\\src\\Songs\\WonHard-TheWinlandia.wav";
+    String WinDuelExtreme = "D:\\IntelliJ\\CompleteSetBattleApp\\src\\Songs\\WonExtreme-AinsBasLaVida.wav";
+    String loseDuel = "D:\\IntelliJ\\CompleteSetBattleApp\\src\\Songs\\Lose-Regression.wav";
+    String surrenderDuel = "D:\\IntelliJ\\CompleteSetBattleApp\\src\\Songs\\Surrender-InazumaOst.wav";
+    String storySong = "D:\\IntelliJ\\CompleteSetBattleApp\\src\\Songs\\temp-AOT.wav";
 
     //SETTING UP ARRAY OF SONGS
-    public String[] arrSongs = {
+    String[] arrSongs = {
             song1,
-            song2,
             song3,
             song4,
             song5,
@@ -47,7 +54,7 @@ public class Adder {
     Clip song;
     Clip soundEffect;
 
-    public void setSoundEffectFile(String soundFileName){
+    void setSoundEffectFile(String soundFileName){
         try{
             File file = new File(soundFileName);
             AudioInputStream sound = AudioSystem.getAudioInputStream(file);
@@ -58,17 +65,17 @@ public class Adder {
         }
     }
 
-    public void playSound(){
+    void playSound(){
         soundEffect.setFramePosition(0);
         soundEffect.start();
     }
 
-    public void stopSound(){
+    void stopSound(){
         soundEffect.stop();
         soundEffect.close();
     }
 
-    public void setSongFile(String songFileName){
+    void setSongFile(String songFileName){
         try{
             File file = new File(songFileName);
             AudioInputStream sound = AudioSystem.getAudioInputStream(file);
@@ -79,23 +86,23 @@ public class Adder {
         }
     }
 
-    public void playSong(){
+    void playSong(){
         song.setFramePosition(0);
         song.start();
     }
 
-    public void continueSong(){
+    void continueSong(){
         song.start();
     }
 
-    public void loopSong(){
+    void loopSong(){
         song.loop(Clip.LOOP_CONTINUOUSLY);
     }
 
-    public void holdSong(){
+    void holdSong(){
         song.stop();
     }
-    public void stopSong(){
+    void stopSong(){
         song.stop();
         song.close();
     }
@@ -105,14 +112,8 @@ public class Adder {
     //END FOR SONG AND SOUND
 
     //START ADD COMPONENT TO GRID
-    public void addComponent(int x, int y, int width, JLabel text, JPanel panel){
-        constr.gridx = x;
-        constr.gridy = y;
-        constr.gridwidth = width;
-        panel.add(text, constr);
-    }
 
-    public void addComponent(int x, int y, int width, JButton button, JPanel panel){
+    void addComponent(int x, int y, int width, JButton button, JPanel panel){
         constr.gridx = x;
         constr.gridy = y;
         constr.gridwidth = width;
@@ -121,13 +122,13 @@ public class Adder {
     //END ADD COMPONENT TO GRID
 
     //REMOVE BUTTON AND PANEL
-    public void removePanel(JFrame frame,JPanel panel){
+    void removePanel(JFrame frame,JPanel panel){
         frame.remove(panel);
         frame.revalidate();
         frame.repaint();
     }
 
-    public void removeBtn(JButton button){
+    void removeBtn(JButton button){
         Container btn = button.getParent();
         btn.remove(button);
         btn.revalidate();
@@ -137,7 +138,7 @@ public class Adder {
 
 
     //START SWITCH THEME MODE
-    public void switchBtnColor(JButton button){
+    void switchBtnColor(JButton button){
         if(dark){
             button.setBackground(Color.LIGHT_GRAY);
             button.setForeground(Color.BLACK);
@@ -147,7 +148,7 @@ public class Adder {
             button.setForeground(Color.WHITE);
         }
     }
-    public void switchLabelColor(JLabel label){
+    void switchLabelColor(JLabel label){
         if(dark){
             label.setForeground(Color.white);
         }
@@ -155,7 +156,7 @@ public class Adder {
             label.setForeground(Color.black);
         }
     }
-    public void switchPanelColor(JPanel panel){
+    void switchPanelColor(JPanel panel){
         if(dark){
             panel.setBackground(Color.BLACK);
         }
