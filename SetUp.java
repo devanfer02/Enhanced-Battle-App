@@ -6,7 +6,7 @@ import Singleplayer.*;
 import java.awt.*;
 import javax.swing.*;
 
-public class SetUp extends Adder {
+class SetUp extends Adder {
     //START IMPORT FROM BASICS PACKAGE
     Opening Opening = new Opening();
     Menu Menu = new Menu();
@@ -45,7 +45,7 @@ public class SetUp extends Adder {
 
     String enemyStatus = "";
     //START SWITCH THEME//
-    public void switchMode(){
+    void switchMode(){
         Opening();
         Menu();
         About();
@@ -61,13 +61,13 @@ public class SetUp extends Adder {
         DuelGame();
         DuelResult();
     }
-    public void Opening(){
+    void Opening(){
         switchPanelColor(Opening.openingPanel);
         switchLabelColor(Opening.titleGame);
         switchBtnColor(Opening.continueToMenu);
         switchBtnColor(Opening.exitGame);
     }
-    public void Menu(){
+    void Menu(){
         switchPanelColor(Menu.menuPanel);
         switchLabelColor(Menu.titleMenu);
         switchBtnColor(Menu.singleBtn);
@@ -77,7 +77,7 @@ public class SetUp extends Adder {
         switchBtnColor(Menu.exitBtn);
     }
 
-    public void About(){
+    void About(){
         switchPanelColor(About.aboutPanel);
         switchLabelColor(About.titleMenu);
         switchLabelColor(About.paragraph1);
@@ -86,7 +86,7 @@ public class SetUp extends Adder {
         switchBtnColor(About.backMainBtn);
     }
 
-    public void Settings(){
+    void Settings(){
         switchPanelColor(Settings.settingsPanel);
         switchLabelColor(Settings.titleSettings);
         switchBtnColor(Settings.setColor);
@@ -95,7 +95,7 @@ public class SetUp extends Adder {
         switchBtnColor(Settings.backMenu);
     }
 
-    public void Rules(){
+    void Rules(){
         switchPanelColor(Rules.rulePanel);
         switchLabelColor(Rules.titleRule);
         switchLabelColor(Rules.desc1);
@@ -108,7 +108,7 @@ public class SetUp extends Adder {
         switchBtnColor(Rules.backMenu);
     }
 
-    public void GameSetMulti(){
+    void GameSetMulti(){
         switchPanelColor(Gsm.gameSetMulti);
         switchLabelColor(Gsm.settingsMultiTxt);
         switchLabelColor(Gsm.setHp);
@@ -127,7 +127,7 @@ public class SetUp extends Adder {
         switchBtnColor(Gsm.backToRule);
     }
 
-    public void GameMulti(){
+    void GameMulti(){
         switchPanelColor(Gm.gameMultiPanel);
         switchLabelColor(Gm.labelPlayer1);
         switchLabelColor(Gm.labelPlayer2);
@@ -148,7 +148,7 @@ public class SetUp extends Adder {
         switchBtnColor(Gm.settings);
     }
 
-    public void MultiGameSettings(){
+    void MultiGameSettings(){
         switchPanelColor(Mgs.pauseSettingPanel);
         switchLabelColor(Mgs.titleSettings);
         switchBtnColor(Mgs.continueToGame);
@@ -158,7 +158,7 @@ public class SetUp extends Adder {
         switchBtnColor(Mgs.backMenu);
     }
 
-    public void Winner(){
+    void Winner(){
         switchPanelColor(winner.winPanel);
         switchLabelColor(winner.congrats);
         switchLabelColor(winner.won);
@@ -166,7 +166,7 @@ public class SetUp extends Adder {
         switchBtnColor(winner.menuBtn);
     }
 
-    public void GameChoice(){
+    void GameChoice(){
         switchPanelColor(SpChoice.choicePanel);
         switchLabelColor(SpChoice.titleChoice);
         switchBtnColor(SpChoice.storyBtn);
@@ -175,7 +175,7 @@ public class SetUp extends Adder {
         switchBtnColor(SpChoice.menuBtn);
     }
 
-    public void DuelModeRule(){
+    void DuelModeRule(){
         switchPanelColor(DMR.duelRulePanel);
         switchLabelColor(DMR.duelRuleTitle);
         switchLabelColor(DMR.desc1);
@@ -188,7 +188,7 @@ public class SetUp extends Adder {
         switchBtnColor(DMR.backChoice);
     }
 
-    public void DuelModeSettings(){
+    void DuelModeSettings(){
         switchPanelColor(DuelSettings.duelSettingPanel);
         switchLabelColor(DuelSettings.titleDuelSetting);
         switchLabelColor(DuelSettings.easyLabel);
@@ -204,7 +204,7 @@ public class SetUp extends Adder {
         switchLabelColor(DuelSettings.underLabel);
     }
 
-    public void DuelGame(){
+    void DuelGame(){
         switchPanelColor(DuelGame.duelGamePanel);
         switchLabelColor(DuelGame.Player);
         switchLabelColor(DuelGame.PlayerHP);
@@ -222,7 +222,7 @@ public class SetUp extends Adder {
         switchBtnColor(DuelGame.settingsDuel);
     }
 
-    public void DuelResult(){
+    void DuelResult(){
         switchPanelColor(DuelResult.duelResultPanel);
         switchLabelColor(DuelResult.topTitle);
         switchLabelColor(DuelResult.duelResultTitle);
@@ -232,47 +232,47 @@ public class SetUp extends Adder {
     //END SWITCH THEME//
 
     ///COLOR FOR GAME SET MUTLI SWITCH
-    public void multiSettingBtnDarkHP(){
+    void multiSettingBtnDarkHP(){
         Gsm.setHpLowBtn.setBackground(Color.LIGHT_GRAY);
         Gsm.setHpMedBtn.setBackground(Color.LIGHT_GRAY);
         Gsm.setHpHighBtn.setBackground(Color.LIGHT_GRAY);
         Gsm.setHpCrazyBtn.setBackground(Color.LIGHT_GRAY);
     }
 
-    public void multiSettingBtnLightHP(){
+    void multiSettingBtnLightHP(){
         Gsm.setHpLowBtn.setBackground(Color.DARK_GRAY);
         Gsm.setHpMedBtn.setBackground(Color.DARK_GRAY);
         Gsm.setHpHighBtn.setBackground(Color.DARK_GRAY);
         Gsm.setHpCrazyBtn.setBackground(Color.DARK_GRAY);
     }
 
-    public void multiSettingBtnDarkAtk(){
+    void multiSettingBtnDarkAtk(){
         Gsm.setAtkLowBtn.setBackground(Color.LIGHT_GRAY);
         Gsm.setAtkMedBtn.setBackground(Color.LIGHT_GRAY);
         Gsm.setAtkHighBtn.setBackground(Color.LIGHT_GRAY);
         Gsm.setAtkCrazyBtn.setBackground(Color.LIGHT_GRAY);
     }
 
-    public void multiSettingBtnLightAtk(){
+    void multiSettingBtnLightAtk(){
         Gsm.setAtkLowBtn.setBackground(Color.DARK_GRAY);
         Gsm.setAtkMedBtn.setBackground(Color.DARK_GRAY);
         Gsm.setAtkHighBtn.setBackground(Color.DARK_GRAY);
         Gsm.setAtkCrazyBtn.setBackground(Color.DARK_GRAY);
     }
 
-    public void setAllMultiHpFalse(){
+    void setAllMultiHpFalse(){
         for(int i = 0; i < 4; i++){
             multiHpCheck[i] = false;
         }
     }
 
-    public void setAllMultiAtkFalse(){
+    void setAllMultiAtkFalse(){
         for(int i = 0; i < 4; i++){
             multiAtkCheck[i] = false;
         }
     }
 
-    public void checkModeGSM_HP(){
+    void checkModeGSM_HP(){
         for(int i = 0; i < 4; i++){
             if(dark && multiHpCheck[i]){
                 multiSettingBtnDarkHP();
@@ -285,7 +285,7 @@ public class SetUp extends Adder {
 
 
     }
-    public void checkModeGSM_ATK(){
+    void checkModeGSM_ATK(){
         for(int i = 0; i < 4; i++){
             if(dark && multiAtkCheck[i]){
                 multiSettingBtnDarkAtk();
@@ -298,7 +298,7 @@ public class SetUp extends Adder {
     }
 
     ///COLOR FOR GAME MULTI
-    public void rollDiceCheckMode(){
+    void rollDiceCheckMode(){
         if(dark){
             Gm.labelPlayer1.setForeground(Color.WHITE);
             Gm.hpPlayer1.setForeground(Color.WHITE);
@@ -321,7 +321,7 @@ public class SetUp extends Adder {
         }
     }
 
-    public void P1TurnCheckMode(){
+    void P1TurnCheckMode(){
         if(dark){
             Gm.labelPlayer2.setForeground(Color.WHITE);
             Gm.hpPlayer2.setForeground(Color.WHITE);
@@ -333,7 +333,7 @@ public class SetUp extends Adder {
             Gm.atkPlayer2R.setForeground(Color.BLACK);
         }
     }
-    public void P2TurnCheckMode(){
+    void P2TurnCheckMode(){
         if(dark){
             Gm.labelPlayer1.setForeground(Color.WHITE);
             Gm.hpPlayer1.setForeground(Color.WHITE);
@@ -346,7 +346,7 @@ public class SetUp extends Adder {
         }
     }
     //ACTIONS FOR GAME
-    public void rollDice(){
+    void rollDice(){
         constr.fill = GridBagConstraints.HORIZONTAL ;
         constr.insets = new Insets(10,10,10,10);
         rollDiceCheckMode();
@@ -361,7 +361,7 @@ public class SetUp extends Adder {
         addComponent(0,5,7,Gm.settings, Gm.gameMultiPanel);
     }
 
-    public void P1Action(){
+    void P1Action(){
         constr.fill = GridBagConstraints.HORIZONTAL ;
         constr.insets = new Insets(10,10,10,10);
         P1TurnCheckMode();
@@ -394,7 +394,7 @@ public class SetUp extends Adder {
         addComponent(0,8,7,Gm.settings, Gm.gameMultiPanel);
     }
 
-    public void P2Action(){
+    void P2Action(){
         constr.fill = GridBagConstraints.HORIZONTAL ;
         constr.insets = new Insets(10,10,10,10);
         P2TurnCheckMode();
@@ -428,7 +428,7 @@ public class SetUp extends Adder {
         addComponent(0,8,7,Gm.settings, Gm.gameMultiPanel);
     }
 
-    public void removeP1Btn(){
+    void removeP1Btn(){
         removeBtn(Gm.btnAtkP1);
         removeBtn(Gm.btnHealP1);
         removeBtn(Gm.btnPoisonP1);
@@ -436,7 +436,7 @@ public class SetUp extends Adder {
         removeBtn(Gm.settings);
     }
 
-    public void removeP2Btn() {
+    void removeP2Btn() {
         removeBtn(Gm.btnAtkP2);
         removeBtn(Gm.btnHealP2);
         removeBtn(Gm.btnPoisonP2);
@@ -444,7 +444,7 @@ public class SetUp extends Adder {
         removeBtn(Gm.settings);
     }
 
-    public void resetStat(){
+    void resetStat(){
         Gsm.countPoisP1 = 5;
         Gsm.countPoisP2 = 5;
         for(int i = 0; i < 4; i++){
@@ -464,6 +464,9 @@ public class SetUp extends Adder {
             multiSettingBtnLightAtk();
         }
 
+        playerSurender = false;
+        playerWin = false;
+        enemyWin = false;
         Gsm.Player1_HP = 0;
         Gsm.Player2_HP = 0;
         Gsm.Player1_ATKR = 0;
@@ -471,7 +474,7 @@ public class SetUp extends Adder {
     }
 
     ///FOR FUNCTION IN APPSYS
-    public void checkSetSound(){
+    void checkSetSound(){
         String txt = Settings.setSound.getText();
         String txt2 = Mgs.setSound.getText();
         if(txt.equals("SOUND : OFF") && txt2.equals("SOUND : OFF")){
@@ -486,7 +489,7 @@ public class SetUp extends Adder {
         }
     }
 
-    public void checkSetSoundVer2(){
+    void checkSetSoundVer2(){
         String txt = Settings.setSound.getText();
         String txt2 = Mgs.setSound.getText();
         if(txt.equals("SOUND : OFF") && txt2.equals("SOUND : OFF")){
@@ -500,7 +503,20 @@ public class SetUp extends Adder {
         }
     }
 
-    public int heal(){
+    void checkSetSoundVer3(){
+        String txt = Settings.setSound.getText();
+        String txt2 = Mgs.setSound.getText();
+        if(txt.equals("SOUND : OFF") && txt2.equals("SOUND : OFF")){
+            stopSound();
+            holdSong();
+        } else{
+            setSoundEffectFile(btnSound);
+            playSong();
+            loopSong();
+        }
+    }
+
+    int heal(){
         int Heal = (int) (Math.random() * 80) + 1;
         for(int i = 0; i < 4; i++){
             if(multiHpCheck[i]){
@@ -510,28 +526,28 @@ public class SetUp extends Adder {
         return Heal;
     }
     ///BUTTONS IN DUEL MODE
-    public void duelCheckSettingBtnDark(){
+    void duelCheckSettingBtnDark(){
         DuelSettings.easyButton.setBackground(Color.LIGHT_GRAY);
         DuelSettings.normalButton.setBackground(Color.LIGHT_GRAY);
         DuelSettings.hardButton.setBackground(Color.LIGHT_GRAY);
         DuelSettings.extremeButton.setBackground(Color.LIGHT_GRAY);
     }
 
-    public void duelCheckSettingBtnLight(){
+    void duelCheckSettingBtnLight(){
         DuelSettings.easyButton.setBackground(Color.DARK_GRAY);
         DuelSettings.normalButton.setBackground(Color.DARK_GRAY);
         DuelSettings.hardButton.setBackground(Color.DARK_GRAY);
         DuelSettings.extremeButton.setBackground(Color.DARK_GRAY);
     }
 
-    public void setDuelSettingText(){
+    void setDuelSettingText(){
         DuelSettings.easyLabel.setText("");
         DuelSettings.normalLabel.setText("");
         DuelSettings.hardLabel.setText("");
         DuelSettings.extremeLabel.setText("");
     }
 
-    public void checkDuelMode(){
+    void checkDuelMode(){
         DuelSettings.underLabel.setText("");
         if(dark){
             duelCheckSettingBtnDark();
@@ -612,13 +628,13 @@ public class SetUp extends Adder {
         }
     }
     ///STARTT ACTIONS FOR DUEL GAME
-    public void duelRollButtons(){
+    void duelRollButtons(){
         constr.fill = GridBagConstraints.HORIZONTAL ;
         constr.insets = new Insets(10,10,10,10);
         addComponent(0,5,6,DuelGame.rollDuel,DuelGame.duelGamePanel);
         addComponent(0,6,6,DuelGame.settingsDuel,DuelGame.duelGamePanel);
     }
-    public void duelRollTurn(){
+    void duelRollTurn(){
         int turn = (int)(Math.random() * 11);
         if(turn % 2 == 0){
             playerAction();
@@ -629,7 +645,7 @@ public class SetUp extends Adder {
     }
 
 
-    public void playerAction(){
+    void playerAction(){
         constr.fill = GridBagConstraints.HORIZONTAL ;
         constr.insets = new Insets(10,10,10,10);
         removeRollDuel();
@@ -643,7 +659,7 @@ public class SetUp extends Adder {
         addComponent(0,9,6,DuelGame.settingsDuel,DuelGame.duelGamePanel);
     }
 
-    public void removePlayerAction(){
+    void removePlayerAction(){
         removeBtn(DuelGame.attackBtn);
         removeBtn(DuelGame.healBtn);
         removeBtn(DuelGame.poisonBtn);
@@ -651,12 +667,12 @@ public class SetUp extends Adder {
         removeBtn(DuelGame.settingsDuel);
     }
 
-    public void removeRollDuel(){
+    void removeRollDuel(){
         removeBtn(DuelGame.rollDuel);
         removeBtn(DuelGame.settingsDuel);
     }
     //ENEMY ACTION
-    public void enemyAction(){
+    void enemyAction(){
         int move = (int)(Math.random() * 100) + 1;
         int ultimate;
         int atk;
@@ -798,7 +814,7 @@ public class SetUp extends Adder {
         }
     }
 
-    public void resetDuelSettings(){
+    void resetDuelSettings(){
         enemyWin = false;
         DuelSettings.isEasy = false;
         DuelSettings.isNormal = false;
@@ -819,14 +835,14 @@ public class SetUp extends Adder {
         checkDuelMode();
     }
 
-    public void updateStatusDuel(){
+    void updateStatusDuel(){
         DuelGame.PlayerHP.setText("HITPOINT :" + DuelSettings.playerHp);
         DuelGame.PlayerAtk.setText("ATK RANGE :" + DuelSettings.playerAtk);
         DuelGame.EnemyHP.setText("HITPOINT :" + DuelSettings.enemyHp);
         DuelGame.EnemyAtk.setText("HITPOINT :" + DuelSettings.enemyAtk);
     }
 
-    public void enemyDuelResult(){
+    void enemyDuelResult(){
         switch(enemyStatus){
             case "ultimate":
                 if(DuelSettings.playerHp < 1){
@@ -845,7 +861,7 @@ public class SetUp extends Adder {
         }
     }
 
-    public void setColorResult(){
+    void setColorResult(){
         if(DuelSettings.isExtreme){
             DuelResult.duelResultTitle.setForeground(Color.RED);
         } else if(DuelSettings.isHard){
