@@ -64,6 +64,12 @@ class AppSys extends SetUp{
     PlayerPoison PlayerPoison = new PlayerPoison();
     PlayerSurrender PlayerSurrender = new PlayerSurrender();
     //// END DUEL MODE GAME
+
+    //// START STORY MODE GAME
+    storyMode storyMode = new storyMode();
+    startStoryMode startStoryMode = new startStoryMode();
+    pauseStoryMode pauseStoryMode = new pauseStoryMode();
+    storyModeChoices storyModeChoices = new storyModeChoices();
     //END SETTING CLASSES FOR ACTION PERFORMED AKA BUTTONS
     JFrame frame = new JFrame("BattleApp");
     String songPlayed = song1;
@@ -100,7 +106,10 @@ class AppSys extends SetUp{
         Settings.setColor.addActionListener(setColorBtn);
         Settings.setSound.addActionListener(setSoundBtn);
         Settings.backMenu.addActionListener(backMenu);
-        Settings.setSong.addActionListener(changeSong);
+        Settings.prevSong.setActionCommand("previous");
+        Settings.nextSong.setActionCommand("next");
+        Settings.prevSong.addActionListener(changeSong);
+        Settings.nextSong.addActionListener(changeSong);
         //END BUTTONS IN SETTINGS
         ///START BUTTONS IN RULE MULTI
         Rules.continueTo.addActionListener(contGameSetMulti);
@@ -145,6 +154,7 @@ class AppSys extends SetUp{
         ///BUTTONS IN SINGLE PLAYER GAME CHOICE
         SpChoice.menuBtn.addActionListener(backMenu);
         SpChoice.duelBtn.addActionListener(duelModeRule);
+        SpChoice.storyBtn.addActionListener(storyMode);
         ////BUTTONS IN DUEL MODE
         DMR.backChoice.addActionListener(backToChoice);
         DMR.contDMGS.addActionListener(duelContSetting);
@@ -169,6 +179,15 @@ class AppSys extends SetUp{
         ////BUTTONS IN DUEL RESULT
         DuelResult.backMenu.addActionListener(bmw);
         DuelResult.newGame.addActionListener(duelContSetting);
+
+        ////BUTTONS IN STORY GAME
+        StoryMode.backToChoice.addActionListener(backToChoice);
+        StoryMode.startStory.addActionListener(startStoryMode);
+        StoryMode.settings.addActionListener(pauseStoryMode);
+        StoryMode.choice1.addActionListener(storyModeChoices);
+        StoryMode.choice2.addActionListener(storyModeChoices);
+        StoryMode.choice1.setActionCommand("choice1");
+        StoryMode.choice2.setActionCommand("choice2");
     }
 
     //START SETTING PANEL SCREEN
@@ -256,6 +275,11 @@ class AppSys extends SetUp{
         frame.add(winner.winPanel);
         frame.setVisible(true);
     }
+
+    void storyModeScreen(){
+        frame.add(StoryMode.storyPanel);
+        frame.setVisible(true);
+    }
     //END SETTING PANEL SCREEN
 
     //IMPLEMENTING BUTTON ACTION
@@ -306,6 +330,14 @@ class AppSys extends SetUp{
         }
     }
 
+    class storyMode implements ActionListener{
+        public void actionPerformed(ActionEvent e){
+            playSound();
+            removePanel(frame, SpChoice.choicePanel);
+            storyModeScreen();
+        }
+    }
+
     class duelContSetting implements ActionListener{
         public void actionPerformed(ActionEvent e) {
             playSound();
@@ -324,6 +356,7 @@ class AppSys extends SetUp{
     class backToChoice implements ActionListener{
         public void actionPerformed(ActionEvent e) {
             playSound();
+            removePanel(frame, StoryMode.storyPanel);
             removePanel(frame, DMR.duelRulePanel);
             gameChoiceScreen();
         }
@@ -352,6 +385,15 @@ class AppSys extends SetUp{
                 removePanel(frame, DuelGame.duelGamePanel);
                 resetDuelSettings();
                 duelPaused = false;
+            }
+            if(storyPaused){
+                stopSong();
+                setSongFile(songPlayed);
+                checkSetSoundVer2();
+                StoryMode.removeStoryText();
+                StoryMode.addStartMenu();
+                removePanel(frame, Mgs.pauseSettingPanel);
+                storyPaused = false;
             }
             else{
                 checkSetSoundVer2();
@@ -449,12 +491,25 @@ class AppSys extends SetUp{
 
     class changeSong implements ActionListener{
         public void actionPerformed(ActionEvent e) {
-            countArrs++;
-            if(countArrs > 10) countArrs = (countArrs % 10) - 1;
-            stopSong();
-            songPlayed = arrSongs[countArrs];
-            setSongFile(songPlayed);
-            checkSetSoundVer2();
+            String choice = e.getActionCommand();
+            switch (choice) {
+                case "previous" -> {
+                    countArrs--;
+                    if (countArrs < 0) countArrs +=  11;
+                    stopSong();
+                    songPlayed = arrSongs[countArrs];
+                    setSongFile(songPlayed);
+                    checkSetSoundVer2();
+                }
+                case "next" -> {
+                    countArrs++;
+                    if (countArrs > 10) countArrs = (countArrs % 10) - 1;
+                    stopSong();
+                    songPlayed = arrSongs[countArrs];
+                    setSongFile(songPlayed);
+                    checkSetSoundVer2();
+                }
+            }
         }
     }
     ///END BUTTON IN SETTING
@@ -587,6 +642,13 @@ class AppSys extends SetUp{
 
     class startGame implements ActionListener {
         public void actionPerformed(ActionEvent e){
+            if(storyPaused){
+                checkSetSoundVer2();
+                storyPaused = false;
+
+                removePanel(frame, Mgs.pauseSettingPanel);
+                storyModeScreen();
+            }
             if((DuelSettings.isEasy || DuelSettings.isNormal ||
                     DuelSettings.isHard || DuelSettings.isExtreme) && duelPaused ){
                 checkSetSoundVer2();
@@ -1184,4 +1246,67 @@ class AppSys extends SetUp{
             duelResultScreen();
         }
     }
+    ////////////////////BUTTONS IN STORY MODE//////////////////////////////////
+    class startStoryMode implements ActionListener{
+        public void actionPerformed(ActionEvent e){
+            stopSong();
+            setSongFile(storySong);
+            checkSetSound();
+            StoryMode.wakeUp();
+        }
+    }
+
+    class pauseStoryMode implements ActionListener{
+        public void actionPerformed(ActionEvent e){
+            playSound();
+            storyPaused = true;
+            removePanel(frame, StoryMode.storyPanel);
+            settingGameScreen();
+        }
+    }
+
+    //CHOICE HANDLER
+    class storyModeChoices implements ActionListener{
+        public void actionPerformed(ActionEvent e){
+
+            String choice = e.getActionCommand();
+
+            switch (StoryMode.place){
+                case "wakeUp":
+                    playSound();
+                    switch (choice) {
+                        case "choice1" -> StoryMode.gasKuliah();
+                        case "choice2" -> StoryMode.lanjutTuru();
+                    }
+                    break;
+                case "gasKuliah":
+                    playSound();
+                    switch (choice) {
+                        case "choice1" -> StoryMode.gasNgebut();
+                        case "choice2" -> StoryMode.pelan();
+                    }
+                    break;
+                case "lanjutTuru":
+                    switch (choice) {
+                        case "choice1" -> {
+                            playSound();
+                            addComponent(0,7,4,StoryMode.settings,StoryMode.storyPanel);
+                            StoryMode.removeStoryText();
+                            StoryMode.addStartMenu();
+                        }
+                        case "choice2" -> {
+                            stopSong();
+                            setSongFile(songPlayed);
+                            checkSetSoundVer2();
+                            addComponent(0,7,4,StoryMode.settings,StoryMode.storyPanel);
+                            StoryMode.removeStoryText();
+                            StoryMode.addStartMenu();
+                            removePanel(frame, StoryMode.storyPanel);
+                            menuScreen();
+                        }
+                    }
+            }
+        }
+    }
+
 }
