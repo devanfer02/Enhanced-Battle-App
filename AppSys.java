@@ -2,7 +2,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-public class AppSys extends SetUp{
+class AppSys extends SetUp{
     //START SETTING CLASSES FOR ACTION PERFORMED AKA BUTTONS
     ///START OPENING MENU AND SETTINGS
     continueBtn continueBtn = new continueBtn();
@@ -67,7 +67,7 @@ public class AppSys extends SetUp{
     //END SETTING CLASSES FOR ACTION PERFORMED AKA BUTTONS
     JFrame frame = new JFrame("BattleApp");
     String songPlayed = song1;
-    public void GameApp(){
+    void GameApp(){
         frame.setSize(800,600);
         frame.setLocationRelativeTo(null);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -173,63 +173,63 @@ public class AppSys extends SetUp{
 
     //START SETTING PANEL SCREEN
 
-    public void menuScreen(){
+    void menuScreen(){
         frame.add(Menu.menuPanel);
         frame.setVisible(true);
     }
 
-    public void aboutScreen(){
+    void aboutScreen(){
         frame.add(About.aboutPanel);
         frame.setVisible(true);
     }
 
-    public void settingsScreen(){
+    void settingsScreen(){
         frame.add(Settings.settingsPanel);
         frame.setVisible(true);
     }
 
-    public void ruleScreen(){
+    void ruleScreen(){
         frame.add(Rules.rulePanel);
         frame.setVisible(true);
     }
 
-    public void gameSettingMultiScreen(){
+    void gameSettingMultiScreen(){
         frame.add(Gsm.gameSetMulti);
         frame.setVisible(true);
     }
 
-    public void gameScreen(){
+    void gameScreen(){
         frame.add(Gm.gameMultiPanel);
         frame.setVisible(true);
     }
 
-    public void settingGameScreen(){
+    void settingGameScreen(){
         frame.add(Mgs.pauseSettingPanel);
         frame.setVisible(true);
     }
 
-    public void gameChoiceScreen(){
+    void gameChoiceScreen(){
         frame.add(SpChoice.choicePanel);
         frame.setVisible(true);
     }
 
-    public void duelModeRuleScreen(){
+    void duelModeRuleScreen(){
         DuelSettings.underLabel.setText("SELECT MODE");
         frame.add(DMR.duelRulePanel);
         frame.setVisible(true);
     }
 
-    public void duelModeSettingScreen(){
+    void duelModeSettingScreen(){
         frame.add(DuelSettings.duelSettingPanel);
         frame.setVisible(true);
     }
 
-    public void duelGameScreen(){
+    void duelGameScreen(){
         frame.add(DuelGame.duelGamePanel);
         frame.setVisible(true);
     }
 
-    public void duelResultScreen(){
+    void duelResultScreen(){
         stopSong();
         setSongFile(loseDuel);
         if(playerSurender) setSongFile(surrenderDuel);
@@ -237,16 +237,16 @@ public class AppSys extends SetUp{
         if(DuelSettings.isNormal && playerWin) setSongFile(WinDuelNormal);
         if(DuelSettings.isHard && playerWin) setSongFile(WinDuelHard);
         if(DuelSettings.isExtreme && playerWin) setSongFile(WinDuelExtreme);
-        playerSurender = false;
-        playerWin = false;
-        checkSetSound();
+
+        if(enemyWin) checkSetSoundVer3();
+        else checkSetSound();
         checkDuelMode();
         resetDuelSettings();
         frame.add(DuelResult.duelResultPanel);
         frame.setVisible(true);
     }
 
-    public void winnerScreen(){
+    void winnerScreen(){
         stopSong();
         setSongFile(WSong);
         resetStat();
@@ -260,7 +260,7 @@ public class AppSys extends SetUp{
 
     //IMPLEMENTING BUTTON ACTION
     ///START MENU BUTTON
-    public class continueBtn implements ActionListener{
+    class continueBtn implements ActionListener{
         public void actionPerformed(ActionEvent e){
             playSound();
             removePanel(frame, Opening.openingPanel);
@@ -268,7 +268,7 @@ public class AppSys extends SetUp{
         }
     }
 
-    public class gameChoiceBtn implements ActionListener{
+    class gameChoiceBtn implements ActionListener{
         public void actionPerformed(ActionEvent e){
             playSound();
             removePanel(frame, Menu.menuPanel);
@@ -276,7 +276,7 @@ public class AppSys extends SetUp{
         }
     }
 
-    public class ruleBtn implements ActionListener{
+    class ruleBtn implements ActionListener{
         public void actionPerformed(ActionEvent e){
             playSound();
             removePanel(frame, Menu.menuPanel);
@@ -284,13 +284,13 @@ public class AppSys extends SetUp{
         }
     }
 
-    public class exitBtn implements ActionListener{
+    class exitBtn implements ActionListener{
         public void actionPerformed(ActionEvent e){
             playSound();
             System.exit(0);
         }
     }
-    public class aboutBtn implements ActionListener{
+    class aboutBtn implements ActionListener{
         public void actionPerformed(ActionEvent e){
             playSound();
             removePanel(frame, Menu.menuPanel);
@@ -298,7 +298,7 @@ public class AppSys extends SetUp{
         }
     }
 
-    public class duelModeRule implements ActionListener{
+    class duelModeRule implements ActionListener{
         public void actionPerformed(ActionEvent e) {
             playSound();
             removePanel(frame, SpChoice.choicePanel);
@@ -306,7 +306,7 @@ public class AppSys extends SetUp{
         }
     }
 
-    public class duelContSetting implements ActionListener{
+    class duelContSetting implements ActionListener{
         public void actionPerformed(ActionEvent e) {
             playSound();
             DuelSettings.isEasy = false;
@@ -321,7 +321,7 @@ public class AppSys extends SetUp{
         }
     }
 
-    public class backToChoice implements ActionListener{
+    class backToChoice implements ActionListener{
         public void actionPerformed(ActionEvent e) {
             playSound();
             removePanel(frame, DMR.duelRulePanel);
@@ -330,7 +330,7 @@ public class AppSys extends SetUp{
     }
 
     //END BUTTON FOR MENU PANEL
-    public class backMenu implements ActionListener{
+    class backMenu implements ActionListener{
         public void actionPerformed(ActionEvent e){
             if(multiPaused){
                 stopSong();
@@ -364,7 +364,7 @@ public class AppSys extends SetUp{
         }
     }
 
-    public class settingBtn implements ActionListener{
+    class settingBtn implements ActionListener{
         public void actionPerformed(ActionEvent e){
             playSound();
             removePanel(frame, Menu.menuPanel);
@@ -373,7 +373,7 @@ public class AppSys extends SetUp{
     }
 
     ///END MENU BUTTON
-    public class backMenuWin implements ActionListener{
+    class backMenuWin implements ActionListener{
         public void actionPerformed(ActionEvent e){
             stopSong();
             setSongFile(songPlayed);
@@ -385,7 +385,7 @@ public class AppSys extends SetUp{
     }
     ///START BUTTON IN SETTING
 
-    public class setSoundSettingsBtn implements ActionListener{
+    class setSoundSettingsBtn implements ActionListener{
         public void actionPerformed(ActionEvent e) {
             String text = Settings.setSound.getText();
             String text2 = Mgs.setSound.getText();
@@ -425,7 +425,7 @@ public class AppSys extends SetUp{
             }
         }
     }
-    public class setColorSettingsBtn implements ActionListener{
+    class setColorSettingsBtn implements ActionListener{
         public void actionPerformed(ActionEvent e) {
             playSound();
             String text = Settings.setColor.getText();
@@ -447,7 +447,7 @@ public class AppSys extends SetUp{
 
     }
 
-    public class changeSong implements ActionListener{
+    class changeSong implements ActionListener{
         public void actionPerformed(ActionEvent e) {
             countArrs++;
             if(countArrs > 10) countArrs = (countArrs % 10) - 1;
@@ -459,7 +459,7 @@ public class AppSys extends SetUp{
     }
     ///END BUTTON IN SETTING
 
-    public class contGameSetMulti implements ActionListener{
+    class contGameSetMulti implements ActionListener{
         public void actionPerformed(ActionEvent e){
             playSound();
             removePanel(frame, winner.winPanel);
@@ -468,7 +468,7 @@ public class AppSys extends SetUp{
         }
     }
     ////MULTIPLAYER MODE BUTTON CONFIGURATIONS
-    public class backToRuleBtn implements ActionListener{
+    class backToRuleBtn implements ActionListener{
         public void actionPerformed(ActionEvent e){
             playSound();
             removePanel(frame, Gsm.gameSetMulti);
@@ -476,7 +476,7 @@ public class AppSys extends SetUp{
         }
     }
 
-    public class playerlowhp implements ActionListener{
+    class playerlowhp implements ActionListener{
         public void actionPerformed(ActionEvent e){
             playSound();
             setAllMultiHpFalse();
@@ -491,7 +491,7 @@ public class AppSys extends SetUp{
 
         }
     }
-    public class playermedhp implements ActionListener{
+    class playermedhp implements ActionListener{
         public void actionPerformed(ActionEvent e){
             playSound();
             setAllMultiHpFalse();
@@ -505,7 +505,7 @@ public class AppSys extends SetUp{
             Gm.hpPlayer2.setText("Hitpoint : " + Gsm.hpMed);
         }
     }
-    public class playerhighhp implements ActionListener{
+    class playerhighhp implements ActionListener{
         public void actionPerformed(ActionEvent e){
             playSound();
             setAllMultiHpFalse();
@@ -518,7 +518,7 @@ public class AppSys extends SetUp{
             Gm.hpPlayer2.setText("Hitpoint : " + Gsm.hpHigh);
         }
     }
-    public class playercrazyhp implements ActionListener{
+    class playercrazyhp implements ActionListener{
         public void actionPerformed(ActionEvent e){
             playSound();
             setAllMultiHpFalse();
@@ -532,7 +532,7 @@ public class AppSys extends SetUp{
         }
     }
     //ATK RANGE
-    public class playerlowatk implements ActionListener{
+    class playerlowatk implements ActionListener{
         public void actionPerformed(ActionEvent e){
             playSound();
             setAllMultiAtkFalse();
@@ -545,7 +545,7 @@ public class AppSys extends SetUp{
             Gm.atkPlayer2R.setText("Atk Range : " + Gsm.atkLow);
         }
     }
-    public class playermedatk implements ActionListener{
+    class playermedatk implements ActionListener{
         public void actionPerformed(ActionEvent e){
             playSound();
             setAllMultiAtkFalse();
@@ -558,7 +558,7 @@ public class AppSys extends SetUp{
             Gm.atkPlayer2R.setText("Atk Range : " + Gsm.atkMed);
         }
     }
-    public class playerhighatk implements ActionListener{
+    class playerhighatk implements ActionListener{
         public void actionPerformed(ActionEvent e){
             playSound();
             setAllMultiAtkFalse();
@@ -571,7 +571,7 @@ public class AppSys extends SetUp{
             Gm.atkPlayer2R.setText("Atk Range : " + Gsm.atkHigh);
         }
     }
-    public class playercrazyatk implements ActionListener{
+    class playercrazyatk implements ActionListener{
         public void actionPerformed(ActionEvent e){
             playSound();
             setAllMultiAtkFalse();
@@ -585,7 +585,7 @@ public class AppSys extends SetUp{
         }
     }
 
-    public class startGame implements ActionListener {
+    class startGame implements ActionListener {
         public void actionPerformed(ActionEvent e){
             if((DuelSettings.isEasy || DuelSettings.isNormal ||
                     DuelSettings.isHard || DuelSettings.isExtreme) && duelPaused ){
@@ -629,7 +629,7 @@ public class AppSys extends SetUp{
         }
     }
 
-    public class pauseGame implements ActionListener {
+    class pauseGame implements ActionListener {
         public void actionPerformed(ActionEvent e){
             multiPaused = true;
             playSound();
@@ -639,7 +639,7 @@ public class AppSys extends SetUp{
     }
 
     ///BUTTON FOR GAME MULTIPLAYER BATTLE
-    public class AttackP1 implements ActionListener {
+    class AttackP1 implements ActionListener {
 
         public void actionPerformed(ActionEvent e){
             int atkR = (int) (Math.random() * Gsm.Player1_ATKR) + 1;
@@ -669,7 +669,7 @@ public class AppSys extends SetUp{
 
     }
 
-    public class HealP1 implements ActionListener{
+    class HealP1 implements ActionListener{
 
         public void actionPerformed(ActionEvent e){
             playSound();
@@ -691,7 +691,7 @@ public class AppSys extends SetUp{
         }
     }
 
-    public class PoisonP1 implements ActionListener{
+    class PoisonP1 implements ActionListener{
         public void actionPerformed(ActionEvent e){
 
             Gsm.P1Turn = true;
@@ -770,7 +770,7 @@ public class AppSys extends SetUp{
         }
     }
 
-    public class SkipP1 implements ActionListener{
+    class SkipP1 implements ActionListener{
 
         public void actionPerformed(ActionEvent e){
             Gsm.P1Turn = false;
@@ -783,7 +783,7 @@ public class AppSys extends SetUp{
     }
 
     //PLAYER 2 Action
-    public class AttackP2 implements ActionListener{
+    class AttackP2 implements ActionListener{
 
         public void actionPerformed(ActionEvent e){
             int atkR = (int) (Math.random() * Gsm.Player2_ATKR) + 1;
@@ -816,7 +816,7 @@ public class AppSys extends SetUp{
         }
     }
 
-    public class HealP2 implements ActionListener{
+    class HealP2 implements ActionListener{
 
         public void actionPerformed(ActionEvent e){
             playSound();
@@ -843,7 +843,7 @@ public class AppSys extends SetUp{
 
     }
 
-    public class PoisonP2 implements ActionListener{
+    class PoisonP2 implements ActionListener{
         public void actionPerformed(ActionEvent e){
             Gsm.P2Turn = true;
             int gacha = (int) (Math.random() * 1000) + 1;
@@ -920,7 +920,7 @@ public class AppSys extends SetUp{
         }
     }
 
-    public class SkipP2 implements ActionListener{
+    class SkipP2 implements ActionListener{
 
         public void actionPerformed(ActionEvent e){
             Gsm.P1Turn = true;
@@ -932,7 +932,7 @@ public class AppSys extends SetUp{
         }
     }
     //RANDOM TURN
-    public class rollDice implements ActionListener{
+    class rollDice implements ActionListener{
         public void actionPerformed(ActionEvent e){
 
             playSound();
@@ -954,7 +954,7 @@ public class AppSys extends SetUp{
     ///////////////////////////////////FOR SINGLE PLAYER//////////////////////////////////////////////////////////
     ///////////////////////////////////FOR SINGLE PLAYER///////////////////////////////////////////////////////////
     //////START DUEL MODE BUTTON CONFIGURATIONS
-    public class easyDuelMode implements ActionListener{
+    class easyDuelMode implements ActionListener{
         public void actionPerformed(ActionEvent e){
             playSound();
             DuelSettings.isEasy = true;
@@ -968,7 +968,7 @@ public class AppSys extends SetUp{
         }
     }
 
-    public class normalDuelMode implements ActionListener{
+    class normalDuelMode implements ActionListener{
         public void actionPerformed(ActionEvent e){
             playSound();
             DuelSettings.isEasy = false;
@@ -982,7 +982,7 @@ public class AppSys extends SetUp{
         }
     }
 
-    public class hardDuelMode implements ActionListener{
+    class hardDuelMode implements ActionListener{
         public void actionPerformed(ActionEvent e){
             playSound();
             DuelSettings.isEasy = false;
@@ -996,7 +996,7 @@ public class AppSys extends SetUp{
         }
     }
 
-    public class extremeDuelMode implements ActionListener{
+    class extremeDuelMode implements ActionListener{
         public void actionPerformed(ActionEvent e){
             playSound();
             DuelSettings.isEasy = false;
@@ -1010,7 +1010,7 @@ public class AppSys extends SetUp{
         }
     }
 
-    public class startDuelGame implements ActionListener{
+    class startDuelGame implements ActionListener{
         public void actionPerformed(ActionEvent e){
             if(DuelSettings.isEasy || DuelSettings.isNormal ||
                     DuelSettings.isHard || DuelSettings.isExtreme){
@@ -1034,7 +1034,7 @@ public class AppSys extends SetUp{
         }
     }
 
-    public class backToRuleDuel implements ActionListener{
+    class backToRuleDuel implements ActionListener{
         public void actionPerformed(ActionEvent e){
             playSound();
             resetDuelSettings();
@@ -1044,7 +1044,7 @@ public class AppSys extends SetUp{
         }
     }
     ////BUTTON ACTIONS FOR DUEL GAME
-    public class rollDuelAction implements ActionListener{
+    class rollDuelAction implements ActionListener{
         public void actionPerformed(ActionEvent e) {
             playSound();
             duelRollTurn();
@@ -1056,7 +1056,7 @@ public class AppSys extends SetUp{
         }
     }
 
-    public class duelGamePaused implements ActionListener{
+    class duelGamePaused implements ActionListener{
 
         public void actionPerformed(ActionEvent e) {
             duelPaused = true;
@@ -1066,7 +1066,7 @@ public class AppSys extends SetUp{
         }
     }
 
-    public class PlayerAttack implements ActionListener{
+    class PlayerAttack implements ActionListener{
         public void actionPerformed(ActionEvent e){
             playerTurn = false;
             playSound();
@@ -1121,7 +1121,7 @@ public class AppSys extends SetUp{
         }
     }
 
-    public class PlayerHeal implements ActionListener{
+    class PlayerHeal implements ActionListener{
         public void actionPerformed(ActionEvent e){
             playSound();
             playerTurn = false;
@@ -1136,7 +1136,7 @@ public class AppSys extends SetUp{
         }
     }
 
-    public class PlayerPoison implements ActionListener{
+    class PlayerPoison implements ActionListener{
         public void actionPerformed(ActionEvent e){
             playSound();
             if(DuelSettings.poisonCount > 0){
@@ -1167,7 +1167,7 @@ public class AppSys extends SetUp{
         }
     }
 
-    public class PlayerSurrender implements ActionListener{
+    class PlayerSurrender implements ActionListener{
         public void actionPerformed(ActionEvent e){
             playerTurn = false;
             removePlayerAction();
@@ -1184,6 +1184,4 @@ public class AppSys extends SetUp{
             duelResultScreen();
         }
     }
-
-
 }
