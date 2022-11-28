@@ -664,6 +664,11 @@ class SetUp extends Adder {
             DuelSettings.extremeLabel.setText("CHADS");
         }
     }
+    ///METHODS FOR MULTIPLAYER ACTION
+
+
+
+
     ///STARTT ACTIONS FOR DUEL GAME
     void duelRollButtons(){
         constr.fill = GridBagConstraints.HORIZONTAL ;
@@ -672,7 +677,7 @@ class SetUp extends Adder {
         addComponent(0,6,6,DuelGame.settingsDuel,DuelGame.duelGamePanel);
     }
     void duelRollTurn(){
-        int turn = (int)(Math.random() * 11);
+        int turn = (int)(Math.random() * 11) + 1;
         if(turn % 2 == 0){
             playerAction();
             playerTurn = true;
