@@ -129,6 +129,7 @@ public class StoryMode extends BasicAdder{
     }
 
     public void runaway(){
+        place = "lanjutTuru";
         removeBtn(settings);
         desc1.setText("Kamu melarikan diri");
         desc2.setText("Tetapi kamu tertabrak oleh truk");
@@ -150,6 +151,30 @@ public class StoryMode extends BasicAdder{
 
         choice1.setText("MENGAMBIL HASIL RAMPOK");
         choice2.setText("LANJUT KE KAMPUS");
+    }
+
+    public void orangBaik(){
+        place = "lanjutTuru";
+        desc1.setText("Orang baik");
+        desc2.setText("Kamu melanjutkan ke kampus");
+        desc3.setText("Sekian dari chapter ini");
+        desc4.setText("Terimkasih karena sudah mau");
+        desc5.setText("Membaca ceritas sampah ini");
+
+        choice1.setText("NEW GAME");
+        choice2.setText("BACK MENU");
+    }
+
+    public void orangRakus(){
+        place = "thief";
+        desc1.setText("Seketika, kamu tersambar petir");
+        desc2.setText("Kamu masuk ke tempat entah berantah");
+        desc3.setText("Kamu menemukan manusia yang tidak berbentuk seperti manusia");
+        desc4.setText("Mau tidak mau, kamu melawan manusia berbentuk aneh itu");
+        desc5.setText("");
+
+        choice1.setText("CONTINUE");
+        removeBtn(choice2);
     }
     ///////METHODS//////
     public void addStoryText(){
