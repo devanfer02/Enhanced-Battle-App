@@ -1,7 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.*;
+
 class AppSys extends SetUp{
     //START SETTING CLASSES FOR ACTION PERFORMED AKA BUTTONS
     ///START OPENING MENU AND SETTINGS
@@ -86,7 +86,6 @@ class AppSys extends SetUp{
         playSong();
         loopSong();
         frame.setVisible(true);
-
 
         //SETTINGS FOR BUTTON
         ///START BUTTONS IN OPENING
@@ -1282,9 +1281,7 @@ class AppSys extends SetUp{
     //CHOICE HANDLER
     class storyModeChoices implements ActionListener{
         public void actionPerformed(ActionEvent e){
-
             String choice = e.getActionCommand();
-
             switch (StoryMode.place){
                 case "wakeUp":
                     playSound();
@@ -1321,19 +1318,25 @@ class AppSys extends SetUp{
                     }
                     break;
                 case "crash":
+                    playSound();
                     StoryMode.fightThief();
                     break;
                 case "fight?":
+                    playSound();
                     switch (choice) {
                         case "choice1" -> StoryMode.runaway();
                         case "choice2" -> {
                             removePanel(frame, StoryMode.storyPanel);
                             storyBattleScreen();
                         }
-
                     }
                     break;
-
+                case "afterBattle":
+                    playSound();
+                    switch (choice){
+                        case "choice1" -> StoryMode.orangRakus();
+                        case "choice2" -> StoryMode.orangBaik();
+                    }
             }
         }
     }
@@ -1347,6 +1350,7 @@ class AppSys extends SetUp{
 
     class storyPlayerAction implements ActionListener{
         public void actionPerformed(ActionEvent e){
+            playSound();
             String choice = e.getActionCommand();
             switch (choice) {
                 case "attack" -> {
@@ -1362,6 +1366,7 @@ class AppSys extends SetUp{
                     } else {
                         StoryBattle.removePlayerAction();
                         StoryBattle.showRoll();
+                        StoryBattle.EnemyHP.setText("Hitpoint : " + StoryBattle.hpEnemy);
                     }
                 }
                 case "heal" -> {
@@ -1372,6 +1377,9 @@ class AppSys extends SetUp{
                     }
                     StoryBattle.status1.setText("You healed your wound");
                     StoryBattle.status2.setText("Hp recovered " + heal);
+                    StoryBattle.PlayerHP.setText("Hitpoint : " + StoryBattle.hpPlayer);
+                    StoryBattle.removePlayerAction();
+                    StoryBattle.showRoll();
                 }
             }
         }
