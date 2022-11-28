@@ -7,11 +7,6 @@ public class StoryMode extends BasicAdder{
     //SET PLACES
     public String place = "";
 
-    // PLAYER AND ENEMY STATS
-    public int hpPlayer = 120;
-    public int atkPlayer = 20;
-    public int hpEnemy = 120;
-    public int atkEnemy = 20;
 
     //LABELS AND BUTTONS
     public JPanel storyPanel = new JPanel();
@@ -105,7 +100,7 @@ public class StoryMode extends BasicAdder{
         desc5.setText("");
 
         choice1.setText("CONTINUE");
-        choice2.setText("CONTINUE");
+        removeBtn(choice2);
     }
 
     public void pelan(){
@@ -117,10 +112,12 @@ public class StoryMode extends BasicAdder{
         desc5.setText("");
 
         choice1.setText("CONTINUE");
-        choice2.setText("CONTINUE");
+        removeBtn(choice2);
     }
 
     public void fightThief(){
+        place = "fight?";
+        addComponent(0,6,4,choice2,storyPanel);
         desc1.setText("Kamu ingin melarikan diri");
         desc2.setText("Tetapi orang tersebut ingin menghajar kamu");
         desc3.setText("Apa yang ingin kamu lakukan?");
@@ -129,6 +126,18 @@ public class StoryMode extends BasicAdder{
 
         choice1.setText("HAJAR");
         choice2.setText("KABUR");
+    }
+
+    public void runaway(){
+        removeBtn(settings);
+        desc1.setText("Kamu melarikan diri");
+        desc2.setText("Tetapi kamu tertabrak oleh truk");
+        desc3.setText("Kamu mati");
+        desc4.setText("");
+        desc5.setText("");
+
+        choice1.setText("NEW GAME");
+        choice2.setText("BACK MENU");
     }
 
 
