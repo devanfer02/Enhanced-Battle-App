@@ -22,7 +22,7 @@ public class StoryBattle extends BasicAdder{
     public JLabel EnemyWpn = new JLabel("Weapon : " + wpnEnemy);
     public JLabel PlayerAtk = new JLabel("Atk Range : " + atkPlayer);
     public JLabel EnemyAtk = new JLabel("Atk Range : " + atkEnemy);
-    public JLabel status1 = new JLabel(" ");
+    public JLabel status1 = new JLabel(" ",SwingConstants.CENTER);
     public JLabel status2 = new JLabel("WAITING FOR THE ROLL",SwingConstants.CENTER);
 
     //BUTTON BATTLE ACTION
@@ -84,6 +84,8 @@ public class StoryBattle extends BasicAdder{
         if(turn % 2 == 0){
             enemyAction();
         } else{
+            status1.setText("Giliran kamu!");
+            status2.setText("Pilih aksimu");
             playerAction();
         }
     }
@@ -95,26 +97,28 @@ public class StoryBattle extends BasicAdder{
 
     public void enemyAction(){
         int turnE = (int)(Math.random() * 3) + 1;
-        switch (turnE){
-            case 1:
+        switch (turnE) {
+            case 1 -> {
                 int atk = (int) (Math.random() * 20) + 15;
                 hpPlayer -= atk;
-                status1.setText("Enemy attacked w/ knife");
+                status1.setText("Musuh menyerang dgn pisau");
                 status2.setText("Damage taken " + atk);
                 PlayerHP.setText("Hitpoint : " + hpPlayer);
-                break;
-            case 2:
-                int heal = (int)(Math.random() * 20) + 5;
+            }
+            case 2 -> {
+                int heal = (int) (Math.random() * 20) + 5;
                 hpEnemy += heal;
-                if(hpEnemy > 120){
+                if (hpEnemy > 120) {
                     hpEnemy = 120;
                 }
-                status1.setText("Enemy healed");
+                status1.setText("Musuh hiling dlu");
                 status2.setText("Healed " + heal);
-                break;
-            default:
-                status1.setText("Enemy give you mercy");
-                status2.setText("Enemy skipped turn");
+                EnemyHP.setText("Hitpoint : " + hpEnemy);
+            }
+            default -> {
+                status1.setText("Musuh terlalu baik");
+                status2.setText("Musuk skip turn");
+            }
         }
     }
 
@@ -127,7 +131,7 @@ public class StoryBattle extends BasicAdder{
     public void addPlayerAction(){
         addComponent(0,8,4,playerAtk,storyBtlPanel);
         addComponent(0,9,4,playerHeal,storyBtlPanel);
-        addComponent(0,9,4,settingsBtl,storyBtlPanel);
+        addComponent(0,10,4,settingsBtl,storyBtlPanel);
     }
 
 }
