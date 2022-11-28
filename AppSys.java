@@ -1,3 +1,5 @@
+import Singleplayer.StoryBattle;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -278,6 +280,11 @@ class AppSys extends SetUp{
 
     void storyModeScreen(){
         frame.add(StoryMode.storyPanel);
+        frame.setVisible(true);
+    }
+
+    void storyBattleScreen(){
+        frame.add(StoryBattle.storyBtlPanel);
         frame.setVisible(true);
     }
     //END SETTING PANEL SCREEN
@@ -1305,6 +1312,14 @@ class AppSys extends SetUp{
                             menuScreen();
                         }
                     }
+                    break;
+                case "crash":
+                    StoryMode.fightThief();
+                    break;
+                case "fight?":
+                    removePanel(frame,StoryMode.storyPanel);
+                    storyBattleScreen();
+                    break;
             }
         }
     }
