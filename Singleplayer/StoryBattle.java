@@ -74,6 +74,11 @@ public class StoryBattle extends BasicAdder{
         addComponent(0,7,4,settingsBtl,storyBtlPanel);
     }
 
+    public void removeRoll(){
+        removeBtn(rollBtn);
+        removeBtn(settingsBtl);
+    }
+
     public void rollTurn(){
         int turn = (int)(Math.random() * 10);
         if(turn % 2 == 0){
@@ -84,45 +89,45 @@ public class StoryBattle extends BasicAdder{
     }
 
     public void playerAction(){
-
+        removeRoll();
+        addPlayerAction();
     }
 
     public void enemyAction(){
         int turnE = (int)(Math.random() * 3) + 1;
         switch (turnE){
             case 1:
-                hpPlayer -= (int) (Math.random() * 20) + 15;
-                if(hpPlayer <= 0){
-                    return;
-                }
-                System.out.println("Musuh menyerang dengan pisaunya");
-                System.out.println("UPDATE INFORMATION");
-                System.out.println("HP Enemy     : " + hpEnemy);
-                System.out.println("HP Player    : " + hpPlayer);
-                System.out.println("Damage Enemy : " + atkEnemy);
-                System.out.println("Tekan enter untuk melanjutkan");
-                System.out.println(" ");
+                int atk = (int) (Math.random() * 20) + 15;
+                hpPlayer -= atk;
+                status1.setText("Enemy attacked w/ knife");
+                status2.setText("Damage taken " + atk);
+                PlayerHP.setText("Hitpoint : " + hpPlayer);
                 break;
             case 2:
-                hpEnemy += (int)(Math.random() * 20) + 5;
+                int heal = (int)(Math.random() * 20) + 5;
+                hpEnemy += heal;
                 if(hpEnemy > 120){
                     hpEnemy = 120;
                 }
-                System.out.println("Musuh hiling dulu");
-                System.out.println("UPDATE INFORMATION");
-                System.out.println("HP Enemy  : " + hpEnemy);
-                System.out.println("HP Player : " + hpPlayer);
-                System.out.println("Tekan enter untuk melanjutkan");
-                System.out.println(" ");
+                status1.setText("Enemy healed");
+                status2.setText("Healed " + heal);
                 break;
             default:
-                System.out.println("Musuhnya terlalu baik");
-                System.out.println("Musuhnya skip turn");
-                System.out.println("\n");
+                status1.setText("Enemy give you mercy");
+                status2.setText("Enemy skipped turn");
         }
     }
 
     public void removePlayerAction(){
-
+        removeBtn(playerAtk);
+        removeBtn(playerHeal);
+        removeBtn(settingsBtl);
     }
+
+    public void addPlayerAction(){
+        addComponent(0,8,4,playerAtk,storyBtlPanel);
+        addComponent(0,9,4,playerHeal,storyBtlPanel);
+        addComponent(0,9,4,settingsBtl,storyBtlPanel);
+    }
+
 }
