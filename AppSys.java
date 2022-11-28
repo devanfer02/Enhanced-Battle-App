@@ -1,5 +1,3 @@
-import Singleplayer.StoryBattle;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -72,6 +70,8 @@ class AppSys extends SetUp{
     startStoryMode startStoryMode = new startStoryMode();
     pauseStoryMode pauseStoryMode = new pauseStoryMode();
     storyModeChoices storyModeChoices = new storyModeChoices();
+    storyPlayerAction playerAction = new storyPlayerAction();
+    rollStory rollStory  = new rollStory();
     //END SETTING CLASSES FOR ACTION PERFORMED AKA BUTTONS
     JFrame frame = new JFrame("BattleApp");
     String songPlayed = song1;
@@ -190,6 +190,13 @@ class AppSys extends SetUp{
         StoryMode.choice2.addActionListener(storyModeChoices);
         StoryMode.choice1.setActionCommand("choice1");
         StoryMode.choice2.setActionCommand("choice2");
+
+        ///BUTTONS IN STORY BATTLE
+        StoryBattle.playerAtk.addActionListener(playerAction);
+        StoryBattle.playerHeal.addActionListener(playerAction);
+        StoryBattle.playerAtk.setActionCommand("attack");
+        StoryBattle.playerHeal.setActionCommand("heal");
+        StoryBattle.rollBtn.addActionListener(rollStory);
     }
 
     //START SETTING PANEL SCREEN
@@ -1317,11 +1324,56 @@ class AppSys extends SetUp{
                     StoryMode.fightThief();
                     break;
                 case "fight?":
-                    removePanel(frame,StoryMode.storyPanel);
-                    storyBattleScreen();
+                    switch (choice) {
+                        case "choice1" -> StoryMode.runaway();
+                        case "choice2" -> {
+                            removePanel(frame, StoryMode.storyPanel);
+                            storyBattleScreen();
+                        }
+
+                    }
                     break;
+
             }
         }
     }
 
+    class rollStory implements ActionListener{
+        public void actionPerformed(ActionEvent e) {
+            playSound();
+            StoryBattle.rollTurn();
+        }
+    }
+
+    class storyPlayerAction implements ActionListener{
+        public void actionPerformed(ActionEvent e){
+            String choice = e.getActionCommand();
+            switch (choice) {
+                case "attack" -> {
+                    int atk = (int) (Math.random() * StoryBattle.atkPlayer) + 5;
+                    StoryBattle.hpEnemy -= atk;
+                    StoryBattle.status1.setText("You attacked!");
+                    StoryBattle.status2.setText("Damage given : " + atk);
+                    if (StoryBattle.hpEnemy < 1) {
+                        removePanel(frame, StoryBattle.storyBtlPanel);
+                        frame.add(StoryMode.storyPanel);
+                        frame.setVisible(true);
+                        StoryMode.afterBattle();
+                    } else {
+                        StoryBattle.removePlayerAction();
+                        StoryBattle.showRoll();
+                    }
+                }
+                case "heal" -> {
+                    int heal = (int) (Math.random() * 25) + 10;
+                    StoryBattle.hpPlayer += heal;
+                    if (StoryBattle.hpPlayer > 100) {
+                        StoryBattle.hpPlayer = 100;
+                    }
+                    StoryBattle.status1.setText("You healed your wound");
+                    StoryBattle.status2.setText("Hp recovered " + heal);
+                }
+            }
+        }
+    }
 }
