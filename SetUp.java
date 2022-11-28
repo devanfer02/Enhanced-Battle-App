@@ -30,6 +30,7 @@ class SetUp extends Adder {
     DuelResult DuelResult = new DuelResult();
 
     StoryMode StoryMode = new StoryMode();
+    StoryBattle StoryBattle = new StoryBattle();
     ///START BOOLEANS FOR SWITCHING PAUSES
     boolean multiPaused = false;
     boolean duelPaused = false;
@@ -64,6 +65,7 @@ class SetUp extends Adder {
         DuelGame();
         DuelResult();
         StoryMode();
+        StoryBattle();
     }
     void Opening(){
         switchPanelColor(Opening.openingPanel);
@@ -251,6 +253,18 @@ class SetUp extends Adder {
         switchBtnColor(StoryMode.choice1);
         switchBtnColor(StoryMode.choice2);
         switchBtnColor(StoryMode.settings);
+    }
+
+    void StoryBattle(){
+        switchPanelColor(StoryBattle.storyBtlPanel);
+        switchLabelColor(StoryBattle.player);
+        switchLabelColor(StoryBattle.enemy);
+        switchLabelColor(StoryBattle.PlayerHP);
+        switchLabelColor(StoryBattle.PlayerWpn);
+        switchLabelColor(StoryBattle.PlayerAtk);
+        switchLabelColor(StoryBattle.EnemyHP);
+        switchLabelColor(StoryBattle.EnemyWpn);
+        switchLabelColor(StoryBattle.EnemyAtk);
     }
     //END SWITCH THEME//
 
