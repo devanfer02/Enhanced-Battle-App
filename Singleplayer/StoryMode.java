@@ -124,8 +124,8 @@ public class StoryMode extends BasicAdder{
         desc4.setText("");
         desc5.setText("");
 
-        choice1.setText("HAJAR");
-        choice2.setText("KABUR");
+        choice1.setText("KABUR");
+        choice2.setText("HAJAR");
     }
 
     public void runaway(){
@@ -140,7 +140,17 @@ public class StoryMode extends BasicAdder{
         choice2.setText("BACK MENU");
     }
 
+    public void afterBattle(){
+        place = "afterBattle";
+        desc1.setText("Kamu mengalahkan perampok tersebut");
+        desc2.setText("Tapi kamu melihat kesempatan dalam kesempitan");
+        desc3.setText("Kamu melihat hasil rampokannya");
+        desc4.setText("Apa yang ingin kamu lakukan?");
+        desc5.setText("");
 
+        choice1.setText("MENGAMBIL HASIL RAMPOK");
+        choice2.setText("LANJUT KE KAMPUS");
+    }
     ///////METHODS//////
     public void addStoryText(){
         addComponent(0,0,4,desc1,storyPanel);
