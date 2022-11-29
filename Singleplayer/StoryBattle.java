@@ -4,6 +4,7 @@ import Basics.BasicAdder;
 import javax.swing.*;
 
 public class StoryBattle extends BasicAdder{
+    public boolean boss = false;
     // PLAYER AND ENEMY STATS
     public int hpPlayer = 120;
     public int atkPlayer = 20;
@@ -97,29 +98,58 @@ public class StoryBattle extends BasicAdder{
 
     public void enemyAction(){
         int turnE = (int)(Math.random() * 3) + 1;
-        switch (turnE) {
-            case 1 -> {
-                int atk = (int) (Math.random() * 20) + 15;
-                hpPlayer -= atk;
-                status1.setText("Musuh menyerang dgn pisau");
-                status2.setText("Damage taken " + atk);
-                PlayerHP.setText("Hitpoint : " + hpPlayer);
-            }
-            case 2 -> {
-                int heal = (int) (Math.random() * 20) + 5;
-                hpEnemy += heal;
-                if (hpEnemy > 120) {
-                    hpEnemy = 120;
+        if(boss){
+            switch (turnE) {
+                case 1 -> {
+                    int atk = (int) (Math.random() * atkEnemy) + 15;
+                    hpPlayer -= atk;
+                    checkPlayer();
+                    status1.setText("Musuh menyerang dengan panas nerakanya");
+                    status2.setText("Damage taken " + atk);
+                    PlayerHP.setText("Hitpoint : " + hpPlayer);
                 }
-                status1.setText("Musuh hiling dlu");
-                status2.setText("Healed " + heal);
-                EnemyHP.setText("Hitpoint : " + hpEnemy);
+                case 2 -> {
+                    int heal = (int) (Math.random() * atkEnemy) + 5;
+                    hpEnemy += heal;
+                    if (hpEnemy > 2000) {
+                        hpEnemy = 2000;
+                    }
+                    status1.setText("Musuh healing dulu dengan makan dosa manusia");
+                    status2.setText("Nyawa yang terecovered " + heal);
+                    EnemyHP.setText("Hitpoint : " + hpEnemy);
+                }
+                default -> {
+                    status1.setText("Musuhnya agak baik");
+                    status2.setText("Musuk skip turn");
+                }
             }
-            default -> {
-                status1.setText("Musuh terlalu baik");
-                status2.setText("Musuk skip turn");
+        } else{
+            switch (turnE) {
+                case 1 -> {
+                    int atk = (int) (Math.random() * atkEnemy) + 15;
+                    hpPlayer -= atk;
+                    checkPlayer();
+                    status1.setText("Musuh menyerang dgn pisau");
+                    status2.setText("Damage taken " + atk);
+                    PlayerHP.setText("Hitpoint : " + hpPlayer);
+                }
+                case 2 -> {
+                    int heal = (int) (Math.random() * atkEnemy) + 5;
+                    hpEnemy += heal;
+                    if (hpEnemy > 120) {
+                        hpEnemy = 120;
+                    }
+                    status1.setText("Musuh hiling dlu");
+                    status2.setText("Healed " + heal);
+                    EnemyHP.setText("Hitpoint : " + hpEnemy);
+                }
+                default -> {
+                    status1.setText("Musuh terlalu baik");
+                    status2.setText("Musuk skip turn");
+                }
             }
         }
+
     }
 
     public void removePlayerAction(){
@@ -132,6 +162,32 @@ public class StoryBattle extends BasicAdder{
         addComponent(0,8,4,playerAtk,storyBtlPanel);
         addComponent(0,9,4,playerHeal,storyBtlPanel);
         addComponent(0,10,4,settingsBtl,storyBtlPanel);
+    }
+
+    void checkPlayer(){
+        if(hpPlayer < 1){
+            removeBtn(rollBtn);
+            removeBtn(playerAtk);
+            removeBtn(playerHeal);
+
+            player.setText("");
+            enemy.setText("");
+            PlayerHP.setText("");
+            EnemyHP.setText("");
+            PlayerWpn.setText("");
+            EnemyWpn.setText("");
+            PlayerAtk.setText("");
+            EnemyAtk.setText("");
+            status1.setText("");
+            status2.setText("");
+            titleBtl.setText("YOU LOST");
+        }
+    }
+
+    public void recheckEnemy(){
+        EnemyHP.setText("Hitpoint : " + hpEnemy);
+        EnemyAtk.setText("Atk Range : " + atkEnemy);
+        EnemyWpn.setText("Weapon : " + "panas neraka");
     }
 
 }
