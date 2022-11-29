@@ -71,6 +71,7 @@ class AppSys extends SetUp{
     pauseStoryMode pauseStoryMode = new pauseStoryMode();
     storyModeChoices storyModeChoices = new storyModeChoices();
     storyPlayerAction playerAction = new storyPlayerAction();
+    storyGamePaused storyGamePaused = new storyGamePaused();
     rollStory rollStory  = new rollStory();
     //END SETTING CLASSES FOR ACTION PERFORMED AKA BUTTONS
     JFrame frame = new JFrame("BattleApp");
@@ -196,6 +197,7 @@ class AppSys extends SetUp{
         StoryBattle.playerAtk.setActionCommand("attack");
         StoryBattle.playerHeal.setActionCommand("heal");
         StoryBattle.rollBtn.addActionListener(rollStory);
+        StoryBattle.settingsBtl.addActionListener(storyGamePaused);
     }
 
     //START SETTING PANEL SCREEN
@@ -399,15 +401,18 @@ class AppSys extends SetUp{
                 resetDuelSettings();
                 duelPaused = false;
             }
-            if(storyPaused){
+            if(storyPaused || storyBattlePause){
                 stopSong();
                 setSongFile(songPlayed);
                 checkSetSoundVer2();
+                StoryBattle.hpPlayer = 120;
+                StoryBattle.hpEnemy = 120;
                 StoryMode.removeStoryText();
                 StoryMode.addStartMenu();
                 removePanel(frame, Mgs.pauseSettingPanel);
                 storyPaused = false;
             }
+
             else{
                 checkSetSoundVer2();
                 removePanel(frame, SpChoice.choicePanel);
@@ -661,6 +666,12 @@ class AppSys extends SetUp{
 
                 removePanel(frame, Mgs.pauseSettingPanel);
                 storyModeScreen();
+            }
+            if(storyBattlePause){
+                checkSetSoundVer2();
+                storyBattlePause = false;
+                removePanel(frame, Mgs.pauseSettingPanel);
+                storyBattleScreen();
             }
             if((DuelSettings.isEasy || DuelSettings.isNormal ||
                     DuelSettings.isHard || DuelSettings.isExtreme) && duelPaused ){
@@ -1322,10 +1333,15 @@ class AppSys extends SetUp{
                     StoryMode.fightThief();
                     break;
                 case "fight?":
-                    playSound();
                     switch (choice) {
-                        case "choice1" -> StoryMode.runaway();
+                        case "choice1" -> {
+                            playSound();
+                            StoryMode.runaway();
+                        }
                         case "choice2" -> {
+                            stopSong();
+                            setSongFile(btlSong3);
+                            checkSetSoundVer2();
                             removePanel(frame, StoryMode.storyPanel);
                             storyBattleScreen();
                         }
@@ -1337,6 +1353,19 @@ class AppSys extends SetUp{
                         case "choice1" -> StoryMode.orangRakus();
                         case "choice2" -> StoryMode.orangBaik();
                     }
+                    break;
+                case "thief":
+                    stopSong();
+                    setSongFile(btlSong4);
+                    checkSetSoundVer2();
+                    StoryBattle.boss = true;
+                    StoryBattle.hpEnemy = 2000;
+                    StoryBattle.atkEnemy = 50;
+                    StoryBattle.recheckEnemy();
+
+                    removePanel(frame, StoryMode.storyPanel);
+                    storyBattleScreen();
+                    break;
             }
         }
     }
@@ -1354,11 +1383,14 @@ class AppSys extends SetUp{
             String choice = e.getActionCommand();
             switch (choice) {
                 case "attack" -> {
-                    int atk = (int) (Math.random() * StoryBattle.atkPlayer) + 5;
+                    int atk = (int) (Math.random() * StoryBattle.atkPlayer) + 15;
                     StoryBattle.hpEnemy -= atk;
                     StoryBattle.status1.setText("You attacked!");
                     StoryBattle.status2.setText("Damage given : " + atk);
                     if (StoryBattle.hpEnemy < 1) {
+                        stopSong();
+                        setSongFile(storySong);
+                        checkSetSoundVer2();
                         removePanel(frame, StoryBattle.storyBtlPanel);
                         frame.add(StoryMode.storyPanel);
                         frame.setVisible(true);
@@ -1384,4 +1416,14 @@ class AppSys extends SetUp{
             }
         }
     }
+    class storyGamePaused implements ActionListener{
+
+        public void actionPerformed(ActionEvent e) {
+            storyBattlePause = true;
+            playSound();
+            removePanel(frame, StoryBattle.storyBtlPanel);
+            settingGameScreen();
+        }
+    }
+
 }
