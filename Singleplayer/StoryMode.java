@@ -6,7 +6,7 @@ import javax.swing.*;
 public class StoryMode extends BasicAdder{
     //SET PLACES
     public String place = "";
-
+    boolean singleChoice = false;
 
     //LABELS AND BUTTONS
     public JPanel storyPanel = new JPanel();
@@ -100,6 +100,7 @@ public class StoryMode extends BasicAdder{
         desc5.setText("");
 
         choice1.setText("CONTINUE");
+        singleChoice = true;
         removeBtn(choice2);
     }
 
@@ -113,9 +114,11 @@ public class StoryMode extends BasicAdder{
 
         choice1.setText("CONTINUE");
         removeBtn(choice2);
+        singleChoice = true;
     }
 
     public void fightThief(){
+        singleChoice = false;
         place = "fight?";
         addComponent(0,6,4,choice2,storyPanel);
         desc1.setText("Kamu ingin melarikan diri");
@@ -129,6 +132,7 @@ public class StoryMode extends BasicAdder{
     }
 
     public void runaway(){
+        singleChoice = false;
         place = "lanjutTuru";
         removeBtn(settings);
         desc1.setText("Kamu melarikan diri");
@@ -175,6 +179,7 @@ public class StoryMode extends BasicAdder{
 
         choice1.setText("CONTINUE");
         removeBtn(choice2);
+        singleChoice = true;
     }
     ///////METHODS//////
     public void addStoryText(){
@@ -189,6 +194,7 @@ public class StoryMode extends BasicAdder{
     }
 
     public void addStartMenu(){
+        singleChoice = false;
         addComponent(0,0,4,storyWelcomeTitle,storyPanel);
         addComponent(0,1,4,startStory,storyPanel);
         addComponent(0,2,4,backToChoice,storyPanel);
@@ -204,7 +210,7 @@ public class StoryMode extends BasicAdder{
         desc4.setText("");
         desc5.setText("");
         removeBtn(choice1);
-        removeBtn(choice2);
+        if(!singleChoice)removeBtn(choice2);
         removeBtn(settings);
     }
 }
