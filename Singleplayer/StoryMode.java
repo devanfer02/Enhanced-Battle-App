@@ -61,7 +61,7 @@ public class StoryMode extends BasicAdder{
         desc5.setText("Apa yang kamu lakukan?");
 
         choice1.setText("GAS KULIAH");
-        choice2.setText("LANUT TURU");
+        choice2.setText("LANJUT TURU");
 
         addStoryText();
     }
