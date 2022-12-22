@@ -267,8 +267,7 @@ class AppSys extends SetUp{
         if(DuelSettings.isHard && playerWin) setSongFile(WinDuelHard);
         if(DuelSettings.isExtreme && playerWin) setSongFile(WinDuelExtreme);
 
-        if(enemyWin) checkSetSoundVer3();
-        else checkSetSound();
+        checkSetSound();
         checkDuelMode();
         resetDuelSettings();
         frame.add(DuelResult.duelResultPanel);
@@ -389,7 +388,7 @@ class AppSys extends SetUp{
                 resetStat();
                 multiPaused = false;
             }
-            if(duelPaused){
+            else if(duelPaused){
                 if(playerTurn) removePlayerAction();
                 playerTurn = false;
                 duelRollButtons();
@@ -401,7 +400,7 @@ class AppSys extends SetUp{
                 resetDuelSettings();
                 duelPaused = false;
             }
-            if(storyPaused || storyBattlePause){
+            else if(storyPaused || storyBattlePause){
                 stopSong();
                 setSongFile(songPlayed);
                 checkSetSoundVer2();
@@ -411,9 +410,8 @@ class AppSys extends SetUp{
                 StoryMode.addStartMenu();
                 removePanel(frame, Mgs.pauseSettingPanel);
                 storyPaused = false;
-            }
-
-            else{
+                storyBattlePause = false;
+            } else{
                 checkSetSoundVer2();
                 removePanel(frame, SpChoice.choicePanel);
                 removePanel(frame, Settings.settingsPanel);
@@ -1132,12 +1130,15 @@ class AppSys extends SetUp{
     ////BUTTON ACTIONS FOR DUEL GAME
     class rollDuelAction implements ActionListener{
         public void actionPerformed(ActionEvent e) {
-            playSound();
             duelRollTurn();
             if(enemyWin){
                 removeRollDuel();
+                stopSong();
+                setSongFile(loseDuel);
                 removePanel(frame, DuelGame.duelGamePanel);
                 duelResultScreen();
+            } else{
+                playSound();
             }
         }
     }
@@ -1255,6 +1256,8 @@ class AppSys extends SetUp{
 
     class PlayerSurrender implements ActionListener{
         public void actionPerformed(ActionEvent e){
+            stopSong();
+            setSongFile(surrenderDuel);
             playerTurn = false;
             removePlayerAction();
             playerSurender = true;
