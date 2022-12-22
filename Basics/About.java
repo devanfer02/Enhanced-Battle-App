@@ -6,7 +6,7 @@ public class About extends BasicAdder{
     public JLabel titleMenu = new JLabel("ABOUT",SwingConstants.CENTER);
     public JLabel paragraph1 = new JLabel("Game ini dibuat untuk melanjutkan kode battle app");
     public JLabel paragraph2 = new JLabel("milik Dosen Pemdas serta mengembangkan battle app");
-    public JLabel paragraph3 = new JLabel("lebih jauh lagi. Game ini dibuat oleh DF PTI 22");
+    public JLabel paragraph3 = new JLabel("lebih jauh lagi. Game ini dibuat oleh Devan PTI 22");
     public JButton backMainBtn = new JButton("MENU");
 
     public About(){
