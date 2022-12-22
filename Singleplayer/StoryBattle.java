@@ -167,8 +167,6 @@ public class StoryBattle extends BasicAdder{
     void checkPlayer(){
         if(hpPlayer < 1){
             removeBtn(rollBtn);
-            removeBtn(playerAtk);
-            removeBtn(playerHeal);
 
             player.setText("");
             enemy.setText("");
