@@ -8,7 +8,6 @@ public class GameChoice extends BasicAdder {
     public JLabel titleChoice = new JLabel("GAME CHOICE");
     public JButton storyBtn = new JButton("STORY MODE");
     public JButton duelBtn = new JButton("DUEL MODE");
-    public JButton survivalBtn = new JButton("SURVIVAL MODE");
     public JButton menuBtn = new JButton("MENU");
 
     public GameChoice(){
@@ -18,13 +17,11 @@ public class GameChoice extends BasicAdder {
         setFont(titleChoice, 40);
         setBtnColor(storyBtn);
         setBtnColor(duelBtn);
-        setBtnColor(survivalBtn);
         setBtnColor(menuBtn);
 
         addComponent(0,0,3,titleChoice,choicePanel);
         addComponent(0,1,3,storyBtn,choicePanel);
         addComponent(0,2,3,duelBtn,choicePanel);
-        addComponent(0,3,3,survivalBtn,choicePanel);
         addComponent(0,4,3,menuBtn,choicePanel);
     }
 }
