@@ -35,6 +35,7 @@ class SetUp extends Adder {
     boolean multiPaused = false;
     boolean duelPaused = false;
     boolean storyPaused = false;
+    boolean storyBattlePause = false;
     boolean enemyWin = false;
     boolean playerTurn = false;
     boolean playerWin = false;
@@ -257,6 +258,8 @@ class SetUp extends Adder {
 
     void StoryBattle(){
         switchPanelColor(StoryBattle.storyBtlPanel);
+        switchLabelColor(StoryBattle.status1);
+        switchLabelColor(StoryBattle.status2);
         switchLabelColor(StoryBattle.player);
         switchLabelColor(StoryBattle.enemy);
         switchLabelColor(StoryBattle.PlayerHP);
@@ -265,6 +268,8 @@ class SetUp extends Adder {
         switchLabelColor(StoryBattle.EnemyHP);
         switchLabelColor(StoryBattle.EnemyWpn);
         switchLabelColor(StoryBattle.EnemyAtk);
+        switchBtnColor(StoryBattle.rollBtn);
+        switchBtnColor(StoryBattle.settingsBtl);
     }
     //END SWITCH THEME//
 
@@ -536,19 +541,6 @@ class SetUp extends Adder {
         } else{
             setSoundEffectFile(btnSound);
             playSound();
-            loopSong();
-        }
-    }
-
-    void checkSetSoundVer3(){
-        String txt = Settings.setSound.getText();
-        String txt2 = Mgs.setSound.getText();
-        if(txt.equals("SOUND : OFF") && txt2.equals("SOUND : OFF")){
-            stopSound();
-            holdSong();
-        } else{
-            setSoundEffectFile(btnSound);
-            playSong();
             loopSong();
         }
     }
